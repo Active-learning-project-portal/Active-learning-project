@@ -8,8 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AccountModule } from './account/account.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
-
-
+import { AccountRoutingModule } from './account/account-routing.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +24,8 @@ import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
       progressBar: true
     }),
     AccountModule,
+    AccountRoutingModule
+   
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,

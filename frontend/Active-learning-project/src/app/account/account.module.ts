@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../shared/modules/material-modules';
 import { AccountComponent } from './account.component';
+import { AccountRoutingModule } from './account-routing.module';
 
 @NgModule({
   declarations: [AccountComponent, SignInComponent, SignupComponent],
@@ -18,6 +19,7 @@ import { AccountComponent } from './account.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AccountRoutingModule,
   ],
 })
 export class AccountModule {}

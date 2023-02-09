@@ -8,9 +8,28 @@
                 <mat-toolbar class="bg-white text-black">
                     <img src="../../assets/images/logojpg.jpg" class="card-img" alt="Logo" />
                 </mat-toolbar>
-                <alp-signin></alp-signin>
+                <div *ngIf="isSignInRendered; then renderSignIn else renderSignup"></div>
+                <ng-template #renderSignIn>
+                    <alp-signin></alp-signin>
+                    <div class="form-group">
+                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a mat-button
+                                class="menu-button" class="btn btn-forgot text-primary"
+                                (click)="isSignInRendered = !isSignInRendered">
+                                <span>Sign up</span>
+                            </a></p>
+                    </div>
+                </ng-template>
+                <ng-template #renderSignup>
+                    <alp-signup></alp-signup>
+                    <div class="form-group">
+                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a mat-button
+                                class="menu-button" class="btn btn-forgot text-primary"
+                                (click)="isSignInRendered = !isSignInRendered">
+                                <span>Sign in</span>
+                            </a></p>
+                    </div>
+                </ng-template>
             </div>
-
         </div>
     </div>
 </div>
