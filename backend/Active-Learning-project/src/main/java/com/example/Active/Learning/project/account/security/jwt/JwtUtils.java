@@ -26,11 +26,6 @@ public class JwtUtils {
     @Value("${active_learning_project.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-
-    private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(this.jwtSecret);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();

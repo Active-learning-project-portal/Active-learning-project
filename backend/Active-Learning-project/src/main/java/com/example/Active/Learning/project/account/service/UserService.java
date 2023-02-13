@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -132,5 +133,28 @@ public class UserService {
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 roles));
+    }
+
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users =userRepository.findAll();
+        return ResponseEntity.ok(users);
+    }
+
+    public ResponseEntity<Optional<User>> getUserById(@NonNull Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    public ResponseEntity<Optional<User>> getUserByUsername(@NonNull String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return ResponseEntity.ok(user);
+    }
+    public ResponseEntity<Optional<User>> getUserByEmail(@NonNull String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+
+    public ResponseEntity<Optional<User>> updateUser(Long id, User user) {
+        return null;
     }
 }
