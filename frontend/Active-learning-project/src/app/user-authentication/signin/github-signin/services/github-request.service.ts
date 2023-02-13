@@ -27,7 +27,8 @@ export class GithubRequestService {
   }
 
   getAccessToken(code: any) {
-    return this.http.get("https://github.com/login/oauth/access_token", {
+
+    return this.http.get("/login/oauth/access_token", {
       params: {
         client_id: this.gitClientId,
         client_secret: this.gitClientSecret,

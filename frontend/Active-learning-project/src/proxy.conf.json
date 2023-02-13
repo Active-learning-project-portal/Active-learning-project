@@ -1,0 +1,8 @@
+{
+    "/login":{
+        "secure":true,
+        "target": "https://github.com",
+        "changeOrigin":true,
+        "logLevel":"debug"
+    }
+}

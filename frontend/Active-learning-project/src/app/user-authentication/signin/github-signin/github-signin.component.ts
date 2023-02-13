@@ -41,7 +41,5 @@ export class GithubSigninComponent implements OnInit {
 
   ngOnInit(): void {
     this.githubLoginUrl = this.config.gitLoginUrl;
-
-
   }
 }
