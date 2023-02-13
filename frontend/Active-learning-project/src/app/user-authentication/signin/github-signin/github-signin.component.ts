@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import queryString from 'query-string'
-import axios from 'axios'
+import { NavigationEnd, Router } from '@angular/router';
+import queryString from 'query-string';
+import { Subscription } from 'rxjs';
+import { GithubRequestService } from './services/github-request.service';
 
 @Component({
   selector: 'alp-github-signin',
@@ -8,58 +10,38 @@ import axios from 'axios'
   styleUrls: ['./github-signin.component.css']
 })
 export class GithubSigninComponent implements OnInit {
-  githubParams!: string;
   githubLoginUrl!: string;
-  gitClientId: string = '0b21a25c5d85b0a71f3d';
-  gitClientSecret: string = 'f4720f1d20d22ba145293f976b5071ee4b83dca0';
+  gitAuthCode!: any;
+  $token!: Subscription;
 
-  async getGithubAccessToken(code: string | (string | null)[]) {
-    // const { data } = await axios({
-    //   url: 'https://github.com/login/oauth/access_token',
-    //   method: 'get',
-    //   withCredentials: false,
-    //   params: {
-    //     client_id: this.gitClientId,
-    //     client_secret: this.gitClientSecret,
-    //     redirect_uri: 'http://localhost:4200/auth/user/signin',
-    //     code,
-    //   },
-    //   headers: {
-    //     'Access-Control-Allow-Origin': '*'
-    //   },
-    // });
+  constructor(
+    private config: GithubRequestService,
+    private router: Router
+  ) {
+    router.events.
+      subscribe(() => {
+        this.gitAuthCode = queryString.parse(this.router.url.split('?')[1])
 
-    const { data } = await axios.get("https://github.com/login/oauth/access_token", {
-      withCredentials: false,
-      params: {
-        client_id: this.gitClientId,
-        client_secret: this.gitClientSecret,
-        redirect_uri: 'http://localhost:4200/auth/user/signin',
-        code,
-      },
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
-    })
-
-    const parsedData = queryString.parse(data);
-    console.log(parsedData)
+        if (this.gitAuthCode['code']) {
+          this.config.getAccessToken(this.gitAuthCode['code'])
+          .subscribe({
+            next(token){
+              console.log(token)
+            },
+            complete() {
+              console.log("Done!!")
+            },
+            error(err) {
+              console.error(err)
+            }
+          })
+        } else this.router.navigate(['/', 'auth'])
+      })
   }
 
   ngOnInit(): void {
-    this.githubParams = queryString.stringify({
-      client_id: this.gitClientId,
-      redirect_uri: `http://localhost:4200/auth/user/signin`,
-      scope: ['read:user', 'user:email'].join(' '),
-      allow_signup: true,
-    });
+    this.githubLoginUrl = this.config.gitLoginUrl;
 
-    this.githubLoginUrl = `https://github.com/login/oauth/authorize?${this.githubParams}`;
-    const gitCode = queryString.parse(window.location.search)['code'];
 
-    if (gitCode) {
-      this.getGithubAccessToken(gitCode)
-    }
   }
-
 }
