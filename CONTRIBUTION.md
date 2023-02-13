@@ -52,4 +52,4 @@ Probably you just need to start application, raise issue by creating an issue.
 
 ## Get in touch
 
-You can communicate with the MDN Web Docs team and community using the [Discord](https://discord.gg/CqBdnGN8).
+You can communicate with the Active Learning Project team and community using the [Discord](https://discord.gg/CqBdnGN8).

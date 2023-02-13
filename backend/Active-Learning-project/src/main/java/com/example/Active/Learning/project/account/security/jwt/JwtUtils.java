@@ -26,7 +26,6 @@ public class JwtUtils {
     @Value("${active_learning_project.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -45,12 +44,7 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String authToken) {
         try {
-//            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-            Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(authToken);
-//            jws = Jwts.parserBuilder()  // (1)
-//                    .setSigningKey(key)         // (2)
-//                    .build()                    // (3)
-//                    .parseClaimsJws(jwsString); // (4)
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
