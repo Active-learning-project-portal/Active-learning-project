@@ -3,6 +3,7 @@ package com.example.Active.Learning.project.account.service;
 
 import com.example.Active.Learning.project.account.exceptions.RoleNotFoundException;
 import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegisteredException;
+import com.example.Active.Learning.project.account.exceptions.UserNotFound;
 import com.example.Active.Learning.project.account.models.ERole;
 import com.example.Active.Learning.project.account.models.Role;
 import com.example.Active.Learning.project.account.models.User;
@@ -14,6 +15,7 @@ import com.example.Active.Learning.project.account.repositories.RoleRepository;
 import com.example.Active.Learning.project.account.repositories.UserRepository;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import com.example.Active.Learning.project.account.security.services.UserDetailsImpl;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -154,7 +156,14 @@ public class UserService {
         return ResponseEntity.ok(user);
     }
 
-    public ResponseEntity<Optional<User>> updateUser(Long id, User user) {
-        return null;
+    public ResponseEntity<User> updateUser(@NonNull Long id, @NonNull User user) {
+        User userExist = userRepository.findById(id).orElseThrow(()-> new UserNotFound(MessageResponse.USER_NOT_FOUND));
+        userExist.setUsername(user.getUsername());
+        userExist.setEmail(user.getEmail());
+        userExist.setPassword(user.getPassword());
+        userRepository.save(userExist);
+        return ResponseEntity.ok(user);
+
     }
+
 }
