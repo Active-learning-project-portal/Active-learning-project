@@ -1,10 +1,18 @@
+:root {
+  --bg-auth-color: rgb(231, 229, 229);
+  --bg-auth-container-color: rgb(255, 255, 255);
+  --border-auth-color: #000;
+  --btn-google-color: blue;
+  --btn-github-color: white;
+}
+
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .spacer {

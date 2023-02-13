@@ -1,0 +1,127 @@
+.card {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.card-header {
+  border: none;
+  background-color: #ffffff;
+  padding: 0.1rem;
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-logo img {
+  width: 60px;
+  height: 60px;
+}
+
+.auth-header p {
+  font-size: 10pt;
+  color: rgb(81, 80, 80);
+}
+
+.auth-connections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.auth-connections .auth-github,
+.auth-connections .auth-google {
+  position: relative;
+  padding: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.auth-connections .auth-github {
+  background-color: rgb(174, 204, 230);
+}
+
+.auth-connections .auth-github img,
+.auth-connections .auth-google img {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.2rem;
+  transform: rotate(0deg);
+  transition: all 0.5s;
+}
+
+.auth-connections .auth-github img,
+.auth-connections .auth-google img,
+.auth-connections .auth-github span,
+.auth-connections .auth-google span {
+  pointer-events: none;
+}
+
+.auth-connections .auth-github:hover img,
+.auth-connections .auth-google:hover img {
+  transform: rotate(360deg);
+}
+
+.auth-alternate {
+  display: flex;
+  align-items: center;
+}
+
+.auth-alternate i {
+  font-style: normal;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+  font-size: 11pt;
+}
+
+.auth-alternate span {
+  width: 50%;
+}
+
+label {
+  font-size: 10pt;
+}
+
+input {
+  border-radius: 0.7rem;
+  border: 2px solid #1e1d1db1;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+button {
+  border-radius: 0.7rem;
+}
+
+.auth-login a {
+  color: #000;
+  font-size: 10pt;
+  text-decoration: none;
+  right: 0;
+}
+
+.auth-signup-link {
+  padding-top: 1rem;
+}
+
+.auth-signup-link i {
+  white-space: nowrap;
+  font-size: 11pt;
+  text-align: center;
+  font-style: normal;
+}
