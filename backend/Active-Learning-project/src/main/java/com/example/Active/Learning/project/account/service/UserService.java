@@ -4,6 +4,7 @@ package com.example.Active.Learning.project.account.service;
 import com.example.Active.Learning.project.account.exceptions.RoleNotFoundException;
 import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegisteredException;
 import com.example.Active.Learning.project.account.exceptions.UserNotFound;
+
 import com.example.Active.Learning.project.account.models.ERole;
 import com.example.Active.Learning.project.account.models.Role;
 import com.example.Active.Learning.project.account.models.User;
@@ -15,6 +16,7 @@ import com.example.Active.Learning.project.account.repositories.RoleRepository;
 import com.example.Active.Learning.project.account.repositories.UserRepository;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import com.example.Active.Learning.project.account.security.services.UserDetailsImpl;
+
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,5 +167,4 @@ public class UserService {
         return ResponseEntity.ok(user);
 
     }
-
 }

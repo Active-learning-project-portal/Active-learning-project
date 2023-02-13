@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountComponent } from './account/account.component';
+import { app, auth } from './shared/routers/Routers';
 
 const routes: Routes = [
   {
-    path: '',
-    component: AccountComponent,
+    path: auth.rootPath,
+    loadChildren: () =>
+      import('./user-authentication/account.module').then((m) => m.AccountModule),
   },
   {
-    path: 'account',
-    loadChildren: () =>
-      import('./account/account.module').then((m) => m.AccountModule),
+    path: app.rootPath,
+    loadChildren: () => import("./master-layout/master-layout.module").then(m => m.MasterLayoutModule)
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: `${auth.rootPath}/${auth.person}`,
     pathMatch: 'full',
   },
 ];

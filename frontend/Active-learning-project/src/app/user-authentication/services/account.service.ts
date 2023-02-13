@@ -1,11 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AppConfig } from 'src/app/app-config/app-config.interface';
-import { APP_SERVICE_CONFIG } from '../../app-config/app-config.service';
 import { IGlobalPayload } from '../../models/payloads/requests/global.interface';
+import { AppConfigBundleService } from 'src/app/app-config/app-config-bundle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,7 @@ export class AccountService {
   public users!: Observable<IGlobalPayload>;
 
   constructor(
-    @Inject(APP_SERVICE_CONFIG) private config: AppConfig,
+    private config: AppConfigBundleService,
     private router: Router,
     private http: HttpClient
   ) {
@@ -41,7 +40,6 @@ export class AccountService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
-
           return user;
         })
       );

@@ -1,9 +1,10 @@
 export interface IGoogle {
-  email: string;
-  emailVerified: boolean;
-  name: string;
-  pictureUrl: string;
-  locale: string;
-  familyName: string;
-  givenName: string;
+  email: string,
+  emailVerified: boolean,
+  name: string,
+  pictureUrl: string,
+  locale: string,
+  familyName: string,
+  givenName: string,
+  provider: string
 }

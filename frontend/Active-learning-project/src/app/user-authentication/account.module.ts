@@ -7,19 +7,34 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../shared/modules/material-modules';
 import { AccountComponent } from './account.component';
 import { AccountRoutingModule } from './account-routing.module';
+import { GoogleSignupComponent } from './signup/google-signup/google-signup.component';
+import { GoogleSigninComponent } from './signin/google-signin/google-signin.component';
+import { GithubSigninComponent } from './signin/github-signin/github-signin.component';
 
 @NgModule({
-  declarations: [AccountComponent, SignInComponent, SignupComponent],
-  exports: [AccountComponent, SignInComponent, SignupComponent],
-
+  declarations: [
+    AccountComponent,
+    SignInComponent,
+    SignupComponent,
+    GoogleSignupComponent,
+    GoogleSigninComponent,
+    GithubSigninComponent
+  ],
+  exports: [
+    AccountComponent,
+    SignInComponent,
+    SignupComponent,
+    GoogleSignupComponent,
+    GoogleSigninComponent,
+    GithubSigninComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
     HttpClientModule,
-    FormsModule,
     ReactiveFormsModule,
-    AccountRoutingModule,
-  ],
+    AccountRoutingModule
+  ]
 })
-export class AccountModule {}
+export class AccountModule { }

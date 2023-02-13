@@ -1,0 +1,107 @@
+<div class="card">
+  <div class="card-header">
+    <div class="auth-logo">
+      <img
+        oncontextmenu="return false;"
+        src="../../../assets/images/logo-symbol.png"
+        alt="ALP LOGO"
+      />
+    </div>
+    <div class="auth-header">
+      <h4 class="text-center fw-bold">Welcome back!</h4>
+      <p class="text-center">Please enter login details below</p>
+    </div>
+    <div class="auth-connections">
+      <div class="auth-github">
+        <alp-github-signin></alp-github-signin>
+      </div>
+      <div class="auth-google">
+        <alp-google-signin></alp-google-signin>
+      </div>
+    </div>
+    <div class="auth-alternate">
+      <span><hr /></span>
+      <i>Or use email</i>
+      <span><hr /></span>
+    </div>
+  </div>
+  <div class="card-body pt-1">
+    <form
+      class="form-horizontal"
+      role="form"
+      [formGroup]="loginForm"
+      (submit)="onSubmit()"
+    >
+      <div class="form-group">
+        <label class="fw-bold mb-0 text-muted" for="email">Email</label>
+        <input
+          placeholder="Email"
+          type="text"
+          formControlName="email"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': submitted && controls['email'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && controls['email'].errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="controls['email'].errors['required']">
+            Email is required
+          </div>
+          <div *ngIf="controls['email'].errors['email']">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="fw-bold mb-0 text-muted" for="password">Password</label>
+        <input
+          placeholder="Password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': submitted && controls['password'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && controls['password'].errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="controls['password'].errors['required']">
+            Password is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group auth-login">
+        <button
+          [disabled]="loading"
+          class="btn btn-dark form-control"
+          routerLink="/board"
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Sign in
+        </button>
+        <a
+          mat-button
+          class="menu-button"
+          class="btn btn-forgot text-dark"
+          routerLink="/board"
+        >
+          Forgot Password?
+        </a>
+      </div>
+    </form>
+    <div class="auth-signup-link text-center">
+      <i
+        >Don't have an account?
+        <a [routerLink]="['/', 'auth', 'user', 'signup']">Sign Up</a></i
+      >
+    </div>
+  </div>
+</div>

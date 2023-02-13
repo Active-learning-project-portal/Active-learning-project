@@ -6,4 +6,6 @@ export const APP_SERVICE_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 export const APP_CONFIG: AppConfig = {
   apiRoute: environment.apiUrl,
+  googleAuthClientID: environment.googleAuthClientID,
+  clientURL: environment.clientURL
 };
