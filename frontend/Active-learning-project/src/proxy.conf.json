@@ -1,6 +1,6 @@
 {
-    "/login":{
-        "secure":true,
+    "/login/*":{
+        "secure":false,
         "target": "https://github.com",
         "changeOrigin":true,
         "logLevel":"debug"

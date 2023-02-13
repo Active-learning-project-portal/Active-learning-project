@@ -43,10 +43,9 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @GetMapping("/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
-    public ResponseEntity<Optional<User>> updateUserById(@PathVariable Long id, @RequestBody User user) {
-
+    public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody User user) {
         return userService.updateUser(id,user);
     }
 }

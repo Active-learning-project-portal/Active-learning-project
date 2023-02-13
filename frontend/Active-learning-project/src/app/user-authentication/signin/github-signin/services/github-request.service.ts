@@ -1,13 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import queryString from 'query-string';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GithubRequestService {
-  private gitClientId: string = '0b21a25c5d85b0a71f3d';
-  private gitClientSecret: string = 'f4720f1d20d22ba145293f976b5071ee4b83dca0';
+  private gitClientId: string = 'e04b86df24f7cbf794c8';
+  private gitClientSecret: string = 'b758bc4642bcb6af67c8f32ea11bcc6c00eb4585';
   private githubParams!: string;
   private githubLoginUrl!: string;
 
@@ -19,7 +19,7 @@ export class GithubRequestService {
       allow_signup: true,
     });
 
-    this.githubLoginUrl = `https://github.com/login/oauth/authorize?${this.githubParams}`;
+    this.githubLoginUrl = `/login/oauth/authorize?${this.githubParams}`;
   }
 
   get gitLoginUrl() {
@@ -27,14 +27,13 @@ export class GithubRequestService {
   }
 
   getAccessToken(code: any) {
-
-    return this.http.get("/login/oauth/access_token", {
+    return this.http.get('/login/oauth/access_token', {
       params: {
         client_id: this.gitClientId,
         client_secret: this.gitClientSecret,
         redirect_uri: 'http://localhost:4200/auth/user/signin',
-        code
-      }
-    })
+        code,
+      },
+    });
   }
 }

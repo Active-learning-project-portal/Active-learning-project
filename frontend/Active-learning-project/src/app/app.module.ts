@@ -11,7 +11,7 @@ import { AccountRoutingModule } from './user-authentication/account-routing.modu
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
 import { MasterLayoutModule } from './master-layout/master-layout.module';
 import { SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { environment } from 'src/environments/environments';
+import { environment } from 'src/environments/environment';
 import { SigninAuthService } from './shared/helpers/signin-auth.service';
 
 @NgModule({
@@ -36,7 +36,7 @@ import { SigninAuthService } from './shared/helpers/signin-auth.service';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorsInterceptor,
+      useClass: SigninAuthService,
       multi: true,
     },
     {

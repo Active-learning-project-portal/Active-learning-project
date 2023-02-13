@@ -12,9 +12,13 @@ export class SigninAuthService implements HttpInterceptor {
     const cors = request.clone({
       setHeaders: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, PUT, POST',
+        'Access-Control-Allow-Methods': "PUT, POST, GET, DELETE, PATCH, OPTIONS",
         'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-        'Content-Type': 'aplication/json'
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "1800",
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+
       },
       withCredentials: false
     })

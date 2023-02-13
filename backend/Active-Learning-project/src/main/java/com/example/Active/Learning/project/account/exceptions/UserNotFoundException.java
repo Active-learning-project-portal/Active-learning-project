@@ -1,7 +1,7 @@
 package com.example.Active.Learning.project.account.exceptions;
 
-public class userNotFoundException extends RuntimeException {
-    public userNotFoundException(final String errorMessage) {
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(final String errorMessage) {
         super(errorMessage);
     }
 }
