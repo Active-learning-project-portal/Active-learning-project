@@ -10,6 +10,9 @@ import { AccountRoutingModule } from './account-routing.module';
 import { GoogleSignupComponent } from './signup/google-signup/google-signup.component';
 import { GoogleSigninComponent } from './signin/google-signin/google-signin.component';
 import { GithubSigninComponent } from './signin/github-signin/github-signin.component';
+import { AccountService } from './services/account.service';
+import { APP_SERVICE_CONFIG, APP_CONFIG } from '../app-config/app-config.service';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +21,7 @@ import { GithubSigninComponent } from './signin/github-signin/github-signin.comp
     SignupComponent,
     GoogleSignupComponent,
     GoogleSigninComponent,
-    GithubSigninComponent
+    GithubSigninComponent,
   ],
   exports: [
     AccountComponent,
@@ -26,7 +29,7 @@ import { GithubSigninComponent } from './signin/github-signin/github-signin.comp
     SignupComponent,
     GoogleSignupComponent,
     GoogleSigninComponent,
-    GithubSigninComponent
+    GithubSigninComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +37,8 @@ import { GithubSigninComponent } from './signin/github-signin/github-signin.comp
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AccountRoutingModule
+    AccountRoutingModule,
   ]
+ 
 })
-export class AccountModule { }
+export class AccountModule {}

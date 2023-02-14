@@ -16,51 +16,46 @@
       class="form-horizontal"
       role="form"
       [formGroup]="loginForm"
-      (submit)="onSubmit()"
+      (submit)="onSignUp()"
     >
       <div class="form-group">
         <label class="fw-bold mb-0 text-muted" for="email">First Name</label>
         <input
-          placeholder="john"
+          placeholder="Enter your first name"
           type="text"
-          formControlName="email"
+          formControlName="firstName"
           class="form-control"
           [ngClass]="{
-            'is-invalid': submitted && controls['email'].errors
+            'is-invalid': submitted && controls['firstName'].errors
           }"
         />
         <div
-          *ngIf="submitted && controls['email'].errors"
+          *ngIf="submitted && controls['firstName'].errors"
           class="invalid-feedback"
         >
-          <div *ngIf="controls['email'].errors['required']">
-            Email is required
+          <div *ngIf="controls['firstName'].errors['required']">
+            First name is required
           </div>
-          <div *ngIf="controls['email'].errors['email']">
-            Email must be a valid email address
-          </div>
+        
         </div>
       </div>
       <div class="form-group">
-        <label class="fw-bold mb-0 text-muted" for="email">Last Name</label>
+        <label class="fw-bold mb-0 text-muted" for="lastName">Last Name</label>
         <input
-          placeholder="doe"
+          placeholder="Enter your last name"
           type="text"
-          formControlName="email"
+          formControlName="lastName"
           class="form-control"
           [ngClass]="{
-            'is-invalid': submitted && controls['email'].errors
+            'is-invalid': submitted && controls['lastName'].errors
           }"
         />
         <div
-          *ngIf="submitted && controls['email'].errors"
+          *ngIf="submitted && controls['lastName'].errors"
           class="invalid-feedback"
         >
-          <div *ngIf="controls['email'].errors['required']">
-            Email is required
-          </div>
-          <div *ngIf="controls['email'].errors['email']">
-            Email must be a valid email address
+          <div *ngIf="controls['lastName'].errors['required']">
+            Last name is required
           </div>
         </div>
       </div>
@@ -111,7 +106,6 @@
         <button
           [disabled]="loading"
           class="btn btn-dark form-control"
-          routerLink="/board"
         >
           <span
             *ngIf="loading"

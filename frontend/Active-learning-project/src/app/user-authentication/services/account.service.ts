@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { IGlobalPayload } from '../../models/payloads/requests/global.interface';
-import { AppConfigBundleService } from 'src/app/app-config/app-config-bundle.service';
+import { map } from 'rxjs/operators';
+import { IGlobalPayload } from 'src/app/models/payloads/requests/global.interface';
+import { environment as config} from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
+
 export class AccountService {
   [x: string]: any;
   private userSubject!: BehaviorSubject<IGlobalPayload>;
   public users!: Observable<IGlobalPayload>;
 
   constructor(
-    private config: AppConfigBundleService,
     private router: Router,
     private http: HttpClient
   ) {
@@ -31,7 +31,7 @@ export class AccountService {
 
   login(email: string, password: string) {
     return this.http
-      .post<IGlobalPayload>(`${this.config.apiRoute}/authenticate`, {
+      .post<IGlobalPayload>(`${config.apiUrl}/auth/signin`, {
         email,
         password,
       })
@@ -47,26 +47,28 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
-    // this.userSubject.next(null);
     this.router.navigate(['/account/login']);
   }
 
   register(user: IGlobalPayload) {
-    return this.http.post(`${this.config.apiRoute}/register`, user);
+    console.log('I am user : ');
+    console.log(user);
+    console.log(config.apiUrl)
+    return this.http.post(`${config.apiUrl}auth/signup`, user);
   }
 
   getAllUser(): Observable<IGlobalPayload[]> {
-    return this.http.get<IGlobalPayload[]>(`${this.config.apiRoute}`);
+    return this.http.get<IGlobalPayload[]>(`${config.apiUrl}`);
   }
 
   getById(userId: string): Observable<IGlobalPayload> {
-    return this.http.get<IGlobalPayload>(this.config.apiRoute + '/' + userId);
+    return this.http.get<IGlobalPayload>(config.apiUrl + '/' + userId);
   }
 
   update(id: string, params: IGlobalPayload) {
     // Admin should have a privilege to delete admin
     // Only super_admin can do this and Admin
-    return this.http.put(`${this.config.apiRoute}/users/${id}`, params).pipe(
+    return this.http.put(`${config.apiUrl}/users/${id}`, params).pipe(
       map((x) => {
         // update stored user if the logged in user updated their own record
         if (id == this.userValue.id) {
@@ -83,7 +85,7 @@ export class AccountService {
 
   delete(id: string) {
     console.log(id);
-    return this.http.delete(`${this.config.apiRoute}/users/${id}`).pipe(
+    return this.http.delete(`${config.apiUrl}/users/${id}`).pipe(
       map((x) => {
         // auto logout if the logged in user deleted their own record
         if (id == this.userValue.id) {

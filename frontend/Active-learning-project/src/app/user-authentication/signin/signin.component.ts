@@ -1,23 +1,22 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'alp-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  styleUrls: ['./signin.component.css'],
 })
 export class SignInComponent implements OnInit {
   loginForm!: FormGroup;
   loading = false;
   submitted = false;
   returnUrl!: string;
-  anonymous = 'anonymous';
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+      ) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -31,5 +30,7 @@ export class SignInComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  onSubmit() {}
+  onSubmit() {
+   
+  }
 }

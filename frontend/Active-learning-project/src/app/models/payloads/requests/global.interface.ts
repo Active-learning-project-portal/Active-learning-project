@@ -1,6 +1,9 @@
 import { IGitHub } from './github.interface';
 import { IGoogle } from './google.interface';
-import { IManual } from './manual.interface';
-export interface IGlobalPayload extends IGitHub, IGoogle, IManual {
-  id: any
+export interface IGlobalPayload extends IGitHub, IGoogle {
+  id: any;
+  email: string;
+  username: string;
+  password: string;
+  provider: string;
 }
