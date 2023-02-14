@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'alp-signin',
@@ -17,7 +17,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -31,5 +31,21 @@ export class SignInComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  onSubmit() {}
+  getFormControl(name: string): AbstractControl {
+    return this.loginForm.controls[name];
+  }
+
+  isFormControlTouched(name: string): boolean {
+    return this.getFormControl(name).touched;
+  }
+
+  isFormControlValid(name: string): boolean {
+    return this.getFormControl(name).valid;
+  }
+
+  onSubmit() {
+    this.loginForm.markAllAsTouched();
+
+
+  }
 }

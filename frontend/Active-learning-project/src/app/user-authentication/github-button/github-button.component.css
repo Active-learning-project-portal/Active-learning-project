@@ -1,0 +1,41 @@
+.gitSignBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid lightgrey;
+  border-radius: 20px;
+  padding: 0 0.4rem;
+  transition: all 0.5s;
+}
+
+.gitSignBtn:hover {
+  background-color: lightgrey;
+  box-shadow: 0 0 3px 4px rgba(0, 0, 0, 0.12);
+}
+
+.gitSignBtn img {
+  width: 24px;
+  height: 24px;
+}
+
+.gitSignBtn a {
+  font-size: 11pt;
+  outline: none;
+  border: none;
+  appearance: none;
+  background-color: transparent;
+}
+
+.gitSignBtn a:focus {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  appearance: none;
+}
+
+.gitSignBtn a:hover {
+  outline: none;
+  border: none;
+  appearance: none;
+}

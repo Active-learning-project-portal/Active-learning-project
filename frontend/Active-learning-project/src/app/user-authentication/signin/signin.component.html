@@ -13,10 +13,10 @@
     </div>
     <div class="auth-connections">
       <div class="auth-github">
-        <alp-github-signin></alp-github-signin>
+        <alp-github-button [btnType]="'signin'"></alp-github-button>
       </div>
       <div class="auth-google">
-        <alp-google-signin></alp-google-signin>
+        <alp-google-button [btnType]="'signin'"></alp-google-button>
       </div>
     </div>
     <div class="auth-alternate">
@@ -40,7 +40,7 @@
           formControlName="email"
           class="form-control"
           [ngClass]="{
-            'is-invalid': submitted && controls['email'].errors
+            isInvalid: submitted && controls['email'].errors
           }"
         />
         <div
@@ -63,7 +63,7 @@
           formControlName="password"
           class="form-control"
           [ngClass]="{
-            'is-invalid': submitted && controls['password'].errors
+            isInvalid: submitted && controls['password'].errors
           }"
         />
         <div

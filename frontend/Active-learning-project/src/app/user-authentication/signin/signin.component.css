@@ -96,8 +96,8 @@ input{
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
@@ -121,4 +121,10 @@ button{
     left: 0;
     margin-top: 1rem;
     font-style: normal;
+}
+
+/* Handling Error responses */
+
+.isInvalid {
+  border: 2px solid rgb(243, 5, 5);
 }

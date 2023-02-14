@@ -26,14 +26,28 @@ export class GithubRequestService {
     return this.githubLoginUrl;
   }
 
-  getAccessToken(code: any) {
-    return this.http.get('/login/oauth/access_token', {
-      params: {
-        client_id: this.gitClientId,
-        client_secret: this.gitClientSecret,
-        redirect_uri: 'http://localhost:4200/auth/user/signin',
-        code,
-      },
+  getAccessToken(code: string) {
+    return this.http.post('/login/oauth/access_token', {
+      client_id: this.gitClientId,
+      client_secret: this.gitClientSecret,
+      redirect_uri: 'http://localhost:4200/auth/user/signin',
+      code,
     });
+  }
+
+  fetchUserInformationFromToken(tokenType: string, token: string) {
+    return this.http.get('/user', {
+      headers: {
+        Authorization: `${tokenType} ${token}`
+      }
+    })
+  }
+
+  fetchUserEmailsFromToken(tokenType: string, token: string) {
+    return this.http.get('/user/emails', {
+      headers: {
+        Authorization: `${tokenType} ${token}`
+      }
+    })
   }
 }

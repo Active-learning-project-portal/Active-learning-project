@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GoogleSigninComponent } from './google-signin.component';
+import { GithubButtonComponent } from './github-button.component';
 
-describe('GoogleSigninComponent', () => {
-  let component: GoogleSigninComponent;
-  let fixture: ComponentFixture<GoogleSigninComponent>;
+describe('GithubButtonComponent', () => {
+  let component: GithubButtonComponent;
+  let fixture: ComponentFixture<GithubButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GoogleSigninComponent ]
+      declarations: [ GithubButtonComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GoogleSigninComponent);
+    fixture = TestBed.createComponent(GithubButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
