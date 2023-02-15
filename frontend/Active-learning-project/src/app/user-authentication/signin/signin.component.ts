@@ -20,7 +20,6 @@ export class SignInComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl!: string;
-  anonymous = 'anonymous';
   isBtnLocked: boolean = false;
 
   constructor(
@@ -89,7 +88,7 @@ export class SignInComponent implements OnInit {
     const authModel: UserAuthRequestModel = {
       authType: 'signin',
       provider: 'MANUAL',
-      email: this.getFormControl('email').value,
+      username: this.getFormControl('email').value,
       password: this.getFormControl('password').value,
     };
 

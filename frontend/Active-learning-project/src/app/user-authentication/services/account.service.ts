@@ -55,9 +55,9 @@ export class AccountService {
   //   this.router.navigate(['/account/login']);
   // }
 
-  // register(user: UserAuthModel) {
-  //   return this.http.post(`${this.config.apiRoute}/register`, user);
-  // }
+  save(user: UserAuthRequestModel) {
+    return this.http.post(`${environment.apiUrl}auth/signup`, user);
+  }
 
   // getAllUser(): Observable<UserAuthModel[]> {
   //   return this.http.get<UserAuthModel[]>(`${this.config.apiRoute}`);

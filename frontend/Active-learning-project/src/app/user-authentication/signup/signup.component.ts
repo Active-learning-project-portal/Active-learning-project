@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { AccountService } from '../services/account.service';
+import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 
 @Component({
   selector: 'alp-signup',
@@ -46,18 +47,29 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    // this.loading = true;
-    // this.accountService.register(this.loginForm.value).subscribe(
-    //   (data) => {
-    //     console.log('Registration successfully' + data);
-    //     this.toastrService.success('Registration successfully');
-    //     console.log(this.route)
-    //     this.router.navigate(['../login'], { relativeTo: this.route });
-    //   },
-    //   (error) => {
-    //     this.toastrService.error( error.message,error.title);
-    //     this.loading = false;
-    //   }
-    // );
+ 
+
+    const authModel: UserAuthRequestModel = {
+      firstname: this.controls['firstName'].value,
+      lastname: this.controls['lastName'].value,
+      authType: 'signin',
+      provider: 'MANUAL',
+      username: this.controls['email'].value,
+      password: this.controls['password'].value,
+    };
+
+    this.loading = true;
+    this.accountService.save(authModel).subscribe(
+      (data) => {
+        console.log('Registration successfully' + data);
+        this.toastrService.success('Registration successfully');
+        console.log(this.route)
+        this.router.navigate(['../login'], { relativeTo: this.route });
+      },
+      (error) => {
+        this.toastrService.error( error.message,error.title);
+        this.loading = false;
+      }
+    );
   }
 }

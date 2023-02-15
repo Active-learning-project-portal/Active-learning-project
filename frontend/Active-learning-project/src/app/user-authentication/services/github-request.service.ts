@@ -90,7 +90,7 @@ export class GithubRequestService {
     return {
       firstname: this.getFirstName(userProfile.name),
       lastname: this.getLastName(userProfile.name),
-      email: this.getPrimaryEmail(userMails),
+      username: this.getPrimaryEmail(userMails),
       avatar: userProfile.avatar_url,
       password: '',
       provider: 'GITHUB',

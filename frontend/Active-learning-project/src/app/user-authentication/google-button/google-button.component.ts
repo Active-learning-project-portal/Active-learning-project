@@ -33,7 +33,7 @@ export class GoogleButtonComponent {
 				this.authModel = {
 					firstname: user.firstName,
 					lastname: user.lastName,
-					email: user.email,
+					username: user.email,
 					avatar: user.photoUrl,
 					provider: user.provider,
 					authType: this.btnType,
