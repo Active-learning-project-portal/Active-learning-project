@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
 
     @Autowired
     PasswordEncoder encoder;
@@ -53,21 +53,16 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public ResponseEntity<?> saveUser(@NonNull SignUpRequest signUpRequest) {
+    public ResponseEntity<?> save(@NonNull SignUpRequest signUpRequest) {
 
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserAlreadyRegisteredException(messageResponse.USERNAME_ALREADY_EXISTS));
-        }
-
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByUsername(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new UserAlreadyRegisteredException(messageResponse.EMAIL_ALREADY_EXISTS));
         }
 
-        User user = new User(signUpRequest.getUsername(),
+
+        User user = new User(
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
@@ -118,10 +113,28 @@ public class UserService {
         return ResponseEntity.ok(messageResponse.USER_CREATED_SUCCESSFULLY);
     }
 
+
+    public Authentication getAuthentication(String email, String password){
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email,
+                            password));
+        }catch (AuthenticationException error){
+            return null;
+        }
+        return authentication;
+    }
+
     public ResponseEntity<?> authenticateUser(@NonNull SignInRequest signInRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInRequest.getUsername(),
-                        signInRequest.getPassword()));
+
+        Authentication authentication = getAuthentication(signInRequest.getEmail(),signInRequest.getPassword());
+
+        if(authentication == null){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new UserNotFoundException(messageResponse.USER_NOT_FOUND));
+        }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -136,7 +149,6 @@ public class UserService {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles));
     }
 
@@ -154,20 +166,18 @@ public class UserService {
         Optional<User> user = userRepository.findByUsername(username);
         return ResponseEntity.ok(user);
     }
-    public ResponseEntity<Optional<User>> getUserByEmail(@NonNull String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return ResponseEntity.ok(user);
-    }
 
     public ResponseEntity<User> updateUser(@NonNull Long id, @NonNull User user) {
         User userExist = userRepository.findById(id).
                 orElseThrow(()->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
 
-        userExist.setUsername(user.getUsername());
-        userExist.setEmail(user.getEmail());
-        userExist.setPassword(user.getPassword());
-        userRepository.save(userExist);
+//        userExist.setUsername(user.getEmail());
+//        userExist.setPassword(user.getPassword());
+//        userRepository.save(userExist);
         return ResponseEntity.ok(user);
     }
+
+
+
 }

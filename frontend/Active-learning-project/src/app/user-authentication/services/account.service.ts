@@ -3,101 +3,98 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserAuthResponseModel } from 'src/app/models/payloads/response/user.auth.response.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
-
 export class AccountService {
-	[x: string]: any;
-	private userSubject!: BehaviorSubject<UserAuthRequestModel>;
-	public users!: Observable<UserAuthRequestModel>;
+  [x: string]: any;
+  private userSubject!: BehaviorSubject<UserAuthRequestModel>;
+  public users!: Observable<UserAuthRequestModel>;
 
-	constructor(
-		// private config: AppConfigBundleService,
-		private router: Router,
-		private http: HttpClient
-	) {
-		this.userSubject = new BehaviorSubject<UserAuthRequestModel>(
-			JSON.parse(localStorage.getItem('user')!)
-		);
-		this.users = this.userSubject.asObservable();
-	}
+  constructor(private router: Router, private http: HttpClient) {
 
-	public get userValue(): UserAuthRequestModel {
-		return this.userSubject.value;
-	}
+    this.userSubject = new BehaviorSubject<UserAuthRequestModel>(
+      JSON.parse(localStorage.getItem('user')!)
+    );
+    this.users = this.userSubject.asObservable();
+  }
 
-	authenticateUser(user: UserAuthRequestModel) {
-		console.log(user)
-		return this.http.post<UserAuthRequestModel>(`${environment.apiUrl}/authenticate`, user)
-	}
+  public get userValue(): UserAuthRequestModel {
+    return this.userSubject.value;
+  }
 
-	// login(email: string, password: string) {
-	//   return this.http
-	//     .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
-	//       email,
-	//       password,
-	//     })
-	//     .pipe(
-	//       map((user) => {
-	//         // store user details and jwt token in local storage to keep user logged in between page refreshes
-	//         localStorage.setItem('user', JSON.stringify(user));
-	//         this.userSubject.next(user);
-	//         return user;
-	//       })
-	//     );
-	// }
+  authenticateUser(user: UserAuthRequestModel) {
+    return this.http.post<UserAuthResponseModel>(
+      `${environment.apiUrl}auth/signin`,
+      user
+    );
+  }
 
-	// logout() {
-	//   localStorage.removeItem('user');
-	//   // this.userSubject.next(null);
-	//   this.router.navigate(['/account/login']);
-	// }
+//   login(email: string, password: string) {
+//     return this.http
+//       .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
+//         email,
+//         password,
+//       })
+//       .pipe(
+//         map((user) => {
+//           // store user details and jwt token in local storage to keep user logged in between page refreshes
+//           localStorage.setItem('user', JSON.stringify(user));
+//           this.userSubject.next(user);
+//           return user;
+//         })
+//       );
+//   }
 
-	// register(user: UserAuthModel) {
-	//   return this.http.post(`${this.config.apiRoute}/register`, user);
-	// }
+  // logout() {
+  //   localStorage.removeItem('user');
+  //   // this.userSubject.next(null);
+  //   this.router.navigate(['/account/login']);
+  // }
 
-	// getAllUser(): Observable<UserAuthModel[]> {
-	//   return this.http.get<UserAuthModel[]>(`${this.config.apiRoute}`);
-	// }
+  // register(user: UserAuthModel) {
+  //   return this.http.post(`${this.config.apiRoute}/register`, user);
+  // }
 
-	// getById(userId: string): Observable<UserAuthModel> {
-	//   return this.http.get<UserAuthModel>(this.config.apiRoute + '/' + userId);
-	// }
+  // getAllUser(): Observable<UserAuthModel[]> {
+  //   return this.http.get<UserAuthModel[]>(`${this.config.apiRoute}`);
+  // }
 
-	// update(id: string, params: UserAuthModel) {
-	//   // Admin should have a privilege to delete admin
-	//   // Only super_admin can do this and Admin
-	//   return this.http.put(`${this.config.apiRoute}/users/${id}`, params).pipe(
-	//     map((x) => {
-	//       // update stored user if the logged in user updated their own record
-	//       if (id == this.userValue.id) {
-	//         // update local storage
-	//         const user = { ...this.userValue, ...params };
-	//         localStorage.setItem('user', JSON.stringify(user));
-	//         // publish updated user to subscribers
-	//         this.userSubject.next(user);
-	//       }
-	//       return x;
-	//     })
-	//   );
-	// }
+  // getById(userId: string): Observable<UserAuthModel> {
+  //   return this.http.get<UserAuthModel>(this.config.apiRoute + '/' + userId);
+  // }
 
-	// delete(id: string) {
-	//   console.log(id);
-	//   return this.http.delete(`${this.config.apiRoute}/users/${id}`).pipe(
-	//     map((x) => {
-	//       // auto logout if the logged in user deleted their own record
-	//       if (id == this.userValue.id) {
-	//         this.logout();
-	//       }
-	//       return x;
-	//     })
-	//   );
-	// }
+  // update(id: string, params: UserAuthModel) {
+  //   // Admin should have a privilege to delete admin
+  //   // Only super_admin can do this and Admin
+  //   return this.http.put(`${this.config.apiRoute}/users/${id}`, params).pipe(
+  //     map((x) => {
+  //       // update stored user if the logged in user updated their own record
+  //       if (id == this.userValue.id) {
+  //         // update local storage
+  //         const user = { ...this.userValue, ...params };
+  //         localStorage.setItem('user', JSON.stringify(user));
+  //         // publish updated user to subscribers
+  //         this.userSubject.next(user);
+  //       }
+  //       return x;
+  //     })
+  //   );
+  // }
+
+  // delete(id: string) {
+  //   console.log(id);
+  //   return this.http.delete(`${this.config.apiRoute}/users/${id}`).pipe(
+  //     map((x) => {
+  //       // auto logout if the logged in user deleted their own record
+  //       if (id == this.userValue.id) {
+  //         this.logout();
+  //       }
+  //       return x;
+  //     })
+  //   );
+  // }
 }
-
-

@@ -17,7 +17,6 @@ import java.util.Set;
 @Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
         })
 @NoArgsConstructor
 public class User {
@@ -25,9 +24,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String email;
     private String password;
-
     private String pictureUrl;
     private String provider;
 
@@ -37,9 +34,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String email, String encode,String provider,String pictureUrl) {
-        this.username = username;
-        this.email = email;
+    public User(String email, String encode,String provider,String pictureUrl) {
+        this.username = email;
         this.password = encode;
         this.provider = provider;
         this.pictureUrl = pictureUrl;
