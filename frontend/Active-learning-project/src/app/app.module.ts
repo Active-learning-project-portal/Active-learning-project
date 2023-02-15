@@ -40,6 +40,11 @@ import { SigninAuthService } from './shared/helpers/signin-auth.service';
       multi: true,
     },
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorsInterceptor,
+      multi: true,
+    },
+    {
       provide: APP_SERVICE_CONFIG,
       useValue: APP_CONFIG
     },

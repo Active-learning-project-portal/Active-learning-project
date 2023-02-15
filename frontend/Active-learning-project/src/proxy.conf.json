@@ -1,8 +1,14 @@
 {
-    "/login/*":{
-        "secure":false,
-        "target": "https://github.com",
-        "changeOrigin":true,
-        "logLevel":"debug"
-    }
+  "/login/*": {
+    "secure": false,
+    "target": "https://github.com",
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/user/*": {
+    "secure": false,
+    "target": "https://api.github.com",
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
 }
