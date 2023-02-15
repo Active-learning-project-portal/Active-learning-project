@@ -1,17 +1,17 @@
 package com.example.Active.Learning.project.account.service;
 
 
+import com.example.Active.Learning.project.account.exceptions.CourseNotFoundException;
 import com.example.Active.Learning.project.account.exceptions.RoleNotFoundException;
 import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegisteredException;
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.models.ERole;
-import com.example.Active.Learning.project.account.models.Role;
-import com.example.Active.Learning.project.account.models.User;
+import com.example.Active.Learning.project.account.models.*;
 import com.example.Active.Learning.project.account.payload.request.SignInRequest;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import com.example.Active.Learning.project.account.payload.response.JwtResponse;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
+import com.example.Active.Learning.project.account.repositories.CourseRepository;
 import com.example.Active.Learning.project.account.repositories.RoleRepository;
 import com.example.Active.Learning.project.account.repositories.UserRepository;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
@@ -46,6 +46,9 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
+
+    @Autowired
+    CourseRepository courseRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -70,6 +73,8 @@ public class UserService {
                 signUpRequest.getAvatar());
 
         user.setRoles(addRoles());
+        user.setCourse(addCourse());
+
         try {
             userRepository.save(user);
         } catch (Exception e) {
@@ -86,6 +91,12 @@ public class UserService {
                 .orElseThrow(() -> new RoleNotFoundException(MessageResponse.ROLE_NOT_FOUND_ERROR));
         roles.add(userRole);
         return roles;
+    }
+
+    public Course addCourse() {
+        return courseRepository.findByName(ECourse.NO_COURSE)
+                .orElseThrow(() -> new CourseNotFoundException(MessageResponse.COURSE_NOT_FOUND));
+
     }
 
     public Authentication getAuthentication(String username, String password) {

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,6 +35,12 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_course",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Course course;
 
     public User(String username,String firstname,String lastname,String authType, String encode,String provider,String avatar) {
         this.firstname = firstname;
