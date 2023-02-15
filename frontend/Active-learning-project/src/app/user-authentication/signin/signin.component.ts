@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserAuthModel } from 'src/app/models/payloads/requests/user.auth.model';
+import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 
 @Component({
 	selector: 'alp-signin',
@@ -77,7 +77,7 @@ export class SignInComponent implements OnInit {
 
 		// If form is valid
 		// Build the auth model
-		const authModel: UserAuthModel = {
+		const authModel: UserAuthRequestModel = {
 			authType: "signin",
 			provider: "MANUAL",
 			email: this.getFormControl('email').value,

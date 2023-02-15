@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserAuthModel } from 'src/app/models/payloads/requests/user.auth.model';
+import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,27 +11,27 @@ import { environment } from 'src/environments/environment';
 
 export class AccountService {
 	[x: string]: any;
-	private userSubject!: BehaviorSubject<UserAuthModel>;
-	public users!: Observable<UserAuthModel>;
+	private userSubject!: BehaviorSubject<UserAuthRequestModel>;
+	public users!: Observable<UserAuthRequestModel>;
 
 	constructor(
 		// private config: AppConfigBundleService,
 		private router: Router,
 		private http: HttpClient
 	) {
-		this.userSubject = new BehaviorSubject<UserAuthModel>(
+		this.userSubject = new BehaviorSubject<UserAuthRequestModel>(
 			JSON.parse(localStorage.getItem('user')!)
 		);
 		this.users = this.userSubject.asObservable();
 	}
 
-	public get userValue(): UserAuthModel {
+	public get userValue(): UserAuthRequestModel {
 		return this.userSubject.value;
 	}
 
-	authenticateUser(user: UserAuthModel) {
+	authenticateUser(user: UserAuthRequestModel) {
 		console.log(user)
-		return this.http.post<UserAuthModel>(`${environment.apiUrl}/authenticate`, user)
+		return this.http.post<UserAuthRequestModel>(`${environment.apiUrl}/authenticate`, user)
 	}
 
 	// login(email: string, password: string) {

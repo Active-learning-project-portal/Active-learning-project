@@ -2,7 +2,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
-import { UserAuthModel } from 'src/app/models/payloads/requests/user.auth.model';
+import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { AccountService } from '../services/account.service';
 
 
@@ -13,7 +13,7 @@ import { AccountService } from '../services/account.service';
 })
 export class GoogleButtonComponent {
 	signContext!: "signin" | "signup";
-	authModel!: UserAuthModel;
+	authModel!: UserAuthRequestModel;
 
 	@Input()
 	btnType!: "signin" | "signup";
