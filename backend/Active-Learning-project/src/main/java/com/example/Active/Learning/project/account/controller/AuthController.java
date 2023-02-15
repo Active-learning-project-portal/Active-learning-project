@@ -48,11 +48,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
-        signUpRequest.setUsername(signUpRequest.getEmail());
-
-        System.out.println(signUpRequest.toString());
-        ResponseEntity message = userService.save(signUpRequest);
-
+        ResponseEntity message = userService.saveUser(signUpRequest);
         return message;
     }
 }

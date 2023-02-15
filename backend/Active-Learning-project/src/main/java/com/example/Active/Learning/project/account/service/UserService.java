@@ -49,29 +49,27 @@ public class UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    MessageResponse messageResponse = new MessageResponse();
     @Autowired
     private JwtUtils jwtUtils;
 
-    public ResponseEntity<?> save(@NonNull SignUpRequest signUpRequest) {
+    public ResponseEntity<?> saveUser(@NonNull SignUpRequest signUpRequest) {
 
-        if (userRepository.existsByUsername(signUpRequest.getEmail())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new UserAlreadyRegisteredException(messageResponse.EMAIL_ALREADY_EXISTS));
+                    .body(new UserAlreadyRegisteredException(MessageResponse.EMAIL_ALREADY_EXISTS));
         }
 
         User user = new User(
-                signUpRequest.getEmail(),
-                signUpRequest.getGivenName(),
-                signUpRequest.getFamilyName(),
+                signUpRequest.getUsername(),
+                signUpRequest.getFirstname(),
+                signUpRequest.getLastname(),
                 signUpRequest.getAuthType(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
-                signUpRequest.getPictureUrl());
+                signUpRequest.getAvatar());
 
-        Set<String> strRoles = signUpRequest.getRole();
-        user.setRoles(addRoles(strRoles));
+        user.setRoles(addRoles());
         try {
             userRepository.save(user);
         } catch (Exception e) {
@@ -79,50 +77,24 @@ public class UserService {
                     .badRequest()
                     .body(e.getMessage());
         }
-        return ResponseEntity.ok(messageResponse.USER_CREATED_SUCCESSFULLY);
+        return ResponseEntity.ok(MessageResponse.USER_CREATED_SUCCESSFULLY);
     }
 
-    public Set<Role> addRoles(Set<String> strRoles){
+    public Set<Role> addRoles() {
         Set<Role> roles = new HashSet<>();
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.TRAINEE)
-                    .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "SUPER_ADMIN":
-                        Role superAdminRole = roleRepository.findByName(ERole.SUPER_ADMIN)
-                                .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
-                        roles.add(superAdminRole);
-                        break;
-                    case "ADMIN":
-                        Role adminRole = roleRepository.findByName(ERole.ADMIN)
-                                .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
-                        roles.add(adminRole);
-                        break;
-                    case "TRAINER":
-                        Role trainerRole = roleRepository.findByName(ERole.TRAINER)
-                                .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
-                        roles.add(trainerRole);
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.TRAINEE)
-                                .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
-                        roles.add(userRole);
-                }
-            });
-        }
-        return  roles;
+        Role userRole = roleRepository.findByName(ERole.TRAINEE)
+                .orElseThrow(() -> new RoleNotFoundException(MessageResponse.ROLE_NOT_FOUND_ERROR));
+        roles.add(userRole);
+        return roles;
     }
 
-    public Authentication getAuthentication(String email, String password){
+    public Authentication getAuthentication(String username, String password) {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email,
+                    new UsernamePasswordAuthenticationToken(username,
                             password));
-        }catch (AuthenticationException error){
+        } catch (AuthenticationException error) {
             return null;
         }
         return authentication;
@@ -130,12 +102,12 @@ public class UserService {
 
     public ResponseEntity<?> authenticateUser(@NonNull SignInRequest signInRequest) {
 
-        Authentication authentication = getAuthentication(signInRequest.getEmail(),signInRequest.getPassword());
+        Authentication authentication = getAuthentication(signInRequest.getUsername(), signInRequest.getPassword());
 
-        if(authentication == null){
+        if (authentication == null) {
             return ResponseEntity
                     .badRequest()
-                    .body(new UserNotFoundException(messageResponse.USER_NOT_FOUND));
+                    .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
         }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -155,7 +127,7 @@ public class UserService {
     }
 
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users =userRepository.findAll();
+        List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
 
@@ -171,7 +143,7 @@ public class UserService {
 
     public ResponseEntity<User> updateUser(@NonNull Long id, @NonNull User user) {
         User userExist = userRepository.findById(id).
-                orElseThrow(()->
+                orElseThrow(() ->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
 
 //        userExist.setUsername(user.getEmail());
@@ -179,7 +151,6 @@ public class UserService {
 //        userRepository.save(userExist);
         return ResponseEntity.ok(user);
     }
-
 
 
 }

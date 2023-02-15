@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class SignInRequest {
     @NotBlank
-    private String email;
+    private String username;
     @NotBlank
     private String password;
     private String provider;
