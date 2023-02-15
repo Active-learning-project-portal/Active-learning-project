@@ -14,4 +14,6 @@ public class SignInRequest {
     private String email;
     @NotBlank
     private String password;
+    private String provider;
+    private String authType;
 }

@@ -25,8 +25,12 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private String pictureUrl;
     private String provider;
+
+    private String firstname;
+    private String lastname;
+    private String avatar;
+    private String authType;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -34,11 +38,14 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String email, String encode,String provider,String pictureUrl) {
+    public User(String email,String firstname,String lastname,String authType, String encode,String provider,String avatar) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.authType = authType;
         this.username = email;
         this.password = encode;
         this.provider = provider;
-        this.pictureUrl = pictureUrl;
+        this.avatar = avatar;
     }
 }
 

@@ -61,16 +61,29 @@ public class UserService {
                     .body(new UserAlreadyRegisteredException(messageResponse.EMAIL_ALREADY_EXISTS));
         }
 
-
         User user = new User(
                 signUpRequest.getEmail(),
+                signUpRequest.getGivenName(),
+                signUpRequest.getFamilyName(),
+                signUpRequest.getAuthType(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
                 signUpRequest.getPictureUrl());
 
         Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
+        user.setRoles(addRoles(strRoles));
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
+        return ResponseEntity.ok(messageResponse.USER_CREATED_SUCCESSFULLY);
+    }
 
+    public Set<Role> addRoles(Set<String> strRoles){
+        Set<Role> roles = new HashSet<>();
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.TRAINEE)
                     .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
@@ -100,19 +113,8 @@ public class UserService {
                 }
             });
         }
-
-        user.setRoles(roles);
-
-        try {
-            userRepository.save(user);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-        return ResponseEntity.ok(messageResponse.USER_CREATED_SUCCESSFULLY);
+        return  roles;
     }
-
 
     public Authentication getAuthentication(String email, String password){
         Authentication authentication;
