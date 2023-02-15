@@ -37,7 +37,7 @@ export class GoogleButtonComponent {
 					avatar: user.photoUrl,
 					provider: user.provider,
 					authType: this.btnType,
-					password: null
+					password: ""
 				};
 
 				// Making a post request
