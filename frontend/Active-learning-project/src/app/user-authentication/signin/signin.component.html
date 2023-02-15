@@ -14,10 +14,8 @@
     <div class="auth-connections">
       <div class="auth-github">
         <alp-github-button [btnType]="'signin'"></alp-github-button>
-        <alp-github-button [btnType]="'signin'"></alp-github-button>
       </div>
       <div class="auth-google">
-        <alp-google-button [btnType]="'signin'"></alp-google-button>
         <alp-google-button [btnType]="'signin'"></alp-google-button>
       </div>
     </div>
@@ -74,7 +72,7 @@
             ></span>
             Sign in
           </span>
-          <span 
+          <span
             class="invalidFeedback"
             *ngIf="hasError('email') && hasError('password')">
             Invalid Login Credentials
