@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
 
     @Autowired
     PasswordEncoder encoder;
@@ -53,29 +53,37 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public ResponseEntity<?> saveUser(@NonNull SignUpRequest signUpRequest) {
+    public ResponseEntity<?> save(@NonNull SignUpRequest signUpRequest) {
 
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserAlreadyRegisteredException(messageResponse.USERNAME_ALREADY_EXISTS));
-        }
-
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByUsername(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new UserAlreadyRegisteredException(messageResponse.EMAIL_ALREADY_EXISTS));
         }
 
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(
                 signUpRequest.getEmail(),
+                signUpRequest.getGivenName(),
+                signUpRequest.getFamilyName(),
+                signUpRequest.getAuthType(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
                 signUpRequest.getPictureUrl());
 
         Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
+        user.setRoles(addRoles(strRoles));
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
+        return ResponseEntity.ok(messageResponse.USER_CREATED_SUCCESSFULLY);
+    }
 
+    public Set<Role> addRoles(Set<String> strRoles){
+        Set<Role> roles = new HashSet<>();
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.TRAINEE)
                     .orElseThrow(() -> new RoleNotFoundException(messageResponse.ROLE_NOT_FOUND_ERROR));
@@ -105,23 +113,30 @@ public class UserService {
                 }
             });
         }
+        return  roles;
+    }
 
-        user.setRoles(roles);
-
+    public Authentication getAuthentication(String email, String password){
+        Authentication authentication;
         try {
-            userRepository.save(user);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email,
+                            password));
+        }catch (AuthenticationException error){
+            return null;
         }
-        return ResponseEntity.ok(messageResponse.USER_CREATED_SUCCESSFULLY);
+        return authentication;
     }
 
     public ResponseEntity<?> authenticateUser(@NonNull SignInRequest signInRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInRequest.getUsername(),
-                        signInRequest.getPassword()));
+
+        Authentication authentication = getAuthentication(signInRequest.getEmail(),signInRequest.getPassword());
+
+        if(authentication == null){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new UserNotFoundException(messageResponse.USER_NOT_FOUND));
+        }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -136,7 +151,6 @@ public class UserService {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles));
     }
 
@@ -154,20 +168,18 @@ public class UserService {
         Optional<User> user = userRepository.findByUsername(username);
         return ResponseEntity.ok(user);
     }
-    public ResponseEntity<Optional<User>> getUserByEmail(@NonNull String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return ResponseEntity.ok(user);
-    }
 
     public ResponseEntity<User> updateUser(@NonNull Long id, @NonNull User user) {
         User userExist = userRepository.findById(id).
                 orElseThrow(()->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
 
-        userExist.setUsername(user.getUsername());
-        userExist.setEmail(user.getEmail());
-        userExist.setPassword(user.getPassword());
-        userRepository.save(userExist);
+//        userExist.setUsername(user.getEmail());
+//        userExist.setPassword(user.getPassword());
+//        userRepository.save(userExist);
         return ResponseEntity.ok(user);
     }
+
+
+
 }

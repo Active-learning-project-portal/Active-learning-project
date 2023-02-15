@@ -21,6 +21,8 @@ public class SignUpRequest {
     private Set<String> role;
     private String provider;
 
+    private String authType;
+
     @Override
     public String toString() {
         return "SignUpRequest{" +
@@ -38,4 +40,5 @@ public class SignUpRequest {
                 ", provider='" + provider + '\'' +
                 '}';
     }
+
 }

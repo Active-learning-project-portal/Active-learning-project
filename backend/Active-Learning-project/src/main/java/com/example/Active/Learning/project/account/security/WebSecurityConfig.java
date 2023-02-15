@@ -22,11 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-//@Configuration
-//@EnableGlobalMethodSecurity(
-//        // securedEnabled = true,
-//        // jsr250Enabled = true,
-//        prePostEnabled = true)
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)

@@ -51,7 +51,7 @@ public class AuthController {
         signUpRequest.setUsername(signUpRequest.getEmail());
 
         System.out.println(signUpRequest.toString());
-        ResponseEntity message = userService.saveUser(signUpRequest);
+        ResponseEntity message = userService.save(signUpRequest);
 
         return message;
     }
