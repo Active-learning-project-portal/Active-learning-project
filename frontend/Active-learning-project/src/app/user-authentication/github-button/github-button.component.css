@@ -10,8 +10,7 @@
 }
 
 .gitSignBtn:hover {
-  background-color: lightgrey;
-  box-shadow: 0 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 3px 4px rgba(117, 117, 117, 0.12);
 }
 
 .gitSignBtn img {
