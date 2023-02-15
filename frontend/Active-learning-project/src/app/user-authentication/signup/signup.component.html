@@ -122,21 +122,16 @@
     </div>
     <div class="auth-connections">
       <div class="auth-github">
-        <img
-          oncontextmenu="return false;"
-          src="../../../assets/icons/github.svg"
-          alt="github auth"
-        />
-        <span>Github Sign Up</span>
+        <alp-github-button [btnType]="'signup'"></alp-github-button>
       </div>
       <div class="auth-google">
-        <alp-google-signup></alp-google-signup>
+        <alp-google-button [btnType]="'signup'"></alp-google-button>
       </div>
     </div>
     <div class="auth-signup-link text-center">
       <i
         >Already have an account?
-        <a [routerLink]="['/', 'auth', 'user', 'signin']">Sign In</a></i
+        <a href="/auth/user/signin">Sign In</a></i
       >
     </div>
   </div>

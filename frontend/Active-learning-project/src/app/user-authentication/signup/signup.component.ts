@@ -46,18 +46,18 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-    this.accountService.register(this.loginForm.value).subscribe(
-      (data) => {
-        console.log('Registration successfully' + data);
-        this.toastrService.success('Registration successfully');
-        console.log(this.route)
-        this.router.navigate(['../login'], { relativeTo: this.route });
-      },
-      (error) => {
-        this.toastrService.error( error.message,error.title);
-        this.loading = false;
-      }
-    );
+    // this.loading = true;
+    // this.accountService.register(this.loginForm.value).subscribe(
+    //   (data) => {
+    //     console.log('Registration successfully' + data);
+    //     this.toastrService.success('Registration successfully');
+    //     console.log(this.route)
+    //     this.router.navigate(['../login'], { relativeTo: this.route });
+    //   },
+    //   (error) => {
+    //     this.toastrService.error( error.message,error.title);
+    //     this.loading = false;
+    //   }
+    // );
   }
 }

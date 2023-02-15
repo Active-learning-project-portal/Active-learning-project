@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { SigninAuthService } from './shared/helpers/signin-auth.service';
 import { AccountService } from './user-authentication/services/account.service';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
+import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,10 @@ import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorsInterceptor,
       multi: true,
+    },
+    {
+      provide: APP_SERVICE_CONFIG,
+      useValue: APP_CONFIG
     },
     {
       provide: 'SocialAuthServiceConfig',

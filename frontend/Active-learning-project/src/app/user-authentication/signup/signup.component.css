@@ -46,7 +46,8 @@
 }
 
 .auth-connections .auth-github {
-  background-color: rgb(174, 204, 230);
+  position: relative;
+  /* background-color: rgb(174, 204, 230); */
 }
 
 .auth-connections .auth-github img,
