@@ -96,10 +96,10 @@ input {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 button {
@@ -122,3 +122,23 @@ button {
   margin-top: 1rem;
   font-style: normal;
 }
+
+/* Handling Error responses */
+@keyframes wrongLogin {
+  from {
+    background-color: rgb(21, 4, 4) !important;
+  }
+
+  to {
+    background-color: red !important;
+  }
+}
+
+.isInvalid {
+  border: 2px solid rgb(243, 5, 5);
+}
+
+.invalidCreds {
+  background-color: red !important;
+}
+
