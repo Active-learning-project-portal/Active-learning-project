@@ -6,13 +6,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountModule } from './user-authentication/account.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
 import { AccountRoutingModule } from './user-authentication/account-routing.module';
-import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
 import { MasterLayoutModule } from './master-layout/master-layout.module';
 import { SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { SigninAuthService } from './shared/helpers/signin-auth.service';
+import { AccountService } from './user-authentication/services/account.service';
+import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
+import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SigninAuthService } from './shared/helpers/signin-auth.service';
     SocialLoginModule,
     HttpClientModule
   ],
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -60,7 +62,8 @@ import { SigninAuthService } from './shared/helpers/signin-auth.service';
           console.error(err)
         }
       }
-    }
+    },
+    AccountService
   ],
   bootstrap: [AppComponent]
 })

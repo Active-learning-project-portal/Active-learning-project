@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     @Autowired
@@ -48,7 +48,9 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
+        signUpRequest.setUsername(signUpRequest.getEmail());
 
+        System.out.println(signUpRequest.toString());
         ResponseEntity message = userService.saveUser(signUpRequest);
 
         return message;

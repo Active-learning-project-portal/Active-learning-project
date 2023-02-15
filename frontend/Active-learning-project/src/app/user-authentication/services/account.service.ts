@@ -1,16 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-// import { UserAuthModel } from '../../models/payloads/requests/global.interface';
-// import { AppConfigBundleService } from 'src/app/app-config/app-config-bundle.service';
 import { UserAuthModel } from 'src/app/models/payloads/requests/user.auth.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root',
 })
+
 export class AccountService {
 	[x: string]: any;
 	private userSubject!: BehaviorSubject<UserAuthModel>;
@@ -101,3 +99,5 @@ export class AccountService {
 	//   );
 	// }
 }
+
+

@@ -30,7 +30,8 @@ import { GithubButtonComponent } from './github-button/github-button.component';
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AccountRoutingModule
+    AccountRoutingModule,
   ]
+ 
 })
-export class AccountModule { }
+export class AccountModule {}
