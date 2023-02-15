@@ -3,19 +3,18 @@ import { Injectable } from '@angular/core';
 import queryString from 'query-string';
 import { Observable, Observer } from 'rxjs';
 import { UserAuthModel } from 'src/app/models/payloads/requests/user.auth.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class GithubRequestService {
-	private gitClientId: string = 'e04b86df24f7cbf794c8';
-	private gitClientSecret: string = 'b758bc4642bcb6af67c8f32ea11bcc6c00eb4585';
 	private githubParams!: string;
 	private githubLoginUrl!: string;
 
 	constructor(private http: HttpClient) {
 		this.githubParams = queryString.stringify({
-			client_id: this.gitClientId,
+			client_id: environment.gitClientId,
 			redirect_uri: `http://localhost:4200/auth/user/signin`,
 			scope: ['read:user', 'user:email'].join(' '),
 			allow_signup: true,
@@ -30,8 +29,8 @@ export class GithubRequestService {
 
 	getAccessToken(code: string): Observable<Object> {
 		return this.http.post('/login/oauth/access_token', {
-			client_id: this.gitClientId,
-			client_secret: this.gitClientSecret,
+			client_id: environment.gitClientId,
+			client_secret: environment.gitClientSecret,
 			redirect_uri: 'http://localhost:4200/auth/user/signin',
 			code,
 		});
