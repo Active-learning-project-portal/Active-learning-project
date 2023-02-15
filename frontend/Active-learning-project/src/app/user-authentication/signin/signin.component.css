@@ -37,12 +37,12 @@
   position: relative;
   display: flex;
   justify-content: flex-end;
-  margin-right: .7rem;
+  margin-right: 0.7rem;
 }
 
-.auth-connections .auth-google{
-    position: relative;
-    margin-left: .7rem;
+.auth-connections .auth-google {
+  position: relative;
+  margin-left: 0.7rem;
 }
 
 .auth-connections .auth-github,
@@ -67,64 +67,58 @@
   transform: rotate(360deg);
 }
 
-.auth-alternate{
-    margin-top: 2rem;
-    display: flex;
-    align-items: center;
+.auth-alternate {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
 }
 
-.auth-alternate i{
-    font-style: normal;
-    margin-left: .5rem;
-    margin-right: .5rem;
-    white-space: nowrap;
-    font-size: 9pt;
+.auth-alternate i {
+  font-style: normal;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+  font-size: 9pt;
 }
 
-.auth-alternate span{
-    width: 50%;
+.auth-alternate span {
+  width: 50%;
 }
 
-label{
-    font-size: 10pt;
+label {
+  font-size: 10pt;
 }
 
-input{
-    border-radius: .7rem;
-    border: 2px solid #1e1d1db1;
-    padding: 1rem;
+input {
+  border-radius: 0.7rem;
+  border: 2px solid #1e1d1db1;
+  padding: 1rem;
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
-button{
-    border-radius: .7rem;
+button {
+  border-radius: 0.7rem;
 }
 
-.auth-login a{
-    color: #000;
-    font-size: 10pt;
-    text-decoration: none;
-    right: 0;
+.auth-login a {
+  color: #000;
+  font-size: 10pt;
+  text-decoration: none;
+  right: 0;
 }
 
-.auth-signup-link i{
-    position: relative;
-    white-space: nowrap;
-    font-size: 11pt;
-    text-align: center;
-    left: 0;
-    margin-top: 1rem;
-    font-style: normal;
-}
-
-/* Handling Error responses */
-
-.isInvalid {
-  border: 2px solid rgb(243, 5, 5);
+.auth-signup-link i {
+  position: relative;
+  white-space: nowrap;
+  font-size: 11pt;
+  text-align: center;
+  left: 0;
+  margin-top: 1rem;
+  font-style: normal;
 }

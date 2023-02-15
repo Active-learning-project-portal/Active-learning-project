@@ -14,8 +14,10 @@
     <div class="auth-connections">
       <div class="auth-github">
         <alp-github-button [btnType]="'signin'"></alp-github-button>
+        <alp-github-button [btnType]="'signin'"></alp-github-button>
       </div>
       <div class="auth-google">
+        <alp-google-button [btnType]="'signin'"></alp-google-button>
         <alp-google-button [btnType]="'signin'"></alp-google-button>
       </div>
     </div>
@@ -40,20 +42,9 @@
           formControlName="email"
           class="form-control"
           [ngClass]="{
-            isInvalid: submitted && controls['email'].errors
+            isInvalid: isFormControlTouched('email') && hasError('email')
           }"
         />
-        <div
-          *ngIf="submitted && controls['email'].errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="controls['email'].errors['required']">
-            Email is required
-          </div>
-          <div *ngIf="controls['email'].errors['email']">
-            Email must be a valid email address
-          </div>
-        </div>
       </div>
       <div class="form-group">
         <label class="fw-bold mb-0 text-muted" for="password">Password</label>
@@ -63,29 +54,31 @@
           formControlName="password"
           class="form-control"
           [ngClass]="{
-            isInvalid: submitted && controls['password'].errors
+            isInvalid: isFormControlTouched('password') && hasError('password')
           }"
         />
-        <div
-          *ngIf="submitted && controls['password'].errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="controls['password'].errors['required']">
-            Password is required
-          </div>
-        </div>
       </div>
       <div class="form-group auth-login">
         <button
-          [disabled]="loading"
+          [disabled]="isBtnLocked"
           class="btn btn-dark form-control"
           routerLink="/board"
+          [ngClass]="{
+            invalidCreds: hasError('email') && hasError('password')
+          }"
         >
-          <span
-            *ngIf="loading"
-            class="spinner-border spinner-border-sm mr-1"
-          ></span>
-          Sign in
+          <span *ngIf="!hasError('email') && !hasError('password')">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Sign in
+          </span>
+          <span 
+            class="invalidFeedback"
+            *ngIf="hasError('email') && hasError('password')">
+            Invalid Login Credentials
+          </span>
         </button>
         <a
           mat-button
@@ -100,7 +93,7 @@
     <div class="auth-signup-link text-center">
       <i
         >Don't have an account?
-        <a [routerLink]="['/', 'auth', 'user', 'signup']">Sign Up</a></i
+        <a href="/auth/user/signup">Sign Up</a></i
       >
     </div>
   </div>
