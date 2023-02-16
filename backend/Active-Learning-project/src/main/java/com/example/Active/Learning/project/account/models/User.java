@@ -24,13 +24,12 @@ public class User {
     private String username;
     private String password;
     private String provider;
-
     private String firstname;
     private String lastname;
     private String avatar;
     private String authType;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

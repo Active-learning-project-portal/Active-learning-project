@@ -5,5 +5,4 @@ public enum ERole {
     ADMIN,
     TRAINER,
     TRAINEE
-
 }

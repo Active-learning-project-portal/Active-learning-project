@@ -94,7 +94,10 @@ export class SignInComponent implements OnInit {
 
     this.accountService.authenticateUser(authModel).subscribe(
       (userAuth) => {
+        console.log("I am user auth");
+        console.log(userAuth)
         this.toastr.success(`Successful login`);
+        this.router.navigate(["/app"])
       },
       (error) => {
         this.toastr.error(error?.message, error?.title);
