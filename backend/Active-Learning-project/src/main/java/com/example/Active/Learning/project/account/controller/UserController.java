@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping()
-    @PreAuthorize("hasRole('TRAINEE') or hasRole('SUPER_ADMIN')")
+//    @PreAuthorize("hasRole('TRAINEE') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return userService.getAllUsers();
     }
