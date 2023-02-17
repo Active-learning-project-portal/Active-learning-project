@@ -14,10 +14,16 @@ import { SigninAuthService } from './shared/helpers/signin-auth.service';
 import { AccountService } from './user-authentication/services/account.service';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { SideNavComponent } from './shared/components/side-nav/side-nav.component';
+import { TopNavComponent } from './shared/components/top-nav/top-nav.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserManagementComponent,
+    SideNavComponent,
+    TopNavComponent
   ],
   imports: [
     BrowserModule,

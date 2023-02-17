@@ -142,13 +142,19 @@ public class UserService {
         return ResponseEntity.ok(users);
     }
 
-    public ResponseEntity<Optional<User>> getUserById(@NonNull Long id) {
+    public ResponseEntity<?> getUserById(@NonNull Long id) {
         Optional<User> user = userRepository.findById(id);
-        return ResponseEntity.ok(user);
+        if (!user.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
+        }
+        return ResponseEntity.ok().body(user.get());
     }
 
     public ResponseEntity<Optional<User>> getUserByUsername(@NonNull String username) {
         Optional<User> user = userRepository.findByUsername(username);
+        User user1 = userRepository.findByUsername(username).get();
         return ResponseEntity.ok(user);
     }
 

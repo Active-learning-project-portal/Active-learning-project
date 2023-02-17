@@ -1,5 +1,5 @@
 export const ServerErrors = {
-  unauthorized: 404,
-  badRequest:400,
-  ok:200,
+  UNAUTHORIZED:401,
+  BAD_REQUEST:400,
+  NOT_FOUND:404,
 };

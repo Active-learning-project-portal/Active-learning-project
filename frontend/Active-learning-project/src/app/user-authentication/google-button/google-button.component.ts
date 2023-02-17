@@ -1,5 +1,5 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
@@ -9,7 +9,8 @@ import { AccountService } from '../services/account.service';
 @Component({
 	selector: 'alp-google-button',
 	templateUrl: './google-button.component.html',
-	styleUrls: ['./google-button.component.css']
+	styleUrls: ['./google-button.component.css'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoogleButtonComponent {
 	signContext!: "signin" | "signup";

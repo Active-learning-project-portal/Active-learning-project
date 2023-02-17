@@ -31,15 +31,15 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER')")
-    public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/{username}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
-    public ResponseEntity<Optional<User>> getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
-    }
+//    @GetMapping("/{username}")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
+//    public ResponseEntity<Optional<User>> getUserByUsername(@RequestBody String username) {
+//        return userService.getUserByUsername(username);
+//    }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
