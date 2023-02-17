@@ -42,13 +42,11 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody SignInRequest signInRequest) {
-        ResponseEntity message = userService.authenticateUser(signInRequest);
-        return message;
+        return userService.authenticateUser(signInRequest);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
-        ResponseEntity message = userService.saveUser(signUpRequest);
-        return message;
+        return userService.saveUser(signUpRequest);
     }
 }

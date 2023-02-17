@@ -16,17 +16,21 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping()
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER')")
     public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }

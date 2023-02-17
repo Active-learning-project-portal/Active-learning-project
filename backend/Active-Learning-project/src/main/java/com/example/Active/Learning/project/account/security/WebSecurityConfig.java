@@ -13,6 +13,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,10 +24,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
-@EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
-@RequiredArgsConstructor
-public class WebSecurityConfig {
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
+//@RequiredArgsConstructor
+public class WebSecurityConfig extends GlobalMethodSecurityConfiguration {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -57,18 +60,18 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    private static final String[] AUTH_WHITELIST = {
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**"
-    };
+//
+//    private static final String[] AUTH_WHITELIST = {
+//            "/v2/api-docs",
+//            "/swagger-resources",
+//            "/swagger-resources/**",
+//            "/configuration/ui",
+//            "/configuration/security",
+//            "/swagger-ui.html",
+//            "/webjars/**",
+//            "/v3/api-docs/**",
+//            "/swagger-ui/**"
+//    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

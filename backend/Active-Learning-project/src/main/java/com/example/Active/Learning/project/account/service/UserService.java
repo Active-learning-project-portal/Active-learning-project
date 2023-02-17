@@ -87,7 +87,7 @@ public class UserService {
 
     public Set<Role> addRoles() {
         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(ERole.TRAINEE)
+        Role userRole = roleRepository.findByName(ERole.ROLE_TRAINEE)
                 .orElseThrow(() -> new RoleNotFoundException(MessageResponse.ROLE_NOT_FOUND_ERROR));
         roles.add(userRole);
         return roles;

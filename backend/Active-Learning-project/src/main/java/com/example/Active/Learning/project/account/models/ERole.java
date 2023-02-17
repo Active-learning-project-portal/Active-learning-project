@@ -1,9 +1,8 @@
 package com.example.Active.Learning.project.account.models;
 
 public enum ERole {
-    SUPER_ADMIN,
-    ADMIN,
-    TRAINER,
-    TRAINEE
-
+    ROLE_SUPER_ADMIN,
+    ROLE_ADMIN,
+    ROLE_TRAINER,
+    ROLE_TRAINEE
 }
