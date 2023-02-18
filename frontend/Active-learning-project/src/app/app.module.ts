@@ -8,23 +8,22 @@ import { AccountModule } from './user-authentication/account.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AccountRoutingModule } from './user-authentication/account-routing.module';
 import { MasterLayoutModule } from './master-layout/master-layout.module';
-import { SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import {
+  SocialLoginModule,
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { SigninAuthService } from './shared/helpers/signin-auth.service';
 import { AccountService } from './user-authentication/services/account.service';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
-import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
-import { UserManagementComponent } from './user-management/user-management.component';
-import { SideNavComponent } from './shared/components/side-nav/side-nav.component';
-import { TopNavComponent } from './shared/components/top-nav/top-nav.component';
+import {
+  APP_CONFIG,
+  APP_SERVICE_CONFIG,
+} from './app-config/app-config.service';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UserManagementComponent,
-    SideNavComponent,
-    TopNavComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -32,14 +31,15 @@ import { TopNavComponent } from './shared/components/top-nav/top-nav.component';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-      progressBar: true
+      progressBar: true,
     }),
     AccountRoutingModule,
     AccountModule,
     MasterLayoutModule,
     SocialLoginModule,
-    HttpClientModule
+    HttpClientModule,
   ],
+
 
   providers: [
     {
@@ -54,23 +54,25 @@ import { TopNavComponent } from './shared/components/top-nav/top-nav.component';
     },
     {
       provide: APP_SERVICE_CONFIG,
-      useValue: APP_CONFIG
+      useValue: APP_CONFIG,
     },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
         autoLogin: false,
-        providers: [{
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider(environment.googleAuthClientID)
-        }],
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(environment.googleAuthClientID),
+          },
+        ],
         onError: (err: any) => {
-          console.error(err)
-        }
-      }
+          console.error(err);
+        },
+      },
     },
-    AccountService
+    AccountService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,68 @@
+<div class="card text-dark">
+	<div class="card-body d-flex flex-column">
+		<div class="text-dark">
+			<h3>User management</h3>
+			<span class="spacer"></span>
+		</div>
+		<div class="form-group">
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<input type="text" class="form-control" placeholder="Search id, name, email, course and roles" />
+				</div>
+				<div class="form-group col-md-3"></div>
+				<div class="form-group col-md-3">
+					<a class="btn btn-outline-primary" role="button">Active <a class="bg-secondary btn-sm">22</a></a>
+					<a class="btn btn-outline-primary" role="button">Deactivate <a
+							class="bg-secondary btn-sm">22</a></a>
+					<a class="btn btn-outline-primary" role="button">All <a class="bg-secondary btn-sm">44</a></a>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<table class="table table-responsive table-hover  table-bordered">
+				<thead class="bg-dark text-white">
+					<tr>
+						<th>
+							ID</th>
+						<th>
+							NAME</th>
+						<th>
+							EMAIL</th>
+						<th>
+							COURSE</th>
+						<th>
+							JOINED</th>
+						<th>
+							LAST SEEN</th>
+						<th>
+							ROLES</th>
+						<th>
+							PROGRESS</th>
+						<th>
+							ACTIONS</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let user of users">
+						<td>{{user.id}}</td>
+						<td>{{user.name}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.course}}</td>
+						<td>{{user.joined | date:'mediumDate'}}</td>
+						<td>{{user["last seen"] | date:'mediumDate'}}</td>
+						<td>{{user.roles}}</td>
+						<td>80%</td>
+						<td>
+							<a *ngIf="user.action == 'Deactivate'" class="btn btn-danger">{{user.action}}</a>
+							<a *ngIf="user.action == 'Activate'" class="btn btn-success">{{user.action}}</a>
+							|
+							<a class="btn btn-info">View</a>
+							|
+							<a class="btn btn-warning">Update</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
