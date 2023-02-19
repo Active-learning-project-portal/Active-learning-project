@@ -47,6 +47,4 @@ export class UserManagementComponent implements OnInit {
     this.users = FakeUsers;
   }
 
-
-
 }

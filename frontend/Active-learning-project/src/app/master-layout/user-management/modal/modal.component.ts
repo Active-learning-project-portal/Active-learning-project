@@ -7,10 +7,14 @@ import { UsersList } from '../models/user-list.interface';
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent implements OnInit {
-  @Input() btnType!: 'Deactivate' | 'Activate' | 'Update' | 'View';
+
+  btnType!: 'Deactivate' | 'Activate' | 'Update' | 'View';
   @Input() user!: UsersList;
 
   ngOnInit(): void {
-   console.log("I am child")
+  }
+
+  onActionButtonClicked(action:any):void{
+    this.btnType =action;
   }
 }
