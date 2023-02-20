@@ -5,19 +5,14 @@ import { UserManagementComponent } from './user-management/user-management.compo
 
 const routes: Routes = [
   {
-    path: '',
-    component: MasterLayoutComponent,
-    children:[
-      {
-        path: "users",
-        component: UserManagementComponent,
-      }
-    ],
-  }
+    path: 'users',
+    loadChildren: () =>
+      import('./user-management/user.module').then((m) => m.UserModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MasterLayoutRoutingModule { }
+export class MasterLayoutRoutingModule {}

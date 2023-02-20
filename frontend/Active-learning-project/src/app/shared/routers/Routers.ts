@@ -13,6 +13,13 @@ const auth = {
 // App routing flow
 const app = {
     rootPath: 'app',
+    person: 'user',
+    action: {
+        users: 'users',
+        all: 'all',
+        inactive: 'inactive',
+        active: 'active'
+    }
 }
 
 export { auth, app }
