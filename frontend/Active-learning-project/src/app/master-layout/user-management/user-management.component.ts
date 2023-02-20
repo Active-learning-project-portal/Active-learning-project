@@ -1,7 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
-import { FakeUsers } from './models/fake-users';
-import { UsersList } from './models/user-list.interface';
+import { UsersList } from 'src/app/shared/models/user-list.interface';
+import { AccountService } from 'src/app/user-authentication/services/account.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'alp-user-management',
@@ -9,42 +11,79 @@ import { UsersList } from './models/user-list.interface';
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-  users!: UsersList[];
-  allCount!:number;
-  activeCount!:number;
-  deactiveCount!:number;
+  allCount!: number;
+  activateCount!: number;
+  deactivateCount!: number;
+  usersResponse!: BehaviorSubject<UsersList[]>;
+  users!: Observable<UsersList[]>;
 
-  constructor() {}
+  constructor(
+    private accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
-  
   ngOnInit() {
-    this.filterAllUsers();
-    this.allCount = this.allUsers;
-    this.activeCount = this.activeUsers.length;
-    this.deactiveCount = this.deactiveUsers.length;
+    this.getAllUser();
   }
 
-  get activeUsers():UsersList[]{
-    return FakeUsers.filter(user => user.action === "Activate");
+  get countAllUsers(): number {
+    return this.usersList?.length;
   }
 
-  get deactiveUsers():UsersList[]{
-    return FakeUsers.filter(user => user.action === "Deactivate");
+  get countAllDeactivatedUsers(): number {
+    return this.usersList?.length;
   }
 
-  get allUsers():number{
-    return FakeUsers.length;
+  get countAllActiveUsers(): number {
+    return this.getAllActiveUsers?.length;
   }
 
-  filterActivateUsers():void{
-    this.users = this.activeUsers;
+
+  get usersList(): UsersList[] {
+    return this.usersResponse?.value;
   }
 
-  filterDeactivateUsers():void{
-    this.users = this.deactiveUsers;
-  }
-  filterAllUsers():void{
-    this.users = FakeUsers;
+
+  getAllUser(): void {
+    this.accountService.getAllUsers().subscribe(
+      (response: any) => {
+        this.usersResponse = new BehaviorSubject<UsersList[]>(
+          response
+        );
+        this.users = this.usersResponse.asObservable();
+        
+      },
+      (error: { message: string | undefined }) => {
+        this.toastr.error(error?.message);
+      }
+    );
   }
 
+  getAllInActiveUsers(): void {
+    this.accountService.getAllInActiveUsers().subscribe(
+      (response: any) => {
+        this.usersResponse = new BehaviorSubject<UsersList[]>(
+          response
+        );
+        this.users = this.usersResponse.asObservable();
+      },
+      (error: { message: string | undefined }) => {
+        this.toastr.error(error?.message);
+      }
+    );
+  }
+
+  getAllActiveUsers(): void {
+    this.accountService.getAllActiveUsers().subscribe(
+      (response: any) => {
+        this.usersResponse = new BehaviorSubject<UsersList[]>(
+          response
+        );
+        this.users = this.usersResponse.asObservable();
+      },
+      (error: { message: string | undefined }) => {
+        this.toastr.error(error?.message);
+      }
+    );
+  }
 }

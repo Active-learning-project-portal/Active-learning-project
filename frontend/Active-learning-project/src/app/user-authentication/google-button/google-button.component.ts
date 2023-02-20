@@ -25,6 +25,7 @@ export class GoogleButtonComponent {
 		private toastr: ToastrService) { }
 
 	ngOnInit(): void {
+		console.log("Hi mushe")
 		const authObserver: Observable<any> = new Observable((observer: Observer<any>) => {
 			this.googleAuth.authState.subscribe((user: any) => {
 				if (!user) {

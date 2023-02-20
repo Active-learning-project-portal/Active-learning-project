@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import {NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MasterLayoutRoutingModule } from './master-layout-routing.module';
@@ -7,6 +7,7 @@ import { SideNavComponent } from '../shared/components/side-nav/side-nav.compone
 import { TopNavComponent } from '../shared/components/top-nav/top-nav.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { ModalComponent } from './user-management/modal/modal.component';
+import { RemoveRoleAndUnderScorePipe } from '../shared/pipes/remove-role-and-under-score.pipe';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ModalComponent } from './user-management/modal/modal.component';
     SideNavComponent,
     TopNavComponent,
     ModalComponent,
+    RemoveRoleAndUnderScorePipe
   ],
   imports: [CommonModule, MasterLayoutRoutingModule],
 })

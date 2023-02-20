@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UsersList } from '../models/user-list.interface';
+import { UsersList } from 'src/app/shared/models/user-list.interface';
 
 @Component({
   selector: 'alp-modal',

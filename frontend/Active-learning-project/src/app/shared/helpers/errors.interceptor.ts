@@ -23,18 +23,23 @@ export class ErrorsInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 0) {
-          if(!error.ok){
+          console.log(error);
+          if (!error.ok) {
             errorObject = {
-              message: "Server not started, contact operational@alp.com",
+              message: 'Server not started, contact operational@alp.com',
             };
           }
         } else {
           switch (error.status) {
             case ServerErrors.BAD_REQUEST:
-            case ServerErrors.UNAUTHORIZED:
             case ServerErrors.NOT_FOUND:
               errorObject = {
                 message: error.error.message,
+              };
+              break;
+            case ServerErrors.UNAUTHORIZED:
+              errorObject = {
+                message: 'You are not authorized',
               };
               break;
             default:

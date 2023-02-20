@@ -9,7 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -27,6 +26,18 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/active")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
+    public ResponseEntity<List<User>> getAllActiveUsers() {
+        return userService.getAllActiveUsers();
+    }
+
+    @GetMapping("/inactive")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
+    public ResponseEntity<List<User>> getAllInActiveUsers() {
+        return userService.getAllInActiveUsers();
     }
 
     @GetMapping("/{id}")

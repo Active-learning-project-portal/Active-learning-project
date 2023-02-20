@@ -70,7 +70,9 @@ public class UserService {
                 signUpRequest.getAuthType(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
-                signUpRequest.getAvatar());
+                signUpRequest.getAvatar(),
+                signUpRequest.getLastSeen(),
+                true);
 
         user.setRoles(addRoles());
         user.setCourse(addCourse());
@@ -141,6 +143,16 @@ public class UserService {
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
+
+    public ResponseEntity<List<User>> getAllActiveUsers() {
+        List<User> users = userRepository.findByIsActive(true);
+        return ResponseEntity.ok(users);
+    }
+    public ResponseEntity<List<User>> getAllInActiveUsers() {
+        List<User> users = userRepository.findByIsActive(false);
+        return ResponseEntity.ok(users);
+    }
+
 
     public ResponseEntity<?> getUserById(@NonNull Long id) {
         Optional<User> user = userRepository.findById(id);

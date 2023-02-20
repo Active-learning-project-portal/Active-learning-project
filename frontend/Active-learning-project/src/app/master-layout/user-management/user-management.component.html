@@ -11,17 +11,17 @@
 				</div>
 				<div class="form-group col-md-3"></div>
 				<div class="form-group col-md-3">
-					<a class="btn btn-outline-primary" role="button" (click)="filterActivateUsers()">Active <a
-							class="bg-secondary btn-sm" >{{activeCount}}</a></a>
-					<a class="btn btn-outline-primary" role="button" (click)="filterDeactivateUsers()">Deactivate <a
-							class="bg-secondary btn-sm">{{deactiveCount}}</a></a>
-					<a class="btn btn-outline-primary" role="button" (click)="filterAllUsers()">All <a
-							class="bg-secondary btn-sm">{{allCount}}</a></a>
+					<a class="btn btn-outline-primary" role="button">Active <a
+							class="bg-secondary btn-sm" (click)="getAllActiveUsers()">{{countAllActiveUsers}}</a></a>
+					<a class="btn btn-outline-primary" role="button">Inactive<a
+							class="bg-secondary btn-sm" (click)="getAllInActiveUsers()">{{countAllDeactivatedUsers}}</a></a>
+					<a class="btn btn-outline-primary" role="button" (click)="getAllUser()">All <a
+							class="bg-secondary btn-sm">{{countAllUsers}}</a></a>
 				</div>
 			</div>
 		</div>
 		<div class="card-body">
-			<table class="table table-responsive table-hover  table-bordered">
+			<table class="table table-responsive  table-striped">
 				<thead class="bg-dark text-white">
 					<tr>
 						<th>
@@ -39,21 +39,26 @@
 						<th>
 							ROLES</th>
 						<th>
-							PROGRESS</th>
+							PROVIDER</th>
 						<th>
 							ACTIONS</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let user of users">
+					<tr *ngFor="let user of usersList">
 						<td>{{user.id}}</td>
-						<td>{{user.name}}</td>
-						<td>{{user.email}}</td>
-						<td>{{user.course}}</td>
+						<td>{{user.lastname}} {{user.firstname}}</td>
+						<td>{{user.username}}</td>
+						<td>{{user.course?.name}}</td>
 						<td>{{user.joined | date:'mediumDate'}}</td>
-						<td>{{user["last seen"] | date:'mediumDate'}}</td>
-						<td>{{user.roles}}</td>
-						<td>80%</td>
+						<td>{{user.lastSeen | date:'mediumDate'}}</td>
+						<td>
+							<span *ngFor="let role of user.roles">
+								{{role.name | removeRoleAndUnderScore}}
+								<br>
+							</span>
+						</td>
+						<td>{{user.provider}}</td>
 						<td>
 							<alp-modal [user]="user"></alp-modal>
 						</td>

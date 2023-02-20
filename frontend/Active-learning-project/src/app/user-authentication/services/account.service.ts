@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -11,18 +11,17 @@ import { environment } from 'src/environments/environment';
 })
 export class AccountService {
   [x: string]: any;
-  private userSubject!: BehaviorSubject<UserAuthRequestModel>;
-  public users!: Observable<UserAuthRequestModel>;
+  private userSubject!: BehaviorSubject<UserAuthResponseModel>;
+  public users!: Observable<UserAuthResponseModel>;
 
   constructor(private router: Router, private http: HttpClient) {
-
-    this.userSubject = new BehaviorSubject<UserAuthRequestModel>(
+    this.userSubject = new BehaviorSubject<UserAuthResponseModel>(
       JSON.parse(localStorage.getItem('user')!)
     );
     this.users = this.userSubject.asObservable();
   }
 
-  public get userValue(): UserAuthRequestModel {
+  public get userValue(): UserAuthResponseModel {
     return this.userSubject.value;
   }
 
@@ -33,21 +32,21 @@ export class AccountService {
     );
   }
 
-//   login(email: string, password: string) {
-//     return this.http
-//       .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
-//         email,
-//         password,
-//       })
-//       .pipe(
-//         map((user) => {
-//           // store user details and jwt token in local storage to keep user logged in between page refreshes
-//           localStorage.setItem('user', JSON.stringify(user));
-//           this.userSubject.next(user);
-//           return user;
-//         })
-//       );
-//   }
+  //   login(email: string, password: string) {
+  //     return this.http
+  //       .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
+  //         email,
+  //         password,
+  //       })
+  //       .pipe(
+  //         map((user) => {
+  //           // store user details and jwt token in local storage to keep user logged in between page refreshes
+  //           localStorage.setItem('user', JSON.stringify(user));
+  //           this.userSubject.next(user);
+  //           return user;
+  //         })
+  //       );
+  //   }
 
   // logout() {
   //   localStorage.removeItem('user');
@@ -59,9 +58,46 @@ export class AccountService {
     return this.http.post(`${environment.apiUrl}auth/signup`, user);
   }
 
-  // getAllUser(): Observable<UserAuthModel[]> {
-  //   return this.http.get<UserAuthModel[]>(`${this.config.apiRoute}`);
-  // }
+  getAllUsers(): any {
+    const accessToken = this.userValue?.accessToken;
+    const tokenType = this.userValue?.tokenType;
+    if (!accessToken || !tokenType) {
+      this.router.navigate(['/auth/user/signin']);
+    }
+    return this.http.get(`${environment.apiUrl}users`, {
+      headers: {
+        Authorization: `${tokenType} ${accessToken}`,
+      },
+    });
+  }
+
+  getAllActiveUsers(): any {
+    const accessToken = this.userValue?.accessToken;
+    const tokenType = this.userValue?.tokenType;
+    if (!accessToken || !tokenType) {
+      this.router.navigate(['/auth/user/signin']);
+    }
+    return this.http.get(`${environment.apiUrl}users/active`, {
+      headers: {
+        Authorization: `${tokenType} ${accessToken}`,
+      },
+    });
+  }
+
+  getAllInActiveUsers(): any {
+    const accessToken = this.userValue?.accessToken;
+    const tokenType = this.userValue?.tokenType;
+    if (!accessToken || !tokenType) {
+      this.router.navigate(['/auth/user/signin']);
+    }
+    return this.http.get(`${environment.apiUrl}users/inactive`, {
+      headers: {
+        Authorization: `${tokenType} ${accessToken}`,
+      },
+    });
+  }
+
+
 
   // getById(userId: string): Observable<UserAuthModel> {
   //   return this.http.get<UserAuthModel>(this.config.apiRoute + '/' + userId);
