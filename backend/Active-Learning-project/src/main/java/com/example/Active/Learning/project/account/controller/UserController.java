@@ -1,8 +1,9 @@
 package com.example.Active.Learning.project.account.controller;
 
 
+import com.example.Active.Learning.project.account.constants.DefaultValues;
 import com.example.Active.Learning.project.account.models.User;
-import com.example.Active.Learning.project.account.service.UserService;
+import com.example.Active.Learning.project.account.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,29 +16,22 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<List<User>> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    @GetMapping("/active")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<List<User>> getAllActiveUsers() {
-        return userService.getAllActiveUsers();
-    }
-
-    @GetMapping("/inactive")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<List<User>> getAllInActiveUsers() {
-        return userService.getAllInActiveUsers();
+    public ResponseEntity<List<User>> getAllUsers(
+            @RequestParam(value = "pageNo", defaultValue = DefaultValues.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = DefaultValues.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = DefaultValues.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+    ) {
+        return userService.getAllUsers(pageNo,pageSize,sortBy,sortDir);
     }
 
     @GetMapping("/{id}")

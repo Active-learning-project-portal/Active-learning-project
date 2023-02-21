@@ -1,11 +1,13 @@
 package com.example.Active.Learning.project.account.service;
 
 
+import com.example.Active.Learning.project.account.constants.DefaultValues;
 import com.example.Active.Learning.project.account.exceptions.CourseNotFoundException;
 import com.example.Active.Learning.project.account.exceptions.RoleNotFoundException;
 import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegisteredException;
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
+import com.example.Active.Learning.project.account.interfaces.UserService;
 import com.example.Active.Learning.project.account.models.*;
 import com.example.Active.Learning.project.account.payload.request.SignInRequest;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
@@ -19,6 +21,10 @@ import com.example.Active.Learning.project.account.security.services.UserDetails
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +41,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder encoder;
@@ -55,7 +61,8 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public ResponseEntity<?> saveUser(@NonNull SignUpRequest signUpRequest) {
+    @Override
+    public ResponseEntity<?> createUser(@NonNull SignUpRequest signUpRequest) {
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -89,16 +96,15 @@ public class UserService {
 
     public Set<Role> addRoles() {
         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(ERole.ROLE_TRAINEE)
+        Role userRole = roleRepository.findByName(DefaultValues.DEFAULT_ROLE.getName())
                 .orElseThrow(() -> new RoleNotFoundException(MessageResponse.ROLE_NOT_FOUND_ERROR));
         roles.add(userRole);
         return roles;
     }
 
     public Course addCourse() {
-        return courseRepository.findByName(ECourse.NO_COURSE)
+        return courseRepository.findByName(DefaultValues.DEFAULT_COURSE.getName())
                 .orElseThrow(() -> new CourseNotFoundException(MessageResponse.COURSE_NOT_FOUND));
-
     }
 
     public Authentication getAuthentication(String username, String password) {
@@ -113,6 +119,7 @@ public class UserService {
         return authentication;
     }
 
+    @Override
     public ResponseEntity<?> authenticateUser(@NonNull SignInRequest signInRequest) {
 
         Authentication authentication = getAuthentication(signInRequest.getUsername(), signInRequest.getPassword());
@@ -139,20 +146,14 @@ public class UserService {
                 roles));
     }
 
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return ResponseEntity.ok(users);
+    @Override
+    public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo,pageSize,sort);
+        Page<User> users = userRepository.findAll(pageable);
+        return ResponseEntity.ok(users.stream().toList());
     }
-
-    public ResponseEntity<List<User>> getAllActiveUsers() {
-        List<User> users = userRepository.findByIsActive(true);
-        return ResponseEntity.ok(users);
-    }
-    public ResponseEntity<List<User>> getAllInActiveUsers() {
-        List<User> users = userRepository.findByIsActive(false);
-        return ResponseEntity.ok(users);
-    }
-
 
     public ResponseEntity<?> getUserById(@NonNull Long id) {
         Optional<User> user = userRepository.findById(id);
@@ -174,7 +175,6 @@ public class UserService {
         User userExist = userRepository.findById(id).
                 orElseThrow(() ->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-
 //        userExist.setUsername(user.getEmail());
 //        userExist.setPassword(user.getPassword());
 //        userRepository.save(userExist);

@@ -58,7 +58,7 @@ export class AccountService {
     return this.http.post(`${environment.apiUrl}auth/signup`, user);
   }
 
-  getAllUsers(): any {
+  getUsers(): any {
     const accessToken = this.userValue?.accessToken;
     const tokenType = this.userValue?.tokenType;
     if (!accessToken || !tokenType) {
@@ -70,34 +70,6 @@ export class AccountService {
       },
     });
   }
-
-  getAllActiveUsers(): any {
-    const accessToken = this.userValue?.accessToken;
-    const tokenType = this.userValue?.tokenType;
-    if (!accessToken || !tokenType) {
-      this.router.navigate(['/auth/user/signin']);
-    }
-    return this.http.get(`${environment.apiUrl}users/active`, {
-      headers: {
-        Authorization: `${tokenType} ${accessToken}`,
-      },
-    });
-  }
-
-  getAllInActiveUsers(): any {
-    const accessToken = this.userValue?.accessToken;
-    const tokenType = this.userValue?.tokenType;
-    if (!accessToken || !tokenType) {
-      this.router.navigate(['/auth/user/signin']);
-    }
-    return this.http.get(`${environment.apiUrl}users/inactive`, {
-      headers: {
-        Authorization: `${tokenType} ${accessToken}`,
-      },
-    });
-  }
-
-
 
   // getById(userId: string): Observable<UserAuthModel> {
   //   return this.http.get<UserAuthModel>(this.config.apiRoute + '/' + userId);

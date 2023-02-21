@@ -29,15 +29,13 @@ export class UserManagementComponent{
     return this.usersResponse?.value;
   }
 
-
   getAllUsers(): void {
-    this.accountService.getAllUsers().subscribe(
+    this.accountService.getUsers().subscribe(
       (response: any) => {
         this.usersResponse = new BehaviorSubject<UsersList[]>(
           response
         );
         this.users = this.usersResponse.asObservable();
-
       },
       (error: { message: string | undefined }) => {
         this.toastr.error(error?.message);
