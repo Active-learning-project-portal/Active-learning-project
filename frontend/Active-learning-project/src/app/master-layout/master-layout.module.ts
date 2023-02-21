@@ -3,15 +3,23 @@ import { CommonModule } from '@angular/common';
 
 import { MasterLayoutRoutingModule } from './master-layout-routing.module';
 import { MasterLayoutComponent } from './master-layout.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TopNavComponent } from './navigation/top-nav/top-nav.component';
+import { SideNavComponent } from './navigation/side-nav/side-nav.component';
+import { UserProfileComponent } from './navigation/top-nav/user-profile/user-profile.component';
 
 
 @NgModule({
   declarations: [
-    MasterLayoutComponent
+    MasterLayoutComponent,
+    TopNavComponent,
+    SideNavComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
-    MasterLayoutRoutingModule
+    MasterLayoutRoutingModule,
+    FontAwesomeModule
   ]
 })
 export class MasterLayoutModule { }

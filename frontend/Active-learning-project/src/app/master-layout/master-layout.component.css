@@ -1,0 +1,45 @@
+.master{
+  margin: 0;
+  padding: 0;
+}
+
+.viewwrapper{
+  background-color: rgba(0, 0, 0, 1);
+  border-radius: 0;
+}
+
+.sidebar{
+  /* width: 0; */
+  /* padding: 0; */
+  overflow: hidden;
+}
+
+.mainview{
+  background-color: rgb(238, 238, 233);
+  border-radius: 7px;
+  margin: 3px;
+  padding: 0;
+}
+
+.icon{
+  gap: .3rem;
+  padding: .4rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.icon .icon-symbol{
+  font-size: 14pt;
+}
+
+.icon .logo span{
+  font-family: 'Lobster';
+  font-size: 14pt;
+  white-space: nowrap;
+}
+
+.icon .logo span,
+.icon .icon-symbol{
+  color: rgb(238, 228, 226);
+}
