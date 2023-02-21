@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@1&family=Lobster&display=swap');
+
 :root {
   --bg-auth-color: rgb(231, 229, 229);
   --bg-auth-container-color: rgb(255, 255, 255);
   --border-auth-color: #000;
   --btn-google-color: blue;
   --btn-github-color: white;
+  --top-nav-height: 3rem;
+  --top-nav-offset: .8rem;
+  --top-nav-search-padding-left: 2rem;
+  --profile-image-size: 2rem;
 }
 
 html,

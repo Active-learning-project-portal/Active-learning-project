@@ -1,0 +1,26 @@
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.user-profile .notifications {
+  font-size: 15pt;
+}
+
+.user-profile .profile img {
+  width: var(--profile-image-size);
+  height: var(--profile-image-size);
+  pointer-events: none;
+}
+
+.user-profile .icons .icon {
+  font-size: 14pt;
+  margin-left: 0.5rem;
+}
+
+.user-profile .icons .icon:hover,
+.user-profile .profile:hover {
+  cursor: pointer;
+}
