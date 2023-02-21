@@ -20,10 +20,11 @@ import {
   APP_CONFIG,
   APP_SERVICE_CONFIG,
 } from './app-config/app-config.service';
+import { FullNamePipe } from './shared/pipes/full-name.pipe';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FullNamePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

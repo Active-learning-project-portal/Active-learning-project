@@ -5,10 +5,15 @@ import { UserManagementComponent } from './user-management/user-management.compo
 
 const routes: Routes = [
   {
-    path: 'users',
-    loadChildren: () =>
-      import('./user-management/user.module').then((m) => m.UserModule),
-  },
+    path: '',
+    component: MasterLayoutComponent,
+    children:[
+      {
+        path: "users",
+        component: UserManagementComponent,
+      }
+    ],
+  }
 ];
 
 @NgModule({

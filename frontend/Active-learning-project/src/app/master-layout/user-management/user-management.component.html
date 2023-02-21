@@ -20,6 +20,51 @@
 				</div>
 			</div>
 		</div>
-		<router-outlet></router-outlet>
+		<div class="card-body">
+			<table class="table table-responsive  table-striped">
+				<thead class="bg-dark text-white">
+					<tr>
+						<th>
+							ID</th>
+						<th>
+							NAME</th>
+						<th>
+							EMAIL</th>
+						<th>
+							COURSE</th>
+						<th>
+							JOINED</th>
+						<th>
+							LAST SEEN</th>
+						<th>
+							ROLES</th>
+						<th>
+							PROVIDER</th>
+						<th>
+							ACTIONS</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let user of usersList">
+						<td>{{user.id}}</td>
+						<td>{{user.lastname}} {{user.firstname}}</td>
+						<td>{{user.username}}</td>
+						<td>{{user.course?.name}}</td>
+						<td>{{user.joined | date:'mediumDate'}}</td>
+						<td>{{user.lastSeen | date:'mediumDate'}}</td>
+						<td>
+							<span *ngFor="let role of user.roles">
+								{{role.name | removeRoleAndUnderScore}}
+								<br>
+							</span>
+						</td>
+						<td>{{user.provider}}</td>
+						<td>
+							<alp-modal [user]="user"></alp-modal>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
