@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { UserAuthResponseModel } from 'src/app/models/payloads/response/user.auth.response.model';
 import { environment } from 'src/environments/environment';
+import { Pagination } from '../../shared/models/pagination.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -58,17 +59,50 @@ export class AccountService {
     return this.http.post(`${environment.apiUrl}auth/signup`, user);
   }
 
-  getUsers(): any {
+  getUsers(pagination: Pagination): any {
     const accessToken = this.userValue?.accessToken;
     const tokenType = this.userValue?.tokenType;
     if (!accessToken || !tokenType) {
       this.router.navigate(['/auth/user/signin']);
     }
-    return this.http.get(`${environment.apiUrl}users`, {
+
+    const pageUrl = this.populateRequestUrl(pagination);
+    console.log(pageUrl);
+
+    return this.http.get(`${environment.apiUrl}users?${pageUrl}`, {
       headers: {
         Authorization: `${tokenType} ${accessToken}`,
       },
     });
+  }
+
+  populateRequestUrl(pagination: Pagination): string {
+    let requestUrl = '';
+    if (pagination.pageNo) {
+      requestUrl += `pageNo=${pagination.pageNo}`;
+    }
+    if (pagination.pageSize) {
+      if (requestUrl.length > 0) {
+        requestUrl += `&pageSize=${pagination.pageSize}`;
+      } else {
+        requestUrl += `pageSize=${pagination.pageSize}`;
+      }
+    }
+    if (pagination['sortBy']) {
+      if (requestUrl.length > 0) {
+        requestUrl += `&sortBy=${pagination.sortBy}`;
+      } else {
+        requestUrl += `sortBy=${pagination.sortBy}`;
+      }
+    }
+    if (pagination.sortDir) {
+      if (requestUrl.length > 0) {
+        requestUrl += `&sortDir=${pagination.sortDir}`;
+      } else {
+        requestUrl += `sortDir=${pagination.sortDir}`;
+      }
+    }
+    return requestUrl;
   }
 
   // getById(userId: string): Observable<UserAuthModel> {

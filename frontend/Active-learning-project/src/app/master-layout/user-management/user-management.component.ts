@@ -3,16 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { UsersList } from 'src/app/shared/models/user-list.interface';
 import { AccountService } from 'src/app/user-authentication/services/account.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-
+import { Pagination } from '../../shared/models/pagination.interface';
 
 @Component({
   selector: 'alp-user-management',
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css'],
 })
-export class UserManagementComponent{
-
-
+export class UserManagementComponent {
   usersResponse!: BehaviorSubject<UsersList[]>;
   users!: Observable<UsersList[]>;
 
@@ -30,11 +28,15 @@ export class UserManagementComponent{
   }
 
   getAllUsers(): void {
-    this.accountService.getUsers().subscribe(
+    const pagination: Pagination = {
+      pageNo: '1',
+      pageSize: '3',
+      sortBy: 'lastname',
+      sortDir: 'DESC',
+    };
+    this.accountService.getUsers(pagination).subscribe(
       (response: any) => {
-        this.usersResponse = new BehaviorSubject<UsersList[]>(
-          response
-        );
+        this.usersResponse = new BehaviorSubject<UsersList[]>(response);
         this.users = this.usersResponse.asObservable();
       },
       (error: { message: string | undefined }) => {

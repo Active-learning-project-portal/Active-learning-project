@@ -10,6 +10,7 @@ import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth
 import { AccountService } from '../services/account.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'alp-signin',
   templateUrl: './signin.component.html',
@@ -101,7 +102,8 @@ export class SignInComponent implements OnInit {
 
         //Save new user
         localStorage.setItem("user",stringifyUser);
-        // this.router.navigate(["/app"])
+        this.router.navigateByUrl("../hhbfgdbf/")
+        console.log(this.router);
       },
       (error) => {
         this.toastr.error(error?.message);

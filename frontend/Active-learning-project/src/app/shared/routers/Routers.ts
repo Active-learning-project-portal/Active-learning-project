@@ -11,8 +11,11 @@ const auth = {
 }
 
 // App routing flow
-const app = {
-    rootPath: 'app',
+const master = {
+    rootPath: 'master',
+    action: {
+        users: 'users',
+    }
 }
 
-export { auth, app }
+export { auth, master }
