@@ -1,28 +1,28 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { UserAuthResponseModel } from 'src/app/models/payloads/response/user.auth.response.model';
 import { environment } from 'src/environments/environment';
+import { Pagination } from '../../shared/models/pagination.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
   [x: string]: any;
-  private userSubject!: BehaviorSubject<UserAuthRequestModel>;
-  public users!: Observable<UserAuthRequestModel>;
+  private userSubject!: BehaviorSubject<UserAuthResponseModel>;
+  public users!: Observable<UserAuthResponseModel>;
 
   constructor(private router: Router, private http: HttpClient) {
-
-    this.userSubject = new BehaviorSubject<UserAuthRequestModel>(
+    this.userSubject = new BehaviorSubject<UserAuthResponseModel>(
       JSON.parse(localStorage.getItem('user')!)
     );
     this.users = this.userSubject.asObservable();
   }
 
-  public get userValue(): UserAuthRequestModel {
+  public get userValue(): UserAuthResponseModel {
     return this.userSubject.value;
   }
 
@@ -33,21 +33,21 @@ export class AccountService {
     );
   }
 
-//   login(email: string, password: string) {
-//     return this.http
-//       .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
-//         email,
-//         password,
-//       })
-//       .pipe(
-//         map((user) => {
-//           // store user details and jwt token in local storage to keep user logged in between page refreshes
-//           localStorage.setItem('user', JSON.stringify(user));
-//           this.userSubject.next(user);
-//           return user;
-//         })
-//       );
-//   }
+  //   login(email: string, password: string) {
+  //     return this.http
+  //       .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
+  //         email,
+  //         password,
+  //       })
+  //       .pipe(
+  //         map((user) => {
+  //           // store user details and jwt token in local storage to keep user logged in between page refreshes
+  //           localStorage.setItem('user', JSON.stringify(user));
+  //           this.userSubject.next(user);
+  //           return user;
+  //         })
+  //       );
+  //   }
 
   // logout() {
   //   localStorage.removeItem('user');
@@ -59,9 +59,51 @@ export class AccountService {
     return this.http.post(`${environment.apiUrl}auth/signup`, user);
   }
 
-  // getAllUser(): Observable<UserAuthModel[]> {
-  //   return this.http.get<UserAuthModel[]>(`${this.config.apiRoute}`);
-  // }
+  getUsers(pagination: Pagination): any {
+    const accessToken = this.userValue?.accessToken;
+    const tokenType = this.userValue?.tokenType;
+    if (!accessToken || !tokenType) {
+      this.router.navigate(['/auth/user/signin']);
+    }
+
+    const pageUrl = this.populateRequestUrl(pagination);
+    console.log(pageUrl);
+
+    return this.http.get(`${environment.apiUrl}users?${pageUrl}`, {
+      headers: {
+        Authorization: `${tokenType} ${accessToken}`,
+      },
+    });
+  }
+
+  populateRequestUrl(pagination: Pagination): string {
+    let requestUrl = '';
+    if (pagination.pageNo) {
+      requestUrl += `pageNo=${pagination.pageNo}`;
+    }
+    if (pagination.pageSize) {
+      if (requestUrl.length > 0) {
+        requestUrl += `&pageSize=${pagination.pageSize}`;
+      } else {
+        requestUrl += `pageSize=${pagination.pageSize}`;
+      }
+    }
+    if (pagination['sortBy']) {
+      if (requestUrl.length > 0) {
+        requestUrl += `&sortBy=${pagination.sortBy}`;
+      } else {
+        requestUrl += `sortBy=${pagination.sortBy}`;
+      }
+    }
+    if (pagination.sortDir) {
+      if (requestUrl.length > 0) {
+        requestUrl += `&sortDir=${pagination.sortDir}`;
+      } else {
+        requestUrl += `sortDir=${pagination.sortDir}`;
+      }
+    }
+    return requestUrl;
+  }
 
   // getById(userId: string): Observable<UserAuthModel> {
   //   return this.http.get<UserAuthModel>(this.config.apiRoute + '/' + userId);

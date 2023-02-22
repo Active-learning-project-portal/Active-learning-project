@@ -7,14 +7,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TopNavComponent } from './navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 import { UserProfileComponent } from './navigation/top-nav/user-profile/user-profile.component';
+import { RemoveRoleAndUnderScorePipe } from '../shared/pipes/remove-role-and-under-score.pipe';
+import { ModalComponent } from './user-management/modal/modal.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 
 @NgModule({
   declarations: [
     MasterLayoutComponent,
+    UserProfileComponent,
+    UserManagementComponent,
+    ModalComponent,
+    RemoveRoleAndUnderScorePipe,
     TopNavComponent,
     SideNavComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -22,4 +29,4 @@ import { UserProfileComponent } from './navigation/top-nav/user-profile/user-pro
     FontAwesomeModule
   ]
 })
-export class MasterLayoutModule { }
+export class MasterLayoutModule {}

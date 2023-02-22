@@ -10,5 +10,11 @@
     "target": "https://api.github.com",
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/api/*": {
+    "secure": false,
+    "target": "http://localhost:8080",
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

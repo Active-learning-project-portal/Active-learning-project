@@ -10,6 +10,7 @@ import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth
 import { AccountService } from '../services/account.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'alp-signin',
   templateUrl: './signin.component.html',
@@ -94,13 +95,18 @@ export class SignInComponent implements OnInit {
 
     this.accountService.authenticateUser(authModel).subscribe(
       (userAuth) => {
-        console.log("I am user auth");
-        console.log(userAuth)
         this.toastr.success(`Successful login`);
-        this.router.navigate(["/app"])
+        const stringifyUser = JSON.stringify(userAuth);
+        //Remove old user if exist
+        localStorage.removeItem("user");
+
+        //Save new user
+        localStorage.setItem("user",stringifyUser);
+        this.router.navigateByUrl("../hhbfgdbf/")
+        console.log(this.router);
       },
       (error) => {
-        this.toastr.error(error?.message, error?.title);
+        this.toastr.error(error?.message);
       }
     );
   }

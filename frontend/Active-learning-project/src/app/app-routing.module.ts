@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { app, auth } from './shared/routers/Routers';
+import { master, auth } from './shared/routers/Routers';
 
 const routes: Routes = [
   {
     path: auth.rootPath,
     loadChildren: () =>
-      import('./user-authentication/account.module').then((m) => m.AccountModule),
+      import('./user-authentication/account.module').then(
+        (m) => m.AccountModule
+      ),
   },
   {
-    path: app.rootPath,
-    loadChildren: () => import("./master-layout/master-layout.module").then(m => m.MasterLayoutModule)
+    path: master.rootPath,
+    loadChildren: () =>
+      import('./master-layout/master-layout.module').then(
+        (m) => m.MasterLayoutModule
+      ),
   },
   {
     path: '**',

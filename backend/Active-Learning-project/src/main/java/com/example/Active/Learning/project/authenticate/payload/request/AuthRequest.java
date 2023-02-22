@@ -1,19 +1,14 @@
-package com.example.Active.Learning.project.account.payload.request;
+package com.example.Active.Learning.project.authenticate.payload.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * SignInRequest
- */
 @Setter
 @Getter
-public class SignInRequest {
+public class AuthRequest {
     @NotBlank
     private String username;
     @NotBlank
     private String password;
-    private String provider;
-    private String authType;
 }

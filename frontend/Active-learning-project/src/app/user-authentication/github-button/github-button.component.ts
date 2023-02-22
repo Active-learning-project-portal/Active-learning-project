@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import queryString from 'query-string';
@@ -12,6 +12,7 @@ import { GithubRequestService } from '../services/github-request.service';
   selector: 'alp-github-button',
   templateUrl: './github-button.component.html',
   styleUrls: ['./github-button.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GithubButtonComponent {
   githubLoginUrl!: string;
