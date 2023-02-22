@@ -14,7 +14,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { SigninAuthService } from './shared/helpers/signin-auth.service';
-import { AccountService } from './user-authentication/services/account.service';
+import { AuthenticateService } from './user-authentication/services/authenticate.service';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
 import {
   APP_CONFIG,
@@ -72,7 +72,7 @@ import { FullNamePipe } from './shared/pipes/full-name.pipe';
         },
       },
     },
-    AccountService,
+    AuthenticateService,
   ],
   bootstrap: [AppComponent],
 })

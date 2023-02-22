@@ -5,5 +5,5 @@ export interface UserAuthResponseModel {
   lastname:string;
   roles: [];
   tokenType: string;
-  accessToken: string;
+  token: string;
 }

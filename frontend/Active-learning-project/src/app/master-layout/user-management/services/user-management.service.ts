@@ -5,12 +5,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { UserAuthResponseModel } from 'src/app/models/payloads/response/user.auth.response.model';
 import { environment } from 'src/environments/environment';
-import { Pagination } from '../../shared/models/pagination.interface';
+import { Pagination } from 'src/app/shared/models/pagination.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AccountService {
+export class UserManagementService {
   [x: string]: any;
   private userSubject!: BehaviorSubject<UserAuthResponseModel>;
   public users!: Observable<UserAuthResponseModel>;
@@ -24,13 +24,6 @@ export class AccountService {
 
   public get userValue(): UserAuthResponseModel {
     return this.userSubject.value;
-  }
-
-  authenticateUser(user: UserAuthRequestModel) {
-    return this.http.post<UserAuthResponseModel>(
-      `${environment.apiUrl}auth/signin`,
-      user
-    );
   }
 
   //   login(email: string, password: string) {
@@ -60,7 +53,7 @@ export class AccountService {
   }
 
   getUsers(pagination: Pagination): any {
-    const accessToken = this.userValue?.accessToken;
+    const accessToken = this.userValue?.token;
     const tokenType = this.userValue?.tokenType;
     if (!accessToken || !tokenType) {
       this.router.navigate(['/auth/user/signin']);

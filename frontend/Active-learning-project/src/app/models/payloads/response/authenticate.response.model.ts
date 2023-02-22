@@ -1,4 +1,4 @@
-export interface AuthentivateResponse {
+export interface AuthenticateResponse {
     token: string,
     tokenType?: string,
   }

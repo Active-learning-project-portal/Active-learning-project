@@ -7,8 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
-import { AccountService } from '../services/account.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticateService } from '../services/authenticate.service';
+import { AuthenticateRequest } from 'src/app/models/payloads/requests/authenticate.request.model';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService,
+    private authenticateService: AuthenticateService,
     private toastr: ToastrService
   ) {}
 
@@ -86,14 +87,12 @@ export class SignInComponent implements OnInit {
 
     // If form is valid
     // Build the auth model
-    const authModel: UserAuthRequestModel = {
-      authType: 'signin',
-      provider: 'MANUAL',
+    const authModel: AuthenticateRequest = {
       username: this.getFormControl('email').value,
       password: this.getFormControl('password').value,
     };
 
-    this.accountService.authenticateUser(authModel).subscribe(
+    this.authenticateService.authenticate(authModel).subscribe(
       (userAuth) => {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);

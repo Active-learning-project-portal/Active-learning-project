@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
-import { AccountService } from '../services/account.service';
+import { AuthenticateService } from '../services/authenticate.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class GoogleButtonComponent {
 	btnType!: "signin" | "signup";
 
 	constructor(
-		private accountService: AccountService,
+		private authenticateService: AuthenticateService,
 		private googleAuth: SocialAuthService,
 		private toastr: ToastrService) { }
 
@@ -43,7 +43,7 @@ export class GoogleButtonComponent {
 				};
 
 				// Making a post request
-				this.accountService.authenticateUser(this.authModel)
+				this.authenticateService.authenticate(this.authModel)
 					.subscribe((response: any) => {
 						observer.next(response)
 					})

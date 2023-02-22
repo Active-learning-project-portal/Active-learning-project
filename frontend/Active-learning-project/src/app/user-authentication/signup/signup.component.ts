@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { AccountService } from '../services/account.service';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { AuthenticateService } from '../services/authenticate.service';
 
 @Component({
   selector: 'alp-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  providers:[AccountService]
+  providers:[AuthenticateService]
 })
 export class SignupComponent implements OnInit {
   loginForm!: FormGroup;
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private googleAuth: SocialAuthService,
-    private accountService: AccountService,
+    private authenticateService: AuthenticateService,
     private toastrService: ToastrService
   ) {}
 
@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit {
     };
 
     this.loading = true;
-    this.accountService.save(authModel).subscribe(
+    this.authenticateService.save(authModel).subscribe(
       (data) => {
         console.log('Registration successfully' + data);
         this.toastrService.success('Registration successfully');

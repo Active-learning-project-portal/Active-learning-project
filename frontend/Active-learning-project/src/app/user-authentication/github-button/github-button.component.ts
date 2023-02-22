@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { Observable, Observer } from 'rxjs';
 import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { auth } from 'src/app/shared/routers/Routers';
-import { AccountService } from '../services/account.service';
+import { AuthenticateService } from '../services/authenticate.service';
 import { GithubRequestService } from '../services/github-request.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class GithubButtonComponent {
     private config: GithubRequestService,
     private router: Router,
     private toastr: ToastrService,
-    private accountService: AccountService
+    private authenticateService: AuthenticateService
   ) {
     this.gitAccessCodeObserver = new Observable(
       (observer: Observer<string | null>) => {
@@ -119,7 +119,7 @@ export class GithubButtonComponent {
             this.gitUserEmails,
             this.btnType
           );
-        this.accountService.authenticateUser(gitAuthModel);
+        this.authenticateService.authenticate(gitAuthModel);
       }
     });
   }
