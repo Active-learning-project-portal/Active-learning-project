@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserRequest} from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { UserResponse } from 'src/app/models/payloads/response/user.auth.response.model';
 import { environment } from 'src/environments/environment';
 import { Pagination } from 'src/app/shared/models/pagination.interface';
@@ -44,7 +44,7 @@ export class UserManagementService {
 
   logout() {
     localStorage.removeItem('user');
-     this.router.navigate(['/auth/user/signin']);
+    this.router.navigate(['/auth/user/signin']);
   }
 
   save(user: UserRequest) {
@@ -58,7 +58,7 @@ export class UserManagementService {
       this.router.navigate(['/auth/user/signup']);
     }
 
-    const pageUrl = this.populateRequestUrl(pagination);
+    const pageUrl = this.getRequestUrl(pagination);
     console.log(pageUrl);
 
     return this.http.get(`${environment.apiUrl}users?${pageUrl}`, {
@@ -68,33 +68,39 @@ export class UserManagementService {
     });
   }
 
-  populateRequestUrl(pagination: Pagination): string {
-    let requestUrl = '';
+  addPageNo(pagination: Pagination): String[] {
+    const paramsList = [];
     if (pagination.pageNo) {
-      requestUrl += `pageNo=${pagination.pageNo}`;
+      paramsList.push(`pageNo=${pagination.pageNo}`);
     }
+    return paramsList;
+  }
+
+  addPageSize(pagination: Pagination): String[] {
+    const paramsList = this.addPageNo(pagination);
     if (pagination.pageSize) {
-      if (requestUrl.length > 0) {
-        requestUrl += `&pageSize=${pagination.pageSize}`;
-      } else {
-        requestUrl += `pageSize=${pagination.pageSize}`;
-      }
+      paramsList.push(`pageSize=${pagination.pageSize}`);
     }
-    if (pagination['sortBy']) {
-      if (requestUrl.length > 0) {
-        requestUrl += `&sortBy=${pagination.sortBy}`;
-      } else {
-        requestUrl += `sortBy=${pagination.sortBy}`;
-      }
+    return paramsList;
+  }
+
+  addSortBy(pagination: Pagination): String[] {
+    const paramsList = this.addPageSize(pagination);
+    if (pagination.sortBy) {
+      paramsList.push(`sortBy=${pagination.sortBy}`);
     }
-    if (pagination.sortDir) {
-      if (requestUrl.length > 0) {
-        requestUrl += `&sortDir=${pagination.sortDir}`;
-      } else {
-        requestUrl += `sortDir=${pagination.sortDir}`;
-      }
+    return paramsList;
+  }
+  addSortDirection(pagination: Pagination): String[] {
+    const paramsList = this.addSortBy(pagination);
+    if (pagination.sortBy) {
+      paramsList.push(`sortDir=${pagination.sortDir}`);
     }
-    return requestUrl;
+    return paramsList;
+  }
+
+  getRequestUrl(pagination: Pagination): string {
+    return this.addSortDirection(pagination).join('&');
   }
 
   // getById(userId: string): Observable<UserAuthModel> {
