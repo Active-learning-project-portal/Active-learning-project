@@ -1,5 +1,4 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#3399ff",
         "activityBar.background": "#3399ff",
