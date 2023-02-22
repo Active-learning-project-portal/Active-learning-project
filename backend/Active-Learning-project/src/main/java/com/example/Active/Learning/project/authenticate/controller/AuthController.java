@@ -1,9 +1,10 @@
-package com.example.Active.Learning.project.account.controller;
+package com.example.Active.Learning.project.authenticate.controller;
 
 
-import com.example.Active.Learning.project.account.payload.request.SignInRequest;
+import com.example.Active.Learning.project.authenticate.payload.request.AuthRequest;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import com.example.Active.Learning.project.account.service.UserServiceImpl;
+import com.example.Active.Learning.project.authenticate.services.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,15 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private AuthenticationServiceImpl authenticationService;
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody SignInRequest signInRequest) {
-        return userService.authenticateUser(signInRequest);
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
-        return userService.createUser(signUpRequest);
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> authenticate(@RequestBody AuthRequest signInRequest) {
+        return authenticationService.authenticate(signInRequest);
     }
 }

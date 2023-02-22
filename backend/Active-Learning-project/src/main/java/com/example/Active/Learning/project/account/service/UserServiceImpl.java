@@ -7,17 +7,14 @@ import com.example.Active.Learning.project.account.exceptions.RoleNotFoundExcept
 import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegisteredException;
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.interfaces.UserService;
+import com.example.Active.Learning.project.account.interfaces.IUserService;
 import com.example.Active.Learning.project.account.models.*;
-import com.example.Active.Learning.project.account.payload.request.SignInRequest;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
-import com.example.Active.Learning.project.account.payload.response.JwtResponse;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.repositories.CourseRepository;
 import com.example.Active.Learning.project.account.repositories.RoleRepository;
 import com.example.Active.Learning.project.account.repositories.UserRepository;
-import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
-import com.example.Active.Learning.project.account.security.services.UserDetailsImpl;
+import com.example.Active.Learning.project.authenticate.security.jwt.JwtUtils;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +27,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +34,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
     @Autowired
     PasswordEncoder encoder;
@@ -55,11 +50,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     CourseRepository courseRepository;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtUtils jwtUtils;
 
     @Override
     public ResponseEntity<?> createUser(@NonNull SignUpRequest signUpRequest) {
@@ -105,45 +95,6 @@ public class UserServiceImpl implements UserService {
     public Course addCourse() {
         return courseRepository.findByName(DefaultValues.DEFAULT_COURSE.getName())
                 .orElseThrow(() -> new CourseNotFoundException(MessageResponse.COURSE_NOT_FOUND));
-    }
-
-    public Authentication getAuthentication(String username, String password) {
-        Authentication authentication;
-        try {
-            authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username,
-                            password));
-        } catch (AuthenticationException error) {
-            return null;
-        }
-        return authentication;
-    }
-
-    @Override
-    public ResponseEntity<?> authenticateUser(@NonNull SignInRequest signInRequest) {
-
-        Authentication authentication = getAuthentication(signInRequest.getUsername(), signInRequest.getPassword());
-
-        if (authentication == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-        }
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                roles));
     }
 
     @Override

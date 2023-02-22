@@ -40,12 +40,6 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-//    @GetMapping("/{username}")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
-//    public ResponseEntity<Optional<User>> getUserByUsername(@RequestBody String username) {
-//        return userService.getUserByUsername(username);
-//    }
-
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
     public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody User user) {

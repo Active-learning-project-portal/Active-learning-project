@@ -1,9 +1,8 @@
-package com.example.Active.Learning.project.account.security.jwt;
+package com.example.Active.Learning.project.authenticate.security.jwt;
 
 import java.util.Date;
 
-import com.example.Active.Learning.project.account.security.services.UserDetailsImpl;
-import io.jsonwebtoken.security.Keys;
+import com.example.Active.Learning.project.authenticate.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
-
-import javax.crypto.SecretKey;
 
 @Component
 public class JwtUtils {
