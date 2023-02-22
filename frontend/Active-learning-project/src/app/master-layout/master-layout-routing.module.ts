@@ -10,12 +10,30 @@ const routes: Routes = [
     component: MasterLayoutComponent,
     children:[
       {
-        path: `${master.rootPath}/${master.action.users}`,
+        path: master.action.users,
         component: UserManagementComponent,
       }
     ],
   }
 ];
+
+// path: auth.person,
+//     component: AccountComponent,
+//     children: [
+//       {
+//         path: auth.action.signin,
+//         component: SignInComponent,
+//       },
+//       {
+//         path: auth.action.signup,
+//         component: SignupComponent,
+//       },
+//       {
+//         path: '**',
+//         redirectTo: auth.action.signin,
+//         pathMatch: 'full'
+//       }
+//     ],
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
