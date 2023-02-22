@@ -10,6 +10,7 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 import { UserProfileComponent } from './navigation/top-nav/user-profile/user-profile.component';
 
 
+
 @NgModule({
   declarations: [
     MasterLayoutComponent,
@@ -24,7 +25,8 @@ import { UserProfileComponent } from './navigation/top-nav/user-profile/user-pro
   ],
   imports: [
     CommonModule,
-    MasterLayoutRoutingModule
+    MasterLayoutRoutingModule,
+    FontAwesomeModule
   ]
 })
 export class MasterLayoutModule {}
