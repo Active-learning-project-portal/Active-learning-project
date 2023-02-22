@@ -97,12 +97,11 @@ export class SignInComponent implements OnInit {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         //Remove old user if exist
-        localStorage.removeItem("user");
-
+        // localStorage.removeItem("user");
         //Save new user
         localStorage.setItem("user",stringifyUser);
         this.router.navigateByUrl("../hhbfgdbf/")
-        console.log(this.router);
+
       },
       (error) => {
         this.toastr.error(error?.message);

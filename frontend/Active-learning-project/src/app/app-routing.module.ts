@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { master, auth } from './shared/routers/Routers';
+import { alp, auth } from './shared/routers/Routers';
 
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: master.rootPath,
+    path: alp.rootPath,
     loadChildren: () =>
       import('./master-layout/master-layout.module').then(
         (m) => m.MasterLayoutModule

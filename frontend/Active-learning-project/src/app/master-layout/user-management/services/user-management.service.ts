@@ -56,7 +56,7 @@ export class UserManagementService {
     const accessToken = this.userValue?.token;
     const tokenType = this.userValue?.tokenType;
     if (!accessToken || !tokenType) {
-      this.router.navigate(['/auth/user/signin']);
+      this.router.navigate(['/auth/user/signup']);
     }
 
     const pageUrl = this.populateRequestUrl(pagination);
