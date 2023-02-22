@@ -2,7 +2,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { AuthenticateService } from '../services/authenticate.service';
 
 
@@ -14,7 +14,7 @@ import { AuthenticateService } from '../services/authenticate.service';
 })
 export class GoogleButtonComponent {
 	signContext!: "signin" | "signup";
-	authModel!: UserAuthRequestModel;
+	userModel!: UserRequest;
 
 	@Input()
 	btnType!: "signin" | "signup";
@@ -32,7 +32,7 @@ export class GoogleButtonComponent {
 					return this.toastr.error("User login error", "Google Auth");
 				}
 
-				this.authModel = {
+				this.userModel = {
 					firstname: user.firstName,
 					lastname: user.lastName,
 					username: user.email,
@@ -43,7 +43,7 @@ export class GoogleButtonComponent {
 				};
 
 				// Making a post request
-				this.authenticateService.authenticate(this.authModel)
+				this.authenticateService.authenticate(this.userModel)
 					.subscribe((response: any) => {
 						observer.next(response)
 					})

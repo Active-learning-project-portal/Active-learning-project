@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { environment } from 'src/environments/environment';
 import { Pagination } from '../../shared/models/pagination.interface';
 import { AuthenticateResponse } from 'src/app/models/payloads/response/authenticate.response.model';
@@ -34,7 +34,7 @@ export class AuthenticateService {
     );
   }
 
-  save(user: UserAuthRequestModel) {
+  save(user: UserRequest) {
     return this.http.post(`${environment.apiUrl}auth/signup`, user);
   }
 

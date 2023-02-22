@@ -6,7 +6,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AuthenticateRequest } from 'src/app/models/payloads/requests/authenticate.request.model';

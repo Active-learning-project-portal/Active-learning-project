@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import queryString from 'query-string';
 import { Observable, Observer } from 'rxjs';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -86,7 +86,7 @@ export class GithubRequestService {
     userProfile: any,
     userMails: Array<Object>,
     authType: 'signin' | 'signup'
-  ): UserAuthRequestModel {
+  ): UserRequest {
     return {
       firstname: this.getFirstName(userProfile.name),
       lastname: this.getLastName(userProfile.name),

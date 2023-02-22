@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { AuthenticateService } from '../services/authenticate.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class SignupComponent implements OnInit {
 
  
 
-    const authModel: UserAuthRequestModel = {
+    const authModel: UserRequest = {
       firstname: this.controls['firstName'].value,
       lastname: this.controls['lastName'].value,
       authType: 'signin',

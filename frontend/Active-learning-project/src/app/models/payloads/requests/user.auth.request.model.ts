@@ -1,4 +1,4 @@
-export interface UserAuthRequestModel {
+export interface UserRequest {
   firstname?: string,
   lastname?: string,
   avatar?: string | null,

@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
-import { UserAuthResponseModel } from 'src/app/models/payloads/response/user.auth.response.model';
+import { UserRequest} from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserResponse } from 'src/app/models/payloads/response/user.auth.response.model';
 import { environment } from 'src/environments/environment';
 import { Pagination } from 'src/app/shared/models/pagination.interface';
 
@@ -12,17 +12,17 @@ import { Pagination } from 'src/app/shared/models/pagination.interface';
 })
 export class UserManagementService {
   [x: string]: any;
-  private userSubject!: BehaviorSubject<UserAuthResponseModel>;
-  public users!: Observable<UserAuthResponseModel>;
+  private userSubject!: BehaviorSubject<UserResponse>;
+  public users!: Observable<UserResponse>;
 
   constructor(private router: Router, private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<UserAuthResponseModel>(
+    this.userSubject = new BehaviorSubject<UserResponse>(
       JSON.parse(localStorage.getItem('user')!)
     );
     this.users = this.userSubject.asObservable();
   }
 
-  public get userValue(): UserAuthResponseModel {
+  public get userValue(): UserResponse {
     return this.userSubject.value;
   }
 
@@ -42,13 +42,12 @@ export class UserManagementService {
   //       );
   //   }
 
-  // logout() {
-  //   localStorage.removeItem('user');
-  //   // this.userSubject.next(null);
-  //   this.router.navigate(['/account/login']);
-  // }
+  logout() {
+    localStorage.removeItem('user');
+     this.router.navigate(['/auth/user/signin']);
+  }
 
-  save(user: UserAuthRequestModel) {
+  save(user: UserRequest) {
     return this.http.post(`${environment.apiUrl}auth/signup`, user);
   }
 

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import queryString from 'query-string';
 import { Observable, Observer } from 'rxjs';
-import { UserAuthRequestModel } from 'src/app/models/payloads/requests/user.auth.request.model';
+import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { auth } from 'src/app/shared/routers/Routers';
 import { AuthenticateService } from '../services/authenticate.service';
 import { GithubRequestService } from '../services/github-request.service';
@@ -113,7 +113,7 @@ export class GithubButtonComponent {
       // Check if both objects are set create an authModel
       // for a git signup/signin
       if (this.gitUserData! && this.gitUserEmails!) {
-        const gitAuthModel: UserAuthRequestModel =
+        const gitAuthModel: UserRequest =
           this.config.transformUserDataToModel(
             this.gitUserData,
             this.gitUserEmails,
