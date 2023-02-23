@@ -10,6 +10,7 @@ import com.example.Active.Learning.project.account.exceptions.UserNotFoundExcept
 import com.example.Active.Learning.project.account.interfaces.IUserService;
 import com.example.Active.Learning.project.account.models.*;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
+import com.example.Active.Learning.project.account.payload.response.Message;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.repositories.CourseRepository;
 import com.example.Active.Learning.project.account.repositories.RoleRepository;
@@ -17,6 +18,7 @@ import com.example.Active.Learning.project.account.repositories.UserRepository;
 import com.example.Active.Learning.project.authenticate.security.jwt.JwtUtils;
 
 import lombok.NonNull;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -81,7 +83,8 @@ public class UserServiceImpl implements IUserService {
                     .badRequest()
                     .body(e.getMessage());
         }
-        return ResponseEntity.ok(MessageResponse.USER_CREATED_SUCCESSFULLY);
+
+        return (ResponseEntity<?>) ResponseEntity.ok();
     }
 
     public Set<Role> addRoles() {
@@ -101,7 +104,7 @@ public class UserServiceImpl implements IUserService {
     public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(pageNo,pageSize,sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<User> users = userRepository.findAll(pageable);
         return ResponseEntity.ok(users.stream().toList());
     }

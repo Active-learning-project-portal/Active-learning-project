@@ -3,6 +3,7 @@ package com.example.Active.Learning.project.account.controller;
 
 import com.example.Active.Learning.project.account.constants.DefaultValues;
 import com.example.Active.Learning.project.account.models.User;
+import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import com.example.Active.Learning.project.account.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,11 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER')")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> create(@RequestBody SignUpRequest user) {
+        return userService.createUser(user);
     }
 
     @PutMapping("/{id}")

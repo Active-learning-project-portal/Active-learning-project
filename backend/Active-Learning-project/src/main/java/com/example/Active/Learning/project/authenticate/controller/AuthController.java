@@ -23,7 +23,7 @@ public class AuthController {
     private AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest signInRequest) {
-        return authenticationService.authenticate(signInRequest);
+    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) {
+        return authenticationService.authenticate(authRequest);
     }
 }

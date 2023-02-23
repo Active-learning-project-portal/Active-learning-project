@@ -23,7 +23,6 @@ export class SignInComponent implements OnInit {
   isBtnLocked: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authenticateService: AuthenticateService,
     private toastr: ToastrService
@@ -48,7 +47,28 @@ export class SignInComponent implements OnInit {
         this.lockButton(false);
       }
     });
+
+    this.goPlaces();
   }
+
+  goPlaces() {
+    this.router
+      .navigate(['../'])
+      .then(
+        (nav) => {
+          console.log(nav); // true if navigation is successful
+        },
+        (err) => {
+          console.log(err); // when there's an error
+        }
+      )
+      .catch((err) => {
+        console.log('I am an error');
+        console.log(err);
+      });
+    console.log(this.router);
+  }
+
 
   getFormControl(name: string): AbstractControl {
     return this.loginForm.controls[name];
@@ -77,6 +97,7 @@ export class SignInComponent implements OnInit {
     this.lockButton(true);
   }
 
+ 
   onSubmit() {
     this.loginForm.markAllAsTouched();
 
@@ -95,7 +116,8 @@ export class SignInComponent implements OnInit {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);
-        this.router.navigate(['/auth/user/signup']);
+        // this.router.navigate(['/auth/user/signup']);
+
       },
       (error) => {
         this.toastr.error(error?.message);

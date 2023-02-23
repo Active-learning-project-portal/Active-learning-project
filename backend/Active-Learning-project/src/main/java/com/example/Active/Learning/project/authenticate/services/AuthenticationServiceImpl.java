@@ -37,9 +37,9 @@ public class AuthenticationServiceImpl implements IAuthentication {
 
 
     @Override
-    public ResponseEntity<?> authenticate(@NonNull AuthRequest signInRequest) {
+    public ResponseEntity<?> authenticate(@NonNull AuthRequest authRequest) {
 
-        Authentication authentication = getAuthentication(signInRequest.getUsername(), signInRequest.getPassword());
+        Authentication authentication = getAuthentication(authRequest.getUsername(), authRequest.getPassword());
 
         if (authentication == null) {
             return ResponseEntity
