@@ -48,7 +48,7 @@ export class UserManagementService {
   }
 
   save(user: UserRequest) {
-    return this.http.post(`${environment.apiUrl}auth/signup`, user);
+    return this.http.post(`${environment.apiUrl}users/signup`, user);
   }
 
   getUsers(pagination: Pagination): any {

@@ -30,6 +30,8 @@ export class ErrorsInterceptor implements HttpInterceptor {
             };
           }
         } else {
+          console.log("Error");
+          console.log(error)
           switch (error.status) {
             case ServerErrors.BAD_REQUEST:
             case ServerErrors.NOT_FOUND:

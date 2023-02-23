@@ -10,7 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AuthenticateRequest } from 'src/app/models/payloads/requests/authenticate.request.model';
 
-
 @Component({
   selector: 'alp-signin',
   templateUrl: './signin.component.html',
@@ -95,12 +94,8 @@ export class SignInComponent implements OnInit {
       (userAuth) => {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
-        //Remove old user if exist
-        // localStorage.removeItem("user");
-        //Save new user
-        localStorage.setItem("user",stringifyUser);
-        this.router.navigateByUrl("../hhbfgdbf/")
-
+        localStorage.setItem('user', stringifyUser);
+        this.router.navigate(['/auth/user/signup']);
       },
       (error) => {
         this.toastr.error(error?.message);
