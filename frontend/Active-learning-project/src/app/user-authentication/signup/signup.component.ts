@@ -5,7 +5,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { AuthenticateService } from '../services/authenticate.service';
-import { UserManagementService } from '../../master-layout/user-management/services/user-management.service';
 
 @Component({
   selector: 'alp-signup',
@@ -23,7 +22,7 @@ export class SignupComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private googleAuth: SocialAuthService,
-    private usermanagementService: UserManagementService,
+    private authenticateService: AuthenticateService,
     private toastrService: ToastrService
   ) {}
 
@@ -48,6 +47,8 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+ 
+
     const authModel: UserRequest = {
       firstname: this.controls['firstName'].value,
       lastname: this.controls['lastName'].value,
@@ -58,9 +59,11 @@ export class SignupComponent implements OnInit {
     };
 
     this.loading = true;
-    this.usermanagementService.save(authModel).subscribe(
+    this.authenticateService.save(authModel).subscribe(
       (data) => {
+        console.log('Registration successfully' + data);
         this.toastrService.success('Registration successfully');
+        console.log(this.route)
         this.router.navigate(['../login'], { relativeTo: this.route });
       },
       (error) => {
