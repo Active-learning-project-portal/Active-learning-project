@@ -84,7 +84,7 @@ public class UserServiceImpl implements IUserService {
                     .body(e.getMessage());
         }
 
-        return (ResponseEntity<?>) ResponseEntity.ok();
+        return ResponseEntity.ok("");
     }
 
     public Set<Role> addRoles() {

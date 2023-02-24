@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, Route, ActivatedRoute, NavigationEnd } from '@angular/router';
 import {
   AbstractControl,
   FormControl,
@@ -9,6 +9,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AuthenticateRequest } from 'src/app/models/payloads/requests/authenticate.request.model';
+import { filter, tap } from 'rxjs';
 
 @Component({
   selector: 'alp-signin',
@@ -21,12 +22,22 @@ export class SignInComponent implements OnInit {
   submitted = false;
   returnUrl!: string;
   isBtnLocked: boolean = false;
+  currentRoute: any;
 
   constructor(
     private router: Router,
+    private route:ActivatedRoute,
     private authenticateService: AuthenticateService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    console.log(router.url);
+    
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      tap(event => {
+       console.log(event)
+      }));
+  }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -48,27 +59,21 @@ export class SignInComponent implements OnInit {
       }
     });
 
-    this.goPlaces();
+    this.printpath('', this.router.config);
   }
 
-  goPlaces() {
-    this.router
-      .navigate(['../'])
-      .then(
-        (nav) => {
-          console.log(nav); // true if navigation is successful
-        },
-        (err) => {
-          console.log(err); // when there's an error
-        }
-      )
-      .catch((err) => {
-        console.log('I am an error');
-        console.log(err);
-      });
-    console.log(this.router);
-  }
+  printpath(parent: String, config: Route[]) {
+    for (const element of config) {
+      const route = element;
+      console.log(parent + '/' + route.path);
+      if (route.children) {
+        const currentPath = route.path ? parent + '/' + route.path : parent;
+        this.printpath(currentPath, route.children);
+      }
+    }
 
+    this.router.navigate(['/auth/user/signup']);
+  }
 
   getFormControl(name: string): AbstractControl {
     return this.loginForm.controls[name];
@@ -97,7 +102,6 @@ export class SignInComponent implements OnInit {
     this.lockButton(true);
   }
 
- 
   onSubmit() {
     this.loginForm.markAllAsTouched();
 
@@ -117,7 +121,14 @@ export class SignInComponent implements OnInit {
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);
         // this.router.navigate(['/auth/user/signup']);
-
+        this.router.navigate(['../../alp/users'], { relativeTo: this.route }); //absolute
+        console.log(this.router);
+        console.log({ relativeTo: this.route })
+        // this.router.navigate(['./list'], { relativeTo: this.route }); //child
+        // this.router.navigate(['../list'], { relativeTo: this.route }); //sibling
+        // this.router.navigate(['../../list'], { relativeTo: this.route }); //parent
+        // this.router.navigate(['tabs/list'], { relativeTo: this.route });
+        // this.router.navigate(['/tabs/list'], { relativeTo: this.route });
       },
       (error) => {
         this.toastr.error(error?.message);

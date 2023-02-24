@@ -6,48 +6,61 @@
 		</div>
 		<div class="form-group">
 			<div class="form-row">
-				<div class="form-group col-md-6">
-					<input type="text" class="form-control" placeholder="Search id, name, email, course and roles" />
+				<div class="form-group col">
+					<input type="text" class="form-control w-50" placeholder="Search id, name, email, course and roles" />
 				</div>
-				<div class="form-group col-md-3"></div>
-				<div class="form-group col-md-3">
-					<a class="btn btn-outline-primary" role="button">Active <a
-							class="bg-secondary btn-sm">44</a></a>
-					<a class="btn btn-outline-primary" role="button">Inactive<a
-							class="bg-secondary btn-sm" >45</a></a>
-					<a class="btn btn-outline-primary" role="button" >All <a
-							class="bg-secondary btn-sm">44</a></a>
+				<div class="form-group col-5 user-management-controls">
+					<span>Filter by: </span>
+					<select class="form-select w-25">
+						<option>ALL</option>
+						<option>SUPER ADMIN</option>
+						<option>ADMIN</option>
+						<option>TRAINER</option>
+						<option>TRAINEE</option>
+					</select>
+					<a class="btn btn-outline-primary" role="button">Active <a class="bg-secondary btn-sm">44</a></a>
+					<a class="btn btn-outline-primary" role="button">Inactive<a class="bg-secondary btn-sm">45</a></a>
 				</div>
 			</div>
 		</div>
 		<div class="card-body">
 			<table class="table table-responsive  table-striped">
+				<caption>User management table</caption>
 				<thead class="bg-dark text-white">
 					<tr>
 						<th>
-							ID</th>
+							<a class="btn" onclick="onChangeSortBy('id')">ID</a>
+						</th>
 						<th>
-							NAME</th>
+							<a class="btn" onclick="onChangeSortBy('lastname')">NAME</a>
+						</th>
 						<th>
-							EMAIL</th>
+							<a class="btn" onclick="onChangeSortBy('username')">EMAIL</a>
+						</th>
 						<th>
-							COURSE</th>
+							<a class="btn" onclick="onChangeSortBy('course')">COURSE</a>
+						</th>
 						<th>
-							JOINED</th>
+							<a class="btn" onclick="onChangeSortBy('joined')">JOINED</a>
+						</th>
 						<th>
-							LAST SEEN</th>
+							<a class="btn" onclick="onChangeSortBy('lastSeen')">LAST SEEN</a>
+						</th>
 						<th>
-							ROLES</th>
+							<a class="btn" onclick="onChangeSortBy('roles')">ROLES</a>
+						</th>
 						<th>
-							PROVIDER</th>
+							<a class="btn" onclick="onChangeSortBy('provider')">PROVIDER</a>
+						</th>
 						<th>
-							ACTIONS</th>
+							<a class="btn" onclick="onChangeSortBy('actions')">ACTIONS</a>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let user of usersList">
 						<td>{{user.id}}</td>
-						<td>{{user.lastname}} {{user.firstname}}</td>
+						<td>{{user.lastname | titlecase}} {{user.firstname | titlecase}}</td>
 						<td>{{user.username}}</td>
 						<td>{{user.course?.name}}</td>
 						<td>{{user.joined | date:'mediumDate'}}</td>
