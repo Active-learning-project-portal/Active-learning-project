@@ -44,6 +44,7 @@ export class UserManagementComponent {
     this.sortDir = 'ASC';
   }
 
+
   onChangePageNo(newPage: string, pageSize: string) {
     let newPageNumberConvertedToInt = Number.parseInt(pageSize);
     if (newPage === 'NEXT') {
@@ -69,7 +70,6 @@ export class UserManagementComponent {
       (response: any) => {
         this.usersResponse = new BehaviorSubject<UsersList[]>(response);
         this.users = this.usersResponse.asObservable();
-        console.log(this.usersResponse);
       },
       (error: { message: string | undefined }) => {
         this.toastr.error(error?.message);
