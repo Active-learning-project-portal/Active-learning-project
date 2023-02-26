@@ -1,9 +1,9 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
-import { UsersList } from 'src/app/shared/models/user-list.interface';
+import { UsersList } from '../../../shared/models/user-list.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Pagination } from '../../shared/models/pagination.interface';
-import { UserManagementService } from './services/user-management.service';
+import { Pagination } from '../../../shared/models/pagination.interface';
+import { UserManagementService } from '../../../services/user-management/user-management.service';
 
 @Component({
   selector: 'alp-user-management',

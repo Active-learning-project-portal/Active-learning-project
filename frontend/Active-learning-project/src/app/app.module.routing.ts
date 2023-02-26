@@ -6,41 +6,41 @@ import { SignInComponent } from './user-authentication/signin/signin.component';
 import { SignupComponent } from './user-authentication/signup/signup.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AccountComponent,
-    children: [
-      {
-        path: 'signin',
-        component: SignInComponent
-      },
-      {
-        path: 'signup',
-        component: SignupComponent
-      },
-      {
-        path: '**',
-        redirectTo: '/signin',
-        pathMatch: 'full'
-      }
-    ],
-  },
-  {
-    path: 'alp',
-    loadChildren: () =>
-      import('./master-layout/master-layout.module').then(
-        (m) => m.MasterLayoutModule
-      ),
-  },
-  {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full',
-  }
+	{
+		path: 'alp',
+		loadChildren: () =>
+			import('./master-layout/master-layout.module').then(
+				(m) => m.MasterLayoutModule
+			)
+	},
+	{
+		path: '',
+		component: AccountComponent,
+		children: [
+			{
+				path: 'signin',
+				component: SignInComponent,
+			},
+			{
+				path: 'signup',
+				component: SignupComponent,
+			},
+			{
+				path: '**',
+				redirectTo: 'signin',
+				pathMatch: 'full'
+			}
+		],
+	},
+	{
+		path: '**',
+		redirectTo: '',
+		pathMatch: 'full',
+	}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }

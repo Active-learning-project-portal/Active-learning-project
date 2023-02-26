@@ -3,8 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, V
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
 import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
-import { AuthenticateService } from '../services/authenticate.service';
-
+import { AuthenticateService } from 'src/app/services/user-authentication/authenticate.service';
 
 @Component({
 	selector: 'alp-google-button',

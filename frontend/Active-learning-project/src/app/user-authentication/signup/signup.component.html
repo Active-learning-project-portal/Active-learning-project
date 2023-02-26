@@ -19,12 +19,13 @@
       (submit)="onSignUp()"
     >
       <div class="form-group">
-        <label class="fw-bold mb-0 text-muted" for="email">First Name</label>
+        <label class="fw-bold mb-0 text-muted" for="firstName">First Name</label>
         <input
           placeholder="Enter your first name"
           type="text"
           formControlName="firstName"
           class="form-control"
+          id="firstName"
           [ngClass]="{
             'is-invalid': submitted && controls['firstName'].errors
           }"
@@ -45,6 +46,7 @@
           type="text"
           formControlName="lastName"
           class="form-control"
+          id="lastName"
           [ngClass]="{
             'is-invalid': submitted && controls['lastName'].errors
           }"
@@ -65,6 +67,7 @@
           type="text"
           formControlName="email"
           class="form-control"
+          id="email"
           [ngClass]="{
             'is-invalid': submitted && controls['email'].errors
           }"
@@ -88,6 +91,7 @@
           type="password"
           formControlName="password"
           class="form-control"
+          id="password"
           [ngClass]="{
             'is-invalid': submitted && controls['password'].errors
           }"
@@ -125,7 +129,7 @@
       </div>
     </div>
     <div class="auth-signup-link text-center">
-      <i>Already have an account? <a [routerLink]="['/signin']">Sign In</a></i>
+      <i>Already have an account? <a href="/signin">Sign In</a></i>
     </div>
   </div>
 </div>
