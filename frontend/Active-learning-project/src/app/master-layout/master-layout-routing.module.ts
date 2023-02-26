@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MasterLayoutComponent } from './master-layout.component';
+import { MasterLayoutComponent } from './layout/master-layout.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { alp } from '../shared/routers/Routers';
 

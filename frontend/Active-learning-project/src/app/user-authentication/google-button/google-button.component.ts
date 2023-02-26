@@ -1,5 +1,5 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
 import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';

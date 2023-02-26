@@ -1,47 +1,51 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './alp-app/app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AccountModule } from './user-authentication/account.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AccountRoutingModule } from './user-authentication/account-routing.module';
 import { MasterLayoutModule } from './master-layout/master-layout.module';
-import {
-  SocialLoginModule,
-  GoogleLoginProvider,
-} from '@abacritt/angularx-social-login';
+import { SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { SigninAuthService } from './shared/helpers/signin-auth.service';
 import { AuthenticateService } from './user-authentication/services/authenticate.service';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
-import {
-  APP_CONFIG,
-  APP_SERVICE_CONFIG,
-} from './app-config/app-config.service';
+import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
 import { FullNamePipe } from './shared/pipes/full-name.pipe';
-
+import { AccountComponent } from './user-authentication/account/account.component';
+import { GithubButtonComponent } from './user-authentication/github-button/github-button.component';
+import { GoogleButtonComponent } from './user-authentication/google-button/google-button.component';
+import { SignInComponent } from './user-authentication/signin/signin.component';
+import { SignupComponent } from './user-authentication/signup/signup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app.module.routing';
 
 @NgModule({
-  declarations: [AppComponent, FullNamePipe],
+  declarations: [
+    AppComponent,
+    FullNamePipe,
+    AccountComponent,
+    SignInComponent,
+    SignupComponent,
+    GoogleButtonComponent,
+    GithubButtonComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    MasterLayoutModule,
+    SocialLoginModule,
+    HttpClientModule,
+    SocialLoginModule,
+    FormsModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       progressBar: true,
-    }),
-    AccountRoutingModule,
-    AccountModule,
-    MasterLayoutModule,
-    SocialLoginModule,
-    HttpClientModule,
+    })
   ],
-
-
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -76,4 +80,4 @@ import { FullNamePipe } from './shared/pipes/full-name.pipe';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

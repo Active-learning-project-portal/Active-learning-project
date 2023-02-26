@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MasterLayoutRoutingModule } from './master-layout-routing.module';
-import { MasterLayoutComponent } from './master-layout.component';
+import { MasterLayoutComponent } from './layout/master-layout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TopNavComponent } from './navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './navigation/side-nav/side-nav.component';
