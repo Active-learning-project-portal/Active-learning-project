@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: flex-start;
   border: 1px solid lightgrey;
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 0 0.4rem;
   transition: all 0.5s;
 }

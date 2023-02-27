@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
-import { AuthenticateService } from '../services/authenticate.service';
-import { UserManagementService } from '../../master-layout/user-management/services/user-management.service';
+import { AuthenticateService } from 'src/app/services/user-authentication/authenticate.service';
+import { UserManagementService } from 'src/app/services/user-management/user-management.service';
 
 @Component({
   selector: 'alp-signup',

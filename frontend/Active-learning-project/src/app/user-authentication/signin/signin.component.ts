@@ -4,11 +4,11 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AuthenticateService } from '../services/authenticate.service';
 import { AuthenticateRequest } from 'src/app/models/payloads/requests/authenticate.request.model';
+import { AuthenticateService } from 'src/app/services/user-authentication/authenticate.service';
 
 @Component({
   selector: 'alp-signin',

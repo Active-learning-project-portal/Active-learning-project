@@ -39,6 +39,7 @@
           type="text"
           formControlName="email"
           class="form-control"
+          id="email"
           [ngClass]="{
             isInvalid: isFormControlTouched('email') && hasError('email')
           }"
@@ -51,6 +52,7 @@
           type="password"
           formControlName="password"
           class="form-control"
+          id="password"
           [ngClass]="{
             isInvalid: isFormControlTouched('password') && hasError('password')
           }"
@@ -74,25 +76,18 @@
           </span>
           <span
             class="invalidFeedback"
-            *ngIf="hasError('email') && hasError('password')">
+            *ngIf="hasError('email') && hasError('password')"
+          >
             Invalid Login Credentials
           </span>
         </button>
-        <a
-          mat-button
-          class="menu-button"
-          class="btn btn-forgot text-dark"
-          routerLink="/board"
-        >
+        <a mat-button class="menu-button" class="btn btn-forgot text-dark">
           Forgot Password?
         </a>
       </div>
     </form>
     <div class="auth-signup-link text-center">
-      <i
-        >Don't have an account?
-        <a href="/auth/user/signup">Sign Up</a></i
-      >
+      <i>Don't have an account? <a href="/signup">Sign Up</a></i>
     </div>
   </div>
 </div>
