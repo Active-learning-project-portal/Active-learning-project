@@ -9,6 +9,7 @@ import { UserProfileComponent } from './navigation/top-nav/user-profile/user-pro
 import { ModalComponent } from './layouts/user-management/modal/modal.component';
 import { UserManagementComponent } from './layouts/user-management/user-management.component';
 import { MasterLayoutComponent } from './layouts/master/master-layout.component';
+import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { MasterLayoutComponent } from './layouts/master/master-layout.component'
 		TopNavComponent,
 		SideNavComponent,
 		UserProfileComponent
+    ArrayToStringPipe
 	],
 	imports: [
 		CommonModule,

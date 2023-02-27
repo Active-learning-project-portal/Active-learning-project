@@ -13,6 +13,10 @@ import { UserManagementService } from '../../../services/user-management/user-ma
 export class UserManagementComponent {
   usersResponse!: BehaviorSubject<UsersList[]>;
   users!: Observable<UsersList[]>;
+  sortBy!: string;
+  pageNo!: string;
+  pageSize!: string;
+  sortDir!: 'ASC' | 'DESC';
 
   constructor(
     private usersService: UserManagementService,
@@ -27,18 +31,45 @@ export class UserManagementComponent {
     return this.usersResponse?.value;
   }
 
+  onChangeSortBy(colunmName: string) {
+    console.log(colunmName)
+    this.sortBy = colunmName;
+  }
+
+  onChangeSortDir() {
+    if (this.sortDir === 'ASC') {
+      this.sortDir = 'DESC';
+      return;
+    }
+    this.sortDir = 'ASC';
+  }
+
+
+  onChangePageNo(newPage: string, pageSize: string) {
+    let newPageNumberConvertedToInt = Number.parseInt(pageSize);
+    if (newPage === 'NEXT') {
+      newPageNumberConvertedToInt++;
+      this.pageSize = String(newPageNumberConvertedToInt);
+      return;
+    }
+    newPageNumberConvertedToInt--;
+    this.pageSize = String(newPageNumberConvertedToInt);
+  }
+  onChangePageSize(colunmName: Pagination) {
+    this.sortDir = colunmName.sortDir;
+  }
+
   getAllUsers(): void {
     const pagination: Pagination = {
-      pageNo: '0',
-      pageSize: '20',
-      sortBy: 'lastname',
-      sortDir: 'DESC',
+      pageNo: this.pageNo,
+      pageSize: this.pageSize,
+      sortBy: this.sortBy,
+      sortDir: this.sortDir,
     };
     this.usersService.getUsers(pagination).subscribe(
       (response: any) => {
         this.usersResponse = new BehaviorSubject<UsersList[]>(response);
         this.users = this.usersResponse.asObservable();
-        console.log(this.usersResponse )
       },
       (error: { message: string | undefined }) => {
         this.toastr.error(error?.message);

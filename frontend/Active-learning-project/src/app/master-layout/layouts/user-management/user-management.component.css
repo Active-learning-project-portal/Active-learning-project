@@ -13,3 +13,12 @@ table {
 .card-body{
   padding: 0%;
 }
+
+.user-management-controls{
+  display: flex;
+  gap: .3rem;
+  align-items: center;
+  white-space: nowrap;
+  justify-content: flex-end;
+}
+
