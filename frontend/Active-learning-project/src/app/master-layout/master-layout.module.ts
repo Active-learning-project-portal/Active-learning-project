@@ -10,6 +10,7 @@ import { UserProfileComponent } from './navigation/top-nav/user-profile/user-pro
 import { RemoveRoleAndUnderScorePipe } from '../shared/pipes/remove-role-and-under-score.pipe';
 import { ModalComponent } from './user-management/modal/modal.component';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
     TopNavComponent,
     SideNavComponent,
     UserProfileComponent,
+    ArrayToStringPipe
   ],
   imports: [
     CommonModule,

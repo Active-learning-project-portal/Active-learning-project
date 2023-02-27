@@ -21,6 +21,7 @@ import {
   APP_SERVICE_CONFIG,
 } from './app-config/app-config.service';
 import { FullNamePipe } from './shared/pipes/full-name.pipe';
+import { ArrayToStringPipe } from './shared/pipes/array-string.pipe';
 
 
 @NgModule({
