@@ -20,7 +20,8 @@ import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 		RemoveRoleAndUnderScorePipe,
 		TopNavComponent,
 		SideNavComponent,
-		UserProfileComponent
+		UserProfileComponent,
+    ArrayToStringPipe
 	],
 	exports: [
 		MasterLayoutComponent,
@@ -31,7 +32,7 @@ import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 		TopNavComponent,
 		SideNavComponent,
 		UserProfileComponent,
-    ArrayToStringPipe
+
 	],
 	imports: [
 		CommonModule,

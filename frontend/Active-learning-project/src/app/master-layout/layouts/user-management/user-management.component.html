@@ -30,13 +30,10 @@
 				<thead class="bg-dark text-white">
 					<tr>
 						<th>
-							<a class="btn" (click)="onChangeSortBy('id')">ID</a>
-						</th>
-						<th>
 							<a class="btn" (click)="onChangeSortBy('lastname')">NAME</a>
 						</th>
 						<th>
-							<a class="btn" (click)="onChangeSortBy('username')">EMAIL</a>
+							<a class="btn" (click)="onChangeSortBy('githubUsername')">GITHUB USERNAME</a>
 						</th>
 						<th>
 							<a class="btn" (click)="onChangeSortBy('course')">COURSE</a>
@@ -54,15 +51,27 @@
 							<a class="btn" (click)="onChangeSortBy('provider')">PROVIDER</a>
 						</th>
 						<th>
+							<a class="btn">STATUS</a>
+						</th>
+						<th>
 							<a class="btn">ACTIONS</a>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let user of usersList">
-						<td>{{user.id}}</td>
-						<td>{{user.lastname | titlecase}} {{user.firstname | titlecase}}</td>
-						<td>{{user.username}}</td>
+						<td>
+							<div class="d-flex align-items-center">
+								<img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+									style="width: 45px; height: 45px" class="rounded-circle" />
+								<div class="ms-3">
+									<p class="fw-bold mb-1">{{user.lastname | titlecase}} {{user.firstname | titlecase}}
+									</p>
+									<p class="text-muted mb-0">{{user.username}}</p>
+								</div>
+							</div>
+						</td>
+						<td>Tshimangadzo</td>
 						<td>{{user.course?.name}}</td>
 						<td>{{user.joined | date:'mediumDate'}}</td>
 						<td>{{user.lastSeen | date:'mediumDate'}}</td>
@@ -73,6 +82,13 @@
 							</span>
 						</td>
 						<td>{{user.provider}}</td>
+						<td>
+							<span *ngIf="user.isActive else inactive"
+								class="badge badge-success rounded-pill d-inline">Active</span>
+							<ng-template #inactive>
+								<span class="badge badge-warning rounded-pill d-inline">Inactive</span>
+							</ng-template>
+						</td>
 						<td>
 							<alp-modal [user]="user"></alp-modal>
 						</td>

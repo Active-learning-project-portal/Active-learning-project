@@ -30,7 +30,8 @@ import { AuthenticateService } from './services/user-authentication/authenticate
 		SignInComponent,
 		SignupComponent,
 		GoogleButtonComponent,
-		GithubButtonComponent
+		GithubButtonComponent,
+   
 	],
 	imports: [
 		BrowserModule,
