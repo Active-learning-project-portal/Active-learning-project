@@ -122,11 +122,7 @@ export class GithubButtonComponent {
           this.gitUserEmails,
           this.btnType
         );
-
-        console.log('Button type');
-        console.log(this.btnType);
-        console.log(transformedData);
-
+        
         if (transformedData.authType === 'signin') {
           const gitAuthModel: AuthenticateRequest = {
             username: transformedData.username,
@@ -146,7 +142,7 @@ export class GithubButtonComponent {
           const authModel: UserRequest = {
             firstname: transformedData.firstname,
             lastname: transformedData.lastname,
-            authType: 'signin',
+            authType: 'signup',
             provider: transformedData.provider,
             username: transformedData.username,
             password: transformedData.password,

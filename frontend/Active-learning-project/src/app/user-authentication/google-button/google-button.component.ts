@@ -28,7 +28,6 @@ export class GoogleButtonComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log('Hi mushe');
     const authObserver: Observable<any> = new Observable(
       (observer: Observer<any>) => {
         this.googleAuth.authState.subscribe((user: any) => {
@@ -45,9 +44,6 @@ export class GoogleButtonComponent {
             password: environment.defaultPassword,
             avatar:user['photoUrl']
           };
-
-          console.log('I am user : ');
-          console.log(authModel);
 
           if (authModel.authType === 'signin') {
             const userModel: AuthenticateRequest = {
@@ -66,8 +62,6 @@ export class GoogleButtonComponent {
               }
             );
           } else if (authModel.authType === 'signup') {
-
-        
             this.userManagementService.save(authModel).subscribe(
               (data) => {
                 this.toastr.success('Registration successfully');
