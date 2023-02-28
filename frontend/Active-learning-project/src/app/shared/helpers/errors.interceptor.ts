@@ -23,15 +23,12 @@ export class ErrorsInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 0) {
-          console.log(error);
           if (!error.ok) {
             errorObject = {
               message: 'Server not started, contact operational@alp.com',
             };
           }
         } else {
-          console.log("Error");
-          console.log(error)
           switch (error.status) {
             case ServerErrors.BAD_REQUEST:
             case ServerErrors.NOT_FOUND:
