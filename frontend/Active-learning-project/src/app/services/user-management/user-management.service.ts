@@ -55,12 +55,9 @@ export class UserManagementService {
     const accessToken = this.userValue?.token;
     const tokenType = this.userValue?.tokenType;
     if (!accessToken || !tokenType) {
-      this.router.navigate(['/auth/user/signup']);
+      this.router.navigate(['/signin']);
     }
-
     const pageUrl = this.getRequestUrl(pagination);
-    console.log(pageUrl);
-
     return this.http.get(`${environment.apiUrl}users?${pageUrl}`, {
       headers: {
         Authorization: `${tokenType} ${accessToken}`,
