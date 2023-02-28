@@ -6,4 +6,5 @@ export const environment = {
   clientURL: 'http://localhost:4200',
   gitClientId: 'e04b86df24f7cbf794c8',
   gitClientSecret:'b758bc4642bcb6af67c8f32ea11bcc6c00eb4585',
+  defaultPassword:'P@ssword1'
 };

@@ -62,7 +62,7 @@ export class UserManagementComponent {
   getAllUsers(): void {
     const pagination: Pagination = {
       pageNo: this.pageNo,
-      pageSize: this.pageSize,
+      pageSize: "20",
       sortBy: this.sortBy,
       sortDir: this.sortDir,
     };

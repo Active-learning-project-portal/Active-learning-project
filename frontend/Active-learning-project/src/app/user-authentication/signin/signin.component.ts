@@ -30,8 +30,7 @@ export class SignInComponent implements OnInit {
     private authenticateService: AuthenticateService,
     private toastr: ToastrService
   ) {
-    console.log(router.url);
-    
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       tap(event => {
@@ -58,21 +57,6 @@ export class SignInComponent implements OnInit {
         this.lockButton(false);
       }
     });
-
-    this.printpath('', this.router.config);
-  }
-
-  printpath(parent: String, config: Route[]) {
-    for (const element of config) {
-      const route = element;
-      console.log(parent + '/' + route.path);
-      if (route.children) {
-        const currentPath = route.path ? parent + '/' + route.path : parent;
-        this.printpath(currentPath, route.children);
-      }
-    }
-
-    this.router.navigate(['/auth/user/signup']);
   }
 
   getFormControl(name: string): AbstractControl {
@@ -108,8 +92,6 @@ export class SignInComponent implements OnInit {
     // ???
     if (this.loginForm.invalid) return;
 
-    // If form is valid
-    // Build the auth model
     const authModel: AuthenticateRequest = {
       username: this.getFormControl('email').value,
       password: this.getFormControl('password').value,
@@ -120,15 +102,7 @@ export class SignInComponent implements OnInit {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);
-        // this.router.navigate(['/auth/user/signup']);
-        this.router.navigate(['../../alp/users'], { relativeTo: this.route }); //absolute
-        console.log(this.router);
-        console.log({ relativeTo: this.route })
-        // this.router.navigate(['./list'], { relativeTo: this.route }); //child
-        // this.router.navigate(['../list'], { relativeTo: this.route }); //sibling
-        // this.router.navigate(['../../list'], { relativeTo: this.route }); //parent
-        // this.router.navigate(['tabs/list'], { relativeTo: this.route });
-        // this.router.navigate(['/tabs/list'], { relativeTo: this.route });
+        this.router.navigate(['/alp'], { relativeTo: this.route });
       },
       (error) => {
         this.toastr.error(error?.message);
