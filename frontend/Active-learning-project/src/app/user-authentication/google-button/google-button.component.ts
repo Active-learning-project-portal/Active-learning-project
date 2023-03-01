@@ -16,7 +16,6 @@ import { environment } from '../../../environments/environment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GoogleButtonComponent {
-
   @Input()
   btnType!: 'signin' | 'signup';
 
@@ -34,7 +33,7 @@ export class GoogleButtonComponent {
           if (!user) {
             return this.toastr.error('User login error', 'Google Auth');
           }
-           console.log(user)
+          console.log(user);
           const authModel: UserRequest = {
             firstname: user['firstName'],
             lastname: user['lastName'],
@@ -42,7 +41,7 @@ export class GoogleButtonComponent {
             provider: user['provider'],
             username: user['email'],
             password: environment.defaultPassword,
-            avatar:user['photoUrl']
+            avatar: user['photoUrl'],
           };
 
           if (authModel.authType === 'signin') {
@@ -56,6 +55,7 @@ export class GoogleButtonComponent {
                 this.toastr.success(`Successful login`);
                 const stringifyUser = JSON.stringify(userAuth);
                 localStorage.setItem('user', stringifyUser);
+                window.location.href = '/alp';
               },
               (error) => {
                 this.toastr.error(error?.message);

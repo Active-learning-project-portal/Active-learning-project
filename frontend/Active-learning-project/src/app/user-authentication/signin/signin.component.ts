@@ -26,7 +26,6 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route:ActivatedRoute,
     private authenticateService: AuthenticateService,
     private toastr: ToastrService
   ) {
@@ -102,7 +101,8 @@ export class SignInComponent implements OnInit {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);
-        this.router.navigate(['/alp'], { relativeTo: this.route });
+        // this.router.navigate(['/alp']);
+        window.location.href = "/alp"
       },
       (error) => {
         this.toastr.error(error?.message);

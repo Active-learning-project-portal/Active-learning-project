@@ -92,7 +92,7 @@ export class GithubRequestService {
 			lastname: this.getLastName(userProfile.name),
 			username: this.getPrimaryEmail(userMails),
 			avatar: userProfile.avatar_url,
-			password: '',
+			password: environment.defaultPassword,
 			provider: 'GITHUB',
 			authType: authType,
 		};

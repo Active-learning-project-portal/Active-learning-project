@@ -78,6 +78,7 @@ export class GithubButtonComponent {
   }
 
   ngOnInit(): void {
+    console.log(this.btnType)
     this.githubLoginUrl = this.config.gitLoginUrl;
     this.btnTitle =
       this.btnType == 'signin'
@@ -113,26 +114,28 @@ export class GithubButtonComponent {
           this.gitUserData = userData;
           break;
       }
-
       // Check if both objects are set create an authModel
       // for a git signup/signin
       if (this.gitUserData! && this.gitUserEmails!) {
+        console.log(this.btnType)
         const transformedData = this.config.transformUserDataToModel(
           this.gitUserData,
           this.gitUserEmails,
           this.btnType
         );
-        
+
+
         if (transformedData.authType === 'signin') {
           const gitAuthModel: AuthenticateRequest = {
             username: transformedData.username,
-            password: transformedData.password,
+            password: environment.defaultPassword,
           };
           this.authenticateService.authenticate(gitAuthModel).subscribe(
             (userAuth) => {
               this.toastr.success(`Successful login`);
               const stringifyUser = JSON.stringify(userAuth);
               localStorage.setItem('user', stringifyUser);
+              window.location.href = '/alp';
             },
             (error) => {
               this.toastr.error(error?.message);
@@ -142,16 +145,17 @@ export class GithubButtonComponent {
           const authModel: UserRequest = {
             firstname: transformedData.firstname,
             lastname: transformedData.lastname,
-            authType: 'signup',
+            authType: transformedData.authType,
             provider: transformedData.provider,
             username: transformedData.username,
-            password: transformedData.password,
+            password: environment.defaultPassword,
             avatar: transformedData.avatar,
           };
 
           this.usermanagementService.save(authModel).subscribe(
             (data) => {
               this.toastr.success('Registration successfully');
+              window.location.href = '/alp';
             },
             (error) => {
               this.toastr.error(error.message, error.title);
