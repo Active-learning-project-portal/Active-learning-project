@@ -33,6 +33,8 @@ public class User {
     private Date lastSeen;
     private Boolean isActive;
 
+    private String githubUsername;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

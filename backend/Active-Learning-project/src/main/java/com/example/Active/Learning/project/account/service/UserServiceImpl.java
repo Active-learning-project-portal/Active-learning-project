@@ -10,32 +10,24 @@ import com.example.Active.Learning.project.account.exceptions.UserNotFoundExcept
 import com.example.Active.Learning.project.account.interfaces.IUserService;
 import com.example.Active.Learning.project.account.models.*;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
-import com.example.Active.Learning.project.account.payload.response.Message;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.repositories.CourseRepository;
 import com.example.Active.Learning.project.account.repositories.RoleRepository;
 import com.example.Active.Learning.project.account.repositories.UserRepository;
-import com.example.Active.Learning.project.authenticate.security.jwt.JwtUtils;
 
 import lombok.NonNull;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -101,12 +93,23 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
+        Page<User> users = null;
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        Page<User> users = userRepository.findAll(pageable);
+
+        if (searchValue != null) {
+            users = userRepository.findAllByLike(searchValue,pageable);
+        } else {
+            users = userRepository.findAll(pageable);
+        }
         return ResponseEntity.ok(users.stream().toList());
+    }
+
+    public String getActiveSearchValue(String searchValue){
+        String searchValueToLowerCase = searchValue.toLowerCase();
+        return searchValueToLowerCase == "active"?"1":searchValueToLowerCase == "inactive"?"0":null;
     }
 
     public ResponseEntity<?> getUserById(@NonNull Long id) {

@@ -58,6 +58,7 @@ export class UserManagementService {
       this.router.navigate(['/signin']);
     }
     const pageUrl = this.getRequestUrl(pagination);
+    console.log(pageUrl)
     return this.http.get(`${environment.apiUrl}users?${pageUrl}`, {
       headers: {
         Authorization: `${tokenType} ${accessToken}`,
@@ -96,8 +97,16 @@ export class UserManagementService {
     return paramsList;
   }
 
+  addSearchValue(pagination: Pagination): String[] {
+    const paramsList = this.addSortDirection(pagination);
+    if (pagination.searchValue) {
+      paramsList.push(`searchValue=${pagination.searchValue}`);
+    }
+    return paramsList;
+  }
+
   getRequestUrl(pagination: Pagination): string {
-    return this.addSortDirection(pagination).join('&');
+    return this.addSearchValue(pagination).join('&');
   }
 
   // getById(userId: string): Observable<UserAuthModel> {

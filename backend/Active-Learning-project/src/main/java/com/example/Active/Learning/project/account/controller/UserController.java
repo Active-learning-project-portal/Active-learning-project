@@ -30,10 +30,13 @@ public class UserController {
             @RequestParam(value = "pageNo", defaultValue = DefaultValues.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = DefaultValues.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = DefaultValues.DEFAULT_SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
+            @RequestParam(value = "searchValue",required = false) String searchValue
     ) {
-        return userService.getAllUsers(pageNo,pageSize,sortBy,sortDir);
+        return userService.getAllUsers(pageNo,pageSize,sortBy,sortDir,searchValue);
     }
+
+
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER')")

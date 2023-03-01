@@ -7,8 +7,8 @@
 		<div class="form-group">
 			<div class="form-row">
 				<div class="form-group col">
-					<input type="text" class="form-control w-50"
-						placeholder="Search id, name, email, course and roles" />
+					<input type="text" class="form-control w-50" placeholder="Search id, name, email, course and roles"
+						#box (keyup.enter)="onEnter(box.value)" />
 				</div>
 				<div class="form-group col-5 user-management-controls">
 					<span>Filter by: </span>
@@ -62,8 +62,8 @@
 					<tr *ngFor="let user of usersList">
 						<td>
 							<div class="d-flex align-items-center">
-								<img src="{{user.avatar}}" alt=""
-									style="width: 45px; height: 45px" class="rounded-circle" />
+								<img src="{{user.avatar}}" alt="" style="width: 45px; height: 45px"
+									class="rounded-circle" />
 								<div class="ms-3">
 									<p class="fw-bold mb-1">{{user.lastname | titlecase}} {{user.firstname | titlecase}}
 									</p>

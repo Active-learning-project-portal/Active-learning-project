@@ -17,6 +17,7 @@ export class UserManagementComponent {
   pageNo!: string;
   pageSize!: string;
   sortDir!: 'ASC' | 'DESC';
+  searchValue!:string;
 
   constructor(
     private usersService: UserManagementService,
@@ -26,6 +27,11 @@ export class UserManagementComponent {
   ngOnInit(): void {
     this.getAllUsers();
   }
+
+  onEnter(value: string) {
+    this.searchValue = value;
+    this.getAllUsers();
+   }
 
   get usersList(): UsersList[] {
     return this.usersResponse?.value;
@@ -65,6 +71,7 @@ export class UserManagementComponent {
       pageSize: "20",
       sortBy: this.sortBy,
       sortDir: this.sortDir,
+      searchValue:this.searchValue
     };
     this.usersService.getUsers(pagination).subscribe(
       (response: any) => {

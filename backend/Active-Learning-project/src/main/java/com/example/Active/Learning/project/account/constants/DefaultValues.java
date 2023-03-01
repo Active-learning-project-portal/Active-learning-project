@@ -12,4 +12,6 @@ public class DefaultValues {
     public static final String DEFAULT_SORT_DIRECTION = "ASC";
     public static final Course DEFAULT_COURSE = new Course(ECourse.NO_COURSE);
     public static final Role DEFAULT_ROLE = new Role(ERole.ROLE_TRAINEE);
+
+    public static final String DEFAULT_SEARCH_COLUMN = "id";
 }

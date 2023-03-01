@@ -62,6 +62,7 @@ export class SignupComponent implements OnInit {
       (data) => {
         this.toastrService.success('Registration successfully');
         this.router.navigate(['../login'], { relativeTo: this.route });
+        this.loading = false;
       },
       (error) => {
         this.toastrService.error( error.message,error.title);

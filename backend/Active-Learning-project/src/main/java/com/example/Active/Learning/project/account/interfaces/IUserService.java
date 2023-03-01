@@ -10,5 +10,5 @@ import java.util.List;
 public interface IUserService {
     ResponseEntity<?> createUser(@NonNull SignUpRequest signUpRequest);
 
-    ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir);
+    ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir,String column);
 }

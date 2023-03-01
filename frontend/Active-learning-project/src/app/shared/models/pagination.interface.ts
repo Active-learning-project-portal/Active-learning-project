@@ -3,4 +3,5 @@ export interface Pagination {
   pageSize: string;
   sortBy: string;
   sortDir: 'ASC' | 'DESC';
+  searchValue?:string;
 }
