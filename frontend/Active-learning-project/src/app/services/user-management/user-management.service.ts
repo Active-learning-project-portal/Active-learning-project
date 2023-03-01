@@ -58,7 +58,6 @@ export class UserManagementService {
       this.router.navigate(['/signin']);
     }
     const pageUrl = this.getRequestUrl(pagination);
-    console.log(pageUrl)
     return this.http.get(`${environment.apiUrl}users?${pageUrl}`, {
       headers: {
         Authorization: `${tokenType} ${accessToken}`,

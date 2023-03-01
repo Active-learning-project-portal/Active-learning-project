@@ -17,7 +17,7 @@ export class UserManagementComponent {
   pageNo!: string;
   pageSize!: string;
   sortDir!: 'ASC' | 'DESC';
-  searchValue!:string;
+  searchValue!: string;
 
   constructor(
     private usersService: UserManagementService,
@@ -31,25 +31,26 @@ export class UserManagementComponent {
   onEnter(value: string) {
     this.searchValue = value;
     this.getAllUsers();
-   }
+  }
 
   get usersList(): UsersList[] {
     return this.usersResponse?.value;
   }
 
   onChangeSortBy(colunmName: string) {
-    console.log(colunmName)
     this.sortBy = colunmName;
+    this.onChangeSortDir();
   }
 
   onChangeSortDir() {
     if (this.sortDir === 'ASC') {
       this.sortDir = 'DESC';
+      this.getAllUsers();
       return;
     }
     this.sortDir = 'ASC';
+    this.getAllUsers();
   }
-
 
   onChangePageNo(newPage: string, pageSize: string) {
     let newPageNumberConvertedToInt = Number.parseInt(pageSize);
@@ -68,10 +69,10 @@ export class UserManagementComponent {
   getAllUsers(): void {
     const pagination: Pagination = {
       pageNo: this.pageNo,
-      pageSize: "20",
+      pageSize: '20',
       sortBy: this.sortBy,
       sortDir: this.sortDir,
-      searchValue:this.searchValue
+      searchValue: this.searchValue,
     };
     this.usersService.getUsers(pagination).subscribe(
       (response: any) => {
