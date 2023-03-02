@@ -36,8 +36,6 @@ public class UserController {
         return userService.getAllUsers(pageNo,pageSize,sortBy,sortDir,searchValue);
     }
 
-
-
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER')")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
@@ -51,7 +49,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER')")
-    public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<List<User>> updateUserById(@PathVariable Long id, @RequestBody SignUpRequest user) {
         return userService.updateUser(id,user);
     }
 }

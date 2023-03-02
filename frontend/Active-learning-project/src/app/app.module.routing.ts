@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { alp, auth } from './shared/routers/Routers';
 import { AccountComponent } from './user-authentication/account/account.component';
 import { SignInComponent } from './user-authentication/signin/signin.component';
 import { SignupComponent } from './user-authentication/signup/signup.component';

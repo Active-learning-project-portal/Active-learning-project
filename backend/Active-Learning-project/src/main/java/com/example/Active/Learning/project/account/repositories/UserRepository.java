@@ -1,9 +1,6 @@
 package com.example.Active.Learning.project.account.repositories;
 
-import com.example.Active.Learning.project.account.models.ECourse;
-import com.example.Active.Learning.project.account.models.ERole;
 import com.example.Active.Learning.project.account.models.User;
-import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -10,6 +10,7 @@ import { ModalComponent } from './layouts/user-management/modal/modal.component'
 import { UserManagementComponent } from './layouts/user-management/user-management.component';
 import { MasterLayoutComponent } from './layouts/master/master-layout.component';
 import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
+import { CourseManagementComponent } from './layouts/course-management/course-management.component';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,8 @@ import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 		TopNavComponent,
 		SideNavComponent,
 		UserProfileComponent,
-    ArrayToStringPipe
+    ArrayToStringPipe,
+    CourseManagementComponent
 	],
 	exports: [
 		MasterLayoutComponent,
@@ -32,6 +34,7 @@ import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 		TopNavComponent,
 		SideNavComponent,
 		UserProfileComponent,
+		CourseManagementComponent
 
 	],
 	imports: [
