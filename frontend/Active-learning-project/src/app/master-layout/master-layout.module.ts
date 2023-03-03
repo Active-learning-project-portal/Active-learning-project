@@ -10,37 +10,35 @@ import { ModalComponent } from './layouts/user-management/modal/modal.component'
 import { UserManagementComponent } from './layouts/user-management/user-management.component';
 import { MasterLayoutComponent } from './layouts/master/master-layout.component';
 import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
-import { CourseManagementComponent } from './layouts/course-management/course-management.component';
+import { CoursesModule } from './layouts/courses/courses.module';
 
 @NgModule({
-	declarations: [
-		MasterLayoutComponent,
-		UserProfileComponent,
-		UserManagementComponent,
-		ModalComponent,
-		RemoveRoleAndUnderScorePipe,
-		TopNavComponent,
-		SideNavComponent,
-		UserProfileComponent,
+  declarations: [
+    MasterLayoutComponent,
+    UserProfileComponent,
+    UserManagementComponent,
+    ModalComponent,
+    RemoveRoleAndUnderScorePipe,
+    TopNavComponent,
+    SideNavComponent,
+    UserProfileComponent,
     ArrayToStringPipe,
-    CourseManagementComponent
-	],
-	exports: [
-		MasterLayoutComponent,
-		UserProfileComponent,
-		UserManagementComponent,
-		ModalComponent,
-		RemoveRoleAndUnderScorePipe,
-		TopNavComponent,
-		SideNavComponent,
-		UserProfileComponent,
-		CourseManagementComponent
-
-	],
-	imports: [
-		CommonModule,
-		MasterLayoutRoutingModule,
-		FontAwesomeModule
-	]
+  ],
+  exports: [
+    MasterLayoutComponent,
+    UserProfileComponent,
+    UserManagementComponent,
+    ModalComponent,
+    RemoveRoleAndUnderScorePipe,
+    TopNavComponent,
+    SideNavComponent,
+    UserProfileComponent,
+  ],
+  imports: [
+    CommonModule,
+    MasterLayoutRoutingModule,
+    CoursesModule,
+    FontAwesomeModule,
+  ],
 })
-export class MasterLayoutModule { }
+export class MasterLayoutModule {}

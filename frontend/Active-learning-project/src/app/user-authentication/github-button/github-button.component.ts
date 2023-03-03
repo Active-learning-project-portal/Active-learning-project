@@ -155,7 +155,7 @@ export class GithubButtonComponent {
           this.usermanagementService.save(authModel).subscribe(
             (data) => {
               this.toastr.success('Registration successfully');
-              window.location.href = '/alp';
+              window.location.href = '/signin';
             },
             (error) => {
               this.toastr.error(error.message, error.title);

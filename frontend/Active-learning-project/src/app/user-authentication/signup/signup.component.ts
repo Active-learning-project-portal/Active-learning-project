@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
     this.usermanagementService.save(authModel).subscribe(
       (data) => {
         this.toastrService.success('Registration successfully');
-        this.router.navigate(['../login'], { relativeTo: this.route });
+        this.router.navigate(['/signin']);
         this.loading = false;
       },
       (error) => {

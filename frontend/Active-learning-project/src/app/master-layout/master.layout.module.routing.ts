@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MasterLayoutComponent } from './layouts/master/master-layout.component';
 import { UserManagementComponent } from './layouts/user-management/user-management.component';
 import { UserManagementGuard } from '../shared/guards/user-management.guard';
-import { CourseManagementComponent } from './layouts/course-management/course-management.component';
 
 const routes: Routes = [
   {
@@ -16,8 +15,11 @@ const routes: Routes = [
         canActivate: [UserManagementGuard],
       },
       {
-        path: 'courses',
-        component: CourseManagementComponent,
+        path: 'languages',
+        loadChildren: () =>
+          import('./layouts/courses/courses.module').then(
+            (m) => m.CoursesModule
+          ),
       },
     ],
   },
