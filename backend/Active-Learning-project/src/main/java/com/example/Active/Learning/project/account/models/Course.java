@@ -12,10 +12,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(name = "courses",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "name"),
-        })
+@Table(name = "courses")
 @NoArgsConstructor
 public class Course {
     @Id

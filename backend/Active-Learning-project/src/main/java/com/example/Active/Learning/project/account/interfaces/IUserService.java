@@ -1,8 +1,6 @@
 package com.example.Active.Learning.project.account.interfaces;
 
-import com.example.Active.Learning.project.account.models.Course;
 import com.example.Active.Learning.project.account.models.User;
-import com.example.Active.Learning.project.account.payload.request.CourseRequest;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import lombok.NonNull;
 import org.springframework.http.ResponseEntity;

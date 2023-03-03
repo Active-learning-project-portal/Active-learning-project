@@ -9,15 +9,20 @@ import com.example.Active.Learning.project.account.payload.response.MessageRespo
 import com.example.Active.Learning.project.account.repositories.PLanguageRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PLanguageServiceImpl implements IPLanguageService {
 
-    private  final PLanguageRepository pLanguageRepository;
+    private final PLanguageRepository pLanguageRepository;
 
     @Autowired
     public PLanguageServiceImpl(PLanguageRepository pLanguageRepository) {
@@ -26,10 +31,19 @@ public class PLanguageServiceImpl implements IPLanguageService {
 
     @Override
     public ResponseEntity<?> createLanguage(@NonNull PLanguageRequest pLanguageRequest) {
+
+        if (pLanguageRequest.getName() == null ||
+                pLanguageRequest.getCourse() == null ||
+                pLanguageRequest.getThumbNail() == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(List.of(new CourseNotFoundException(MessageResponse.NO_LANGUAGE_ADDED).getMessage()));
+        }
+
         if (pLanguageRepository.existsByName(pLanguageRequest.getName())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new CourseNotFoundException(MessageResponse.LANGUAGE_ALREADY_EXISTS));
+                    .body(List.of(new CourseNotFoundException(MessageResponse.LANGUAGE_ALREADY_EXISTS).getMessage()));
         }
 
         PLanguage pLanguage = new PLanguage(
@@ -45,17 +59,33 @@ public class PLanguageServiceImpl implements IPLanguageService {
                     .body(e.getMessage());
         }
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(List.of(pLanguage));
     }
 
     @Override
     public ResponseEntity<List<PLanguage>> getAllLanguages(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
-        return null;
+        Page<PLanguage> languages = null;
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        if (searchValue != null) {
+            languages = pLanguageRepository.findAllByLike(searchValue, pageable);
+        } else {
+            languages = pLanguageRepository.findAll(pageable);
+        }
+        return ResponseEntity.ok(languages.stream().toList());
     }
 
     @Override
     public ResponseEntity<?> getLanguageById(@NonNull Long languageId) {
-        return null;
+        Optional<PLanguage> course = pLanguageRepository.findById(languageId);
+        if (!course.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new CourseNotFoundException(MessageResponse.USER_NOT_FOUND));
+        }
+        return ResponseEntity.ok().body(course.get());
     }
 
     @Override
@@ -65,6 +95,20 @@ public class PLanguageServiceImpl implements IPLanguageService {
 
     @Override
     public ResponseEntity<?> deleteLanguage(@NonNull Long languageId) {
-        return null;
+        Optional<PLanguage> language = pLanguageRepository.findById(languageId);
+        if (!language.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(List.of(new CourseNotFoundException(MessageResponse.LANGUAGE_NOT_FOUND)));
+        }
+
+        try {
+            pLanguageRepository.deleteById(languageId);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
+        return ResponseEntity.ok(List.of(language));
     }
 }

@@ -2,10 +2,7 @@ package com.example.Active.Learning.project.account.controller;
 
 
 import com.example.Active.Learning.project.account.constants.DefaultValues;
-import com.example.Active.Learning.project.account.interfaces.IPLanguageService;
-import com.example.Active.Learning.project.account.models.Course;
 import com.example.Active.Learning.project.account.models.PLanguage;
-import com.example.Active.Learning.project.account.payload.request.CourseRequest;
 import com.example.Active.Learning.project.account.payload.request.PLanguageRequest;
 import com.example.Active.Learning.project.account.service.PLanguageServiceImpl;
 import lombok.NonNull;
