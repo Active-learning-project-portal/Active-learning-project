@@ -31,7 +31,7 @@ public class CourseServiceImpl implements ICourseService {
         if (courseRepository.existsByName(courseRequest.getName())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new CourseNotFoundException(MessageResponse.COURSE_NAME_ALREADY_EXISTS));
+                    .body(new CourseNotFoundException(MessageResponse.COURSE_ALREADY_EXISTS));
         }
 
         Course course = new Course(
