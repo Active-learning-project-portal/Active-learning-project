@@ -1,6 +1,32 @@
 <div class="sidebar">
-    <a ><i class="fa fa-fw fa-envelope"></i> Dashboard</a>
-    <a><i class="fa fa-fw fa-user"></i> Kanban</a>
-    <a routerLink="/alp/users"><i class="fa fa-fw fa-home"></i> Users</a>
-    <a routerLink="/alp/courses"><i class="fa fa-fw fa-wrench"></i> Courses</a>
+  <a routerLink="/alp/dashboard" routerLinkActive="active">
+    <div>
+      <fa-icon class="icon" [icon]="dashboard"></fa-icon>
+    </div>
+    <div>Dashboard</div>
+  </a>
+  <a routerLink="/alp/courses" routerLinkActive="active">
+    <div>
+      <fa-icon class="icon" [icon]="courses"></fa-icon>
+    </div>
+    <div>Courses</div>
+  </a>
+  <a routerLink="/alp/assignments" routerLinkActive="active">
+    <div>
+      <fa-icon class="icon" [icon]="assignments"></fa-icon>
+    </div>
+    <div>Assignments</div>
+  </a>
+  <a routerLink="/alp/users" routerLinkActive="active">
+    <div>
+      <fa-icon class="icon" [icon]="users"></fa-icon>
+    </div>
+    <div>Users</div>
+  </a>
+  <a routerLink="/alp/settings" routerLinkActive="active">
+    <div>
+      <fa-icon class="icon" [icon]="settings"></fa-icon>
+    </div>
+    <div>Settings</div>
+  </a>
 </div>

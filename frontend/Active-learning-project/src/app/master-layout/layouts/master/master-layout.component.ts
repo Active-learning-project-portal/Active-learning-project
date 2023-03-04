@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faBars, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
