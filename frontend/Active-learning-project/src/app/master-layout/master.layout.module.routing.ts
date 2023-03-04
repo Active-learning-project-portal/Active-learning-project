@@ -5,21 +5,28 @@ import { UserManagementComponent } from './layouts/user-management/user-manageme
 import { UserManagementGuard } from '../shared/guards/user-management.guard';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: MasterLayoutComponent,
-		children: [
-			{
-				path: '',
-				component: UserManagementComponent,
-				canActivate:[UserManagementGuard],
-			}
-		],
-	}
+  {
+    path: '',
+    component: MasterLayoutComponent,
+    children: [
+      {
+        path: 'users',
+        component: UserManagementComponent,
+        canActivate: [UserManagementGuard],
+      },
+      {
+        path: 'languages',
+        loadChildren: () =>
+          import('./layouts/courses/courses.module').then(
+            (m) => m.CoursesModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class MasterLayoutRoutingModule { }
+export class MasterLayoutRoutingModule {}

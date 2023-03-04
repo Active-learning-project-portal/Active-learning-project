@@ -65,6 +65,7 @@ export class GoogleButtonComponent {
             this.userManagementService.save(authModel).subscribe(
               (data) => {
                 this.toastr.success('Registration successfully');
+                window.location.href = '/alp';
               },
               (error) => {
                 this.toastr.error(error.message, error.title);
