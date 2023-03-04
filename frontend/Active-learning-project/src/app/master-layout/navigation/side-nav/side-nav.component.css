@@ -1,14 +1,41 @@
-
-
-
-
-
-
+.sidebar {
+  margin-top: 2rem;
+}
 
 .sidebar a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 20px;
-    color: #818181;
-    display: block;
+  display: flex;
+  padding: 0.4rem;
+  text-decoration: none;
+  color: #e4e0e0;
+  margin-top: 0.2rem;
+  border-left-width: var(--sidenav-border-size);
+  border-left-style: var(--sidenav-border-style);
+  border-left-color: var(--sidenav-inactive-link);
+}
+
+.sidebar a div:nth-child(1) {
+  position: relative;
+  min-width: 2rem;
+  margin: auto .8rem;
+}
+
+.sidebar a div:nth-child(1) .icon {
+  font-size: 15pt;
+}
+
+.sidebar a div:nth-child(2) {
+  text-align: left;
+  font-size: 17px;
+}
+
+.sidebar a.active {
+  border-left-color: var(--sidenav-active-link);
+}
+
+/* .sidebar a.active .icon {
+  color: var(--sidenav-inactive-link);
+} */
+
+.sidebar a.active div:nth-child(2) {
+  color: var(--sidenav-active-link);
 }

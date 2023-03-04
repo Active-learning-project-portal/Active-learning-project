@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LanguageManagementComponent } from './language-management/language-management.component';
+import { CourseMasterComponent } from './course-layouts/course-master/course-master.component';
 
 const routes: Routes = [
-
   {
     path: '',
-    component: LanguageManagementComponent,
+    component: CourseMasterComponent,
+    children: [
+      
+    ]
   },
 ];
 

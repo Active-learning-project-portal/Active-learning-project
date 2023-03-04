@@ -10,6 +10,11 @@
   --top-nav-offset: .8rem;
   --top-nav-search-padding-left: 2rem;
   --profile-image-size: 2rem;
+  /* Sidebar Navigation */
+  --sidenav-border-size: 5px;
+  --sidenav-inactive-link: transparent;
+  --sidenav-active-link: orange;
+  --sidenav-border-style: solid;
 }
 
 html,

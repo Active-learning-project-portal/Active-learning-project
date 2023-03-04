@@ -9,8 +9,8 @@
 }
 
 .sidebar{
-  /* width: 0; */
-  /* padding: 0; */
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -23,14 +23,15 @@
 
 .icon{
   gap: .3rem;
-  padding: .4rem;
+  margin: 1.3rem auto;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: nowrap;
 }
 
 .icon .icon-symbol{
-  font-size: 14pt;
+  font-size: 18pt;
 }
 
 .icon .logo span{
