@@ -11,6 +11,9 @@ import { UserManagementComponent } from './layouts/user-management/user-manageme
 import { MasterLayoutComponent } from './layouts/master/master-layout.component';
 import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 import { CoursesModule } from './layouts/courses/courses.module';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+import { AssignmentsComponent } from './layouts/assignments/assignments.component';
+import { SettingsComponent } from './layouts/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { CoursesModule } from './layouts/courses/courses.module';
     SideNavComponent,
     UserProfileComponent,
     ArrayToStringPipe,
+    DashboardComponent,
+    AssignmentsComponent,
+    SettingsComponent,
   ],
   exports: [
     MasterLayoutComponent,
