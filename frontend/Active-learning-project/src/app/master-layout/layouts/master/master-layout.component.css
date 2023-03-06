@@ -1,28 +1,32 @@
-.master{
+.master {
   margin: 0;
   padding: 0;
 }
 
-.viewwrapper{
+.viewwrapper {
   background-color: rgba(0, 0, 0, 1);
   border-radius: 0;
+  flex-wrap: nowrap;
 }
 
-.sidebar{
+.sidebar {
+  position: relative;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  transition: all 0.5s;
 }
 
-.mainview{
+.mainview {
   background-color: rgb(238, 238, 233);
   border-radius: 7px;
   margin: 3px;
   padding: 0;
+  transition: margin .5s, border-radius .5s;
 }
 
-.icon{
-  gap: .3rem;
+.icon {
+  gap: 0.3rem;
   margin: 1.3rem auto;
   display: flex;
   align-items: center;
@@ -30,17 +34,53 @@
   flex-wrap: nowrap;
 }
 
-.icon .icon-symbol{
+.icon .icon-symbol {
   font-size: 18pt;
 }
 
-.icon .logo span{
-  font-family: 'Lobster';
+.icon .logo span {
+  font-family: "Lobster";
   font-size: 14pt;
   white-space: nowrap;
 }
 
 .icon .logo span,
-.icon .icon-symbol{
+.icon .icon-symbol {
   color: rgb(238, 228, 226);
+}
+
+@media only screen and (max-width: 1120px) {
+  .icon .logo {
+    display: none;
+  }
+
+  .sidebar {
+    width: 8%;
+  }
+
+  .mainview {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .icon .logo {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, .95);
+    transition: width .5s;
+  }
+
+  .sidebar.toggle{
+    width: 100%;
+  }
 }

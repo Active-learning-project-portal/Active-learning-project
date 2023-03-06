@@ -16,11 +16,12 @@
 .sidebar a div:nth-child(1) {
   position: relative;
   min-width: 2rem;
-  margin: auto .8rem;
+  margin: auto 0.8rem;
 }
 
 .sidebar a div:nth-child(1) .icon {
   font-size: 15pt;
+  transition: all 0.5s;
 }
 
 .sidebar a div:nth-child(2) {
@@ -38,4 +39,35 @@
 
 .sidebar a.active div:nth-child(2) {
   color: var(--sidenav-active-link);
+}
+
+@media only screen and (max-width: 1120px) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .sidebar a div:nth-child(1) {
+    width: 100%;
+  }
+
+  .sidebar a div:nth-child(1) .icon {
+    font-size: 18pt;
+  }
+
+  .sidebar a div:nth-child(2) {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .sidebar a{
+    width: max-content;
+  }
+  
+  .sidebar a div:nth-child(2) {
+    display: flex;
+    text-align: left;
+  }
 }
