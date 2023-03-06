@@ -14,13 +14,3 @@
   height: var(--profile-image-size);
   pointer-events: none;
 }
-
-.user-profile .icons .icon {
-  font-size: 14pt;
-  margin-left: 0.5rem;
-}
-
-.user-profile .icons .icon:hover,
-.user-profile .profile:hover {
-  cursor: pointer;
-}

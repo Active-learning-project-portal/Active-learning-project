@@ -14,6 +14,14 @@ import { CoursesModule } from './layouts/courses/courses.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AssignmentsComponent } from './layouts/assignments/assignments.component';
 import { SettingsComponent } from './layouts/settings/settings.component';
+import { CourseRegistrationComponent } from './modals/course-registration/course-registration.component';
+import { MaterialModule } from '../shared/modules/material-modules';
+import { ProgrammingLanguageComponent } from './modals/views/programming-language/programming-language.component';
+import { LanguageCourseComponent } from './modals/views/language-course/language-course.component';
+import { LanguageSubjectComponent } from './modals/views/language-subject/language-subject.component';
+import { MatButtonModule } from '@angular/material/button';
+import { CommunityComponent } from './layouts/community/community.component';
+import { PlaygroundComponent } from './layouts/playground/playground.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +37,12 @@ import { SettingsComponent } from './layouts/settings/settings.component';
     DashboardComponent,
     AssignmentsComponent,
     SettingsComponent,
+    CourseRegistrationComponent,
+    ProgrammingLanguageComponent,
+    LanguageCourseComponent,
+    LanguageSubjectComponent,
+    CommunityComponent,
+    PlaygroundComponent
   ],
   exports: [
     MasterLayoutComponent,
@@ -39,12 +53,22 @@ import { SettingsComponent } from './layouts/settings/settings.component';
     TopNavComponent,
     SideNavComponent,
     UserProfileComponent,
+    ArrayToStringPipe,
+    DashboardComponent,
+    AssignmentsComponent,
+    SettingsComponent,
+    CourseRegistrationComponent,
+    ProgrammingLanguageComponent,
+    LanguageCourseComponent,
+    LanguageSubjectComponent
   ],
   imports: [
     CommonModule,
     MasterLayoutRoutingModule,
     CoursesModule,
     FontAwesomeModule,
+    MaterialModule,
+    MatButtonModule
   ],
 })
-export class MasterLayoutModule {}
+export class MasterLayoutModule { }

@@ -6,6 +6,8 @@ import { UserManagementGuard } from '../shared/guards/user-management.guard';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AssignmentsComponent } from './layouts/assignments/assignments.component';
 import { SettingsComponent } from './layouts/settings/settings.component';
+import { CommunityComponent } from './layouts/community/community.component';
+import { PlaygroundComponent } from './layouts/playground/playground.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,14 @@ const routes: Routes = [
       {
         path: 'settings',
         component: SettingsComponent,
+      },
+      {
+        path: 'community',
+        component: CommunityComponent,
+      },
+      {
+        path: 'playground',
+        component: PlaygroundComponent,
       }
     ],
   },

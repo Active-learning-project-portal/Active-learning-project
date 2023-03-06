@@ -21,6 +21,7 @@ import { SignupComponent } from './user-authentication/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app.module.routing';
 import { AuthenticateService } from './services/user-authentication/authenticate.service';
+import { MaterialModule } from './shared/modules/material-modules';
 
 @NgModule({
 	declarations: [
@@ -30,8 +31,7 @@ import { AuthenticateService } from './services/user-authentication/authenticate
 		SignInComponent,
 		SignupComponent,
 		GoogleButtonComponent,
-		GithubButtonComponent,
-   
+		GithubButtonComponent
 	],
 	imports: [
 		BrowserModule,
