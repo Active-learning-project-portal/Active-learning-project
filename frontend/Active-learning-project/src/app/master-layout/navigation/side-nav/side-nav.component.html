@@ -1,1 +1,53 @@
-<p class="text-warning">side-nav works!</p>
+<div class="sidebar">
+  <a routerLink="/alp/dashboard" routerLinkActive="active" (click)="closeMenu()">
+    <div>
+      <fa-icon class="icon" [icon]="dashboard"></fa-icon>
+    </div>
+    <div>Dashboard</div>
+  </a>
+  <a routerLink="/alp/courses" routerLinkActive="active" (click)="closeMenu()">
+    <div>
+      <fa-icon class="icon" [icon]="courses"></fa-icon>
+    </div>
+    <div>Courses</div>
+  </a>
+  <a routerLink="/alp/assignments" routerLinkActive="active" (click)="closeMenu()">
+    <div>
+      <fa-icon class="icon" [icon]="assignments"></fa-icon>
+    </div>
+    <div>Assignments</div>
+  </a>
+  <a routerLink="/alp/users" routerLinkActive="active" (click)="closeMenu()">
+    <div>
+      <fa-icon class="icon" [icon]="users"></fa-icon>
+    </div>
+    <div>Users</div>
+  </a>
+  <a routerLink="/alp/community" routerLinkActive="active" (click)="closeMenu()">
+    <div>
+      <fa-icon class="icon" [icon]="community"></fa-icon>
+    </div>
+    <div>Community</div>
+  </a>
+  <a routerLink="/alp/playground" routerLinkActive="active" (click)="closeMenu()">
+    <div>
+      <fa-icon class="icon" [icon]="playground"></fa-icon>
+    </div>
+    <div>Playground</div>
+  </a>
+  <hr style="color: #fff" />
+  <div class="config">
+    <a routerLink="/alp/settings" routerLinkActive="active" (click)="closeMenu()">
+      <div>
+        <fa-icon class="icon" [icon]="settings"></fa-icon>
+      </div>
+      <div>Settings</div>
+    </a>
+    <a routerLinkActive="active" (click)="signOut()">
+      <div>
+        <fa-icon class="icon" [icon]="logout"></fa-icon>
+      </div>
+      <div>Logout</div>
+    </a>
+  </div>
+</div>

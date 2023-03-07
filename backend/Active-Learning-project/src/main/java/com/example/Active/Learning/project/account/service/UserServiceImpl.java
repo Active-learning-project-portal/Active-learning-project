@@ -25,8 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.DateTimeException;
-import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -117,21 +115,17 @@ public class UserServiceImpl implements IUserService {
         return ResponseEntity.ok().body(user.get());
     }
 
-    public ResponseEntity<Optional<User>> getUserByUsername(@NonNull String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        User user1 = userRepository.findByUsername(username).get();
-        return ResponseEntity.ok(user);
-    }
-
-    public ResponseEntity<User> updateUser(@NonNull Long id, @NonNull User user) {
-        User userExist = userRepository.findById(id).
+    @Override
+    public ResponseEntity<List<User>> updateUser(@NonNull Long userId, @NonNull SignUpRequest signUpRequest) {
+        User userExist = userRepository.findById(userId).
                 orElseThrow(() ->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-//        userExist.setUsername(user.getEmail());
-//        userExist.setPassword(user.getPassword());
-//        userRepository.save(userExist);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(List.of(userExist));
     }
 
+    @Override
+    public ResponseEntity<User> deleteUser(@NonNull Long userId) {
+      return null;
+    }
 
 }

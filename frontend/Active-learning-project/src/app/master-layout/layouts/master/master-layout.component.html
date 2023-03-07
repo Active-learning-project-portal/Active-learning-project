@@ -1,21 +1,24 @@
 <div class="fluid-container bg-light h-100 master">
   <div class="row m-0 h-100 viewwrapper">
-    <div class="col-lg-2 sidebar">
+    <div class="col-lg-2 col-md-3 sidebar" [ngClass]="{ toggle: isMenuOpen }">
       <div class="icon">
         <fa-icon [icon]="faSolidBars" class="icon-symbol"></fa-icon>
         <div class="logo">
           <span>Active Learning</span>
         </div>
       </div>
+      <hr style="color: #fff" />
       <!-- Side Navigation Import -->
-      <alp-side-nav></alp-side-nav>
+      <alp-side-nav (closeSideMenuEmitter)="toggleSideNavMenu($event)"></alp-side-nav>
     </div>
-    <div class="col-lg mainview">
+    <div class="col-lg col-md col mainview">
       <!-- Top Navigation Import -->
-      <alp-top-nav></alp-top-nav>
-      <!-- <router-outlet></router-outlet> -->
+      <alp-top-nav
+        (toggleMenuEmitter)="toggleSideNavMenu($event)"
+        [menuOpen]="isMenuOpen"
+      ></alp-top-nav>
       <div class="maincontent">
-        <alp-user-management></alp-user-management>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>

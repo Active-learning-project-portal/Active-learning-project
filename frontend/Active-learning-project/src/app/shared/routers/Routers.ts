@@ -18,4 +18,4 @@ const alp = {
     }
 }
 
-export { auth, alp }
+export { auth }
