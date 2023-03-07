@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'alp-root',
@@ -8,30 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
   title = 'Active-learning-project';
+  
+  static isBrowser = new BehaviorSubject<boolean>(false);
 
-  constructor(public toastr: ToastrService) {}
-
-  showSuccess() {
-    this.toastr.success('everything is broken', 'Major Error', {
-      timeOut: 3000,
-    });
-  }
-
-  showError() {
-    this.toastr.error('everything is broken', 'Major Error', {
-      timeOut: 3000,
-    });
-  }
-
-  showInfo() {
-    this.toastr.info('everything is broken', 'Major Error', {
-      timeOut: 3000,
-    });
-  }
-
-  showWarning() {
-    this.toastr.warning('everything is broken', 'Major Error', {
-      timeOut: 3000,
-    });
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {
+    AppComponent.isBrowser.next(isPlatformBrowser(platformId));
   }
 }
