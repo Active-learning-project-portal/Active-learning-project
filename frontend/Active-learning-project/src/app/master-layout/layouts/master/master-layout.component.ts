@@ -22,7 +22,7 @@ export class MasterLayoutComponent {
       // Request user to register for a course to use the system
       this.dialog.open(CourseRegistrationComponent, {
         width: '70%',
-        height: '95%',
+        height: '89%',
         backdropClass: 'courseSelectorBackgrop'
       })
     }

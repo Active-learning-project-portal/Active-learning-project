@@ -1,31 +1,38 @@
 <mat-stepper #stepper>
-  <mat-step class="h-100 p-0" label="Choose Language">
-    <h1 mat-dialog-title>CHOOSE A PROGRAMMING LANGUAGE</h1>
-    <div class="row m-0" mat-dialog-content>
+  <mat-step label="Choose Language">
+    <div class="stepperContent rounded" mat-dialog-content>
       <alp-programming-language></alp-programming-language>
     </div>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" (click)="nextStep(stepper)">Next</button>
+    <div class="stepperAction" mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="nextStep(stepper)">
+        Next
+      </button>
     </div>
   </mat-step>
   <mat-step label="Choose Course">
-    <!-- <p mat-dialog-title>Choose a Course</p> -->
-    <h1 mat-dialog-title>CHOOSE A COURSE</h1>
-    <div class="row m-0" mat-dialog-content></div>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" (click)="prevStep(stepper)">Back</button>
-      <button mat-raised-button color="accent" (click)="nextStep(stepper)">Next</button>
+    <div class="row m-0 stepperContent" mat-dialog-content>
+      <h1>CHOOSE A COURSE</h1>
+    </div>
+    <div class="stepperAction" mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="prevStep(stepper)">
+        Back
+      </button>
+      <button mat-raised-button color="accent" (click)="nextStep(stepper)">
+        Next
+      </button>
     </div>
   </mat-step>
-  <mat-step label="Knowledge Validation">
-    <!-- <p mat-dialog-title>Choose a Course</p> -->
-    <h1 mat-dialog-title>
-      HAVE YOU COMPLETED BASICS FOR THIS PROGRAMMING LANGUAGE BEFORE?
-    </h1>
-    <div class="row m-0" mat-dialog-content></div>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" (click)="prevStep(stepper)">Back</button>
-      <button mat-raised-button color="accent" (click)="nextStep(stepper)">Register</button>
+  <mat-step class="h-100 stepperContainer" label="Knowledge Validation">
+    <div class="row m-0 stepperContent" mat-dialog-content>
+      <h1>HAVE YOU COMPLETED BASICS FOR THIS PROGRAMMING LANGUAGE BEFORE?</h1>
+    </div>
+    <div class="stepperAction" mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="prevStep(stepper)">
+        Back
+      </button>
+      <button mat-raised-button color="accent" (click)="nextStep(stepper)">
+        Register
+      </button>
     </div>
   </mat-step>
 </mat-stepper>
