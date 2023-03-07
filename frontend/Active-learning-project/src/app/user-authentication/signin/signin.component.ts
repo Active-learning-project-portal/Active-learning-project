@@ -101,7 +101,6 @@ export class SignInComponent implements OnInit {
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);
-        // this.router.navigate(['/alp']);
         window.location.href = "/alp"
       },
       (error) => {

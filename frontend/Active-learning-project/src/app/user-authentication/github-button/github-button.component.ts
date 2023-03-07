@@ -77,8 +77,52 @@ export class GithubButtonComponent {
     );
   }
 
+  aunthenticateUser(transformedData: any) {
+    const gitAuthModel: AuthenticateRequest = {
+      username: transformedData.username,
+      password: environment.defaultPassword,
+    };
+    this.authenticateService.authenticate(gitAuthModel).subscribe(
+      (userAuth) => {
+        this.toastr.success(`Successful login`);
+        const stringifyUser = JSON.stringify(userAuth);
+        localStorage.setItem('user', stringifyUser);
+        window.location.href = '/alp';
+      },
+      (error) => {
+        if (error?.message === 'User not Found!') {
+          this.signUpUser(transformedData);
+          return;
+        }
+        this.toastr.error(error?.message);
+      }
+    );
+  }
+
+  signUpUser(transformedData: any) {
+    const authModel: UserRequest = {
+      firstname: transformedData.firstname,
+      lastname: transformedData.lastname,
+      authType: transformedData.authType,
+      provider: transformedData.provider,
+      username: transformedData.username,
+      password: environment.defaultPassword,
+      avatar: transformedData.avatar,
+    };
+
+    this.usermanagementService.save(authModel).subscribe(
+      (data) => {
+        this.toastr.success('Registration successfully');
+        window.location.href = '/signin';
+      },
+      (error) => {
+        this.toastr.error(error?.message);
+      }
+    );
+  }
+
   ngOnInit(): void {
-    console.log(this.btnType)
+    console.log(this.btnType);
     this.githubLoginUrl = this.config.gitLoginUrl;
     this.btnTitle =
       this.btnType == 'signin'
@@ -117,51 +161,12 @@ export class GithubButtonComponent {
       // Check if both objects are set create an authModel
       // for a git signup/signin
       if (this.gitUserData! && this.gitUserEmails!) {
-        console.log(this.btnType)
         const transformedData = this.config.transformUserDataToModel(
           this.gitUserData,
           this.gitUserEmails,
           this.btnType
         );
-
-
-        if (transformedData.authType === 'signin') {
-          const gitAuthModel: AuthenticateRequest = {
-            username: transformedData.username,
-            password: environment.defaultPassword,
-          };
-          this.authenticateService.authenticate(gitAuthModel).subscribe(
-            (userAuth) => {
-              this.toastr.success(`Successful login`);
-              const stringifyUser = JSON.stringify(userAuth);
-              localStorage.setItem('user', stringifyUser);
-              window.location.href = '/alp';
-            },
-            (error) => {
-              this.toastr.error(error?.message);
-            }
-          );
-        } else if (transformedData.authType === 'signup') {
-          const authModel: UserRequest = {
-            firstname: transformedData.firstname,
-            lastname: transformedData.lastname,
-            authType: transformedData.authType,
-            provider: transformedData.provider,
-            username: transformedData.username,
-            password: environment.defaultPassword,
-            avatar: transformedData.avatar,
-          };
-
-          this.usermanagementService.save(authModel).subscribe(
-            (data) => {
-              this.toastr.success('Registration successfully');
-              window.location.href = '/signin';
-            },
-            (error) => {
-              this.toastr.error(error.message, error.title);
-            }
-          );
-        }
+          this.aunthenticateUser(transformedData);
       }
     });
   }
