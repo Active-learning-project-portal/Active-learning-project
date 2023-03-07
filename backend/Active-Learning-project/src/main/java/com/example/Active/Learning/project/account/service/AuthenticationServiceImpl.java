@@ -1,14 +1,12 @@
-package com.example.Active.Learning.project.authenticate.services;
+package com.example.Active.Learning.project.account.service;
 
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.payload.response.JwtResponse;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
-import com.example.Active.Learning.project.authenticate.interfaces.IAuthentication;
-import com.example.Active.Learning.project.authenticate.payload.request.AuthRequest;
-import com.example.Active.Learning.project.authenticate.payload.response.AuthResponse;
-import com.example.Active.Learning.project.authenticate.security.jwt.JwtUtils;
-import com.example.Active.Learning.project.authenticate.security.services.UserDetailsImpl;
+import com.example.Active.Learning.project.account.interfaces.IAuthentication;
+import com.example.Active.Learning.project.account.payload.request.AuthRequest;
+import com.example.Active.Learning.project.account.payload.response.AuthResponse;
+import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AuthenticationServiceImpl implements IAuthentication {
@@ -42,10 +37,14 @@ public class AuthenticationServiceImpl implements IAuthentication {
         Authentication authentication = getAuthentication(authRequest.getUsername(), authRequest.getPassword());
 
         if (authentication == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
+            return switch (authRequest.getAuthType()) {
+                case GITHUB, GOOGLE, MANUAL -> ResponseEntity
+                        .badRequest()
+                        .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
+            };
+
         }
+
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

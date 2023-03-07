@@ -1,10 +1,8 @@
-package com.example.Active.Learning.project.authenticate.controller;
+package com.example.Active.Learning.project.account.controller;
 
 
-import com.example.Active.Learning.project.authenticate.payload.request.AuthRequest;
-import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
-import com.example.Active.Learning.project.account.service.UserServiceImpl;
-import com.example.Active.Learning.project.authenticate.services.AuthenticationServiceImpl;
+import com.example.Active.Learning.project.account.payload.request.AuthRequest;
+import com.example.Active.Learning.project.account.service.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

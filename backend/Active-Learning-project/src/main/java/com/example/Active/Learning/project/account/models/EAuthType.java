@@ -1,6 +1,6 @@
 package com.example.Active.Learning.project.account.models;
 
-public enum AuthType {
+public enum EAuthType {
     GOOGLE,
     MANUAL,
     GITHUB

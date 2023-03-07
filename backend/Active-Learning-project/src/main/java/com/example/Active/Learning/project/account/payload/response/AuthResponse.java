@@ -1,4 +1,4 @@
-package com.example.Active.Learning.project.authenticate.payload.response;
+package com.example.Active.Learning.project.account.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;

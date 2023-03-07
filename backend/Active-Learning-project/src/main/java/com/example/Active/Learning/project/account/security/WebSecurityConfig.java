@@ -1,9 +1,9 @@
-package com.example.Active.Learning.project.authenticate.security;
+package com.example.Active.Learning.project.account.security;
 
 
-import com.example.Active.Learning.project.authenticate.security.jwt.AuthEntryPointJwt;
-import com.example.Active.Learning.project.authenticate.security.jwt.AuthTokenFilter;
-import com.example.Active.Learning.project.authenticate.security.services.UserDetailsServiceImpl;
+import com.example.Active.Learning.project.account.security.jwt.AuthEntryPointJwt;
+import com.example.Active.Learning.project.account.security.jwt.AuthTokenFilter;
+import com.example.Active.Learning.project.account.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

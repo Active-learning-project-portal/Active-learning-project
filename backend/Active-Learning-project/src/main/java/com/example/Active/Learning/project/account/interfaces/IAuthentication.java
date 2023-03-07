@@ -1,7 +1,6 @@
-package com.example.Active.Learning.project.authenticate.interfaces;
+package com.example.Active.Learning.project.account.interfaces;
 
-import com.example.Active.Learning.project.authenticate.payload.request.AuthRequest;
-import lombok.NonNull;
+import com.example.Active.Learning.project.account.payload.request.AuthRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 

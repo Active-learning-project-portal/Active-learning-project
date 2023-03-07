@@ -1,4 +1,4 @@
-package com.example.Active.Learning.project.authenticate.security.services;
+package com.example.Active.Learning.project.account.security.services;
 
 import com.example.Active.Learning.project.account.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;

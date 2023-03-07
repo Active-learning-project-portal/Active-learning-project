@@ -1,4 +1,4 @@
-package com.example.Active.Learning.project.authenticate.security.jwt;
+package com.example.Active.Learning.project.account.security.jwt;
 
 import java.io.IOException;
 

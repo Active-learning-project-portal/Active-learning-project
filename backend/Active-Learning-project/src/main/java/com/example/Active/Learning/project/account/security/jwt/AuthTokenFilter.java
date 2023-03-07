@@ -1,9 +1,9 @@
-package com.example.Active.Learning.project.authenticate.security.jwt;
+package com.example.Active.Learning.project.account.security.jwt;
 
 import java.io.IOException;
 
 
-import com.example.Active.Learning.project.authenticate.security.services.UserDetailsServiceImpl;
+import com.example.Active.Learning.project.account.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

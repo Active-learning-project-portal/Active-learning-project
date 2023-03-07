@@ -1,8 +1,8 @@
-package com.example.Active.Learning.project.authenticate.security.jwt;
+package com.example.Active.Learning.project.account.security.jwt;
 
 import java.util.Date;
 
-import com.example.Active.Learning.project.authenticate.security.services.UserDetailsImpl;
+import com.example.Active.Learning.project.account.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

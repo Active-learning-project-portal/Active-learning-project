@@ -107,11 +107,6 @@ public class UserServiceImpl implements IUserService {
         return ResponseEntity.ok(users.stream().toList());
     }
 
-    public String getActiveSearchValue(String searchValue){
-        String searchValueToLowerCase = searchValue.toLowerCase();
-        return searchValueToLowerCase == "active"?"1":searchValueToLowerCase == "inactive"?"0":null;
-    }
-
     public ResponseEntity<?> getUserById(@NonNull Long id) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
