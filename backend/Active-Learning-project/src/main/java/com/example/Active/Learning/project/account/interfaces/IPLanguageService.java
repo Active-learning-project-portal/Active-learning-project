@@ -6,12 +6,13 @@ import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IPLanguageService {
 
     ResponseEntity<?> createLanguage(@NonNull PLanguageRequest pLanguageRequest);
     ResponseEntity<List<PLanguage>> getAllLanguages(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue);
-    ResponseEntity<?> getLanguageById(@NonNull Long languageId);
-    ResponseEntity<List<PLanguage>> updateLanguage(@NonNull Long languageId, @NonNull PLanguageRequest pLanguageRequest);
-    ResponseEntity<?> deleteLanguage(@NonNull Long languageId);
+    ResponseEntity<?> getLanguageById(@NonNull UUID languageId);
+    ResponseEntity<List<PLanguage>> updateLanguage(@NonNull UUID languageId, @NonNull PLanguageRequest pLanguageRequest);
+    ResponseEntity<?> deleteLanguage(@NonNull UUID languageId);
 }

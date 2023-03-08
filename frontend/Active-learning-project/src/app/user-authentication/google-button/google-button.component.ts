@@ -44,34 +44,17 @@ export class GoogleButtonComponent {
             avatar: user['photoUrl'],
           };
 
-          if (authModel.authType === 'signin') {
-            const userModel: AuthenticateRequest = {
-              username: authModel.username,
-              password: environment.defaultPassword,
-            };
-
-            this.authenticateService.authenticate(userModel).subscribe(
-              (userAuth) => {
-                this.toastr.success(`Successful login`);
-                const stringifyUser = JSON.stringify(userAuth);
-                localStorage.setItem('user', stringifyUser);
-                window.location.href = '/alp';
-              },
-              (error) => {
-                this.toastr.error(error?.message);
-              }
-            );
-          } else if (authModel.authType === 'signup') {
-            this.userManagementService.save(authModel).subscribe(
-              (data) => {
-                this.toastr.success('Registration successfully');
-                window.location.href = '/alp';
-              },
-              (error) => {
-                this.toastr.error(error.message, error.title);
-              }
-            );
-          }
+          this.authenticateService.authenticate(authModel).subscribe(
+            (userAuth) => {
+              this.toastr.success(`Successful login`);
+              const stringifyUser = JSON.stringify(userAuth);
+              localStorage.setItem('user', stringifyUser);
+              window.location.href = '/alp';
+            },
+            (error) => {
+              this.toastr.error(error?.message);
+            }
+          );
           return;
         });
       }

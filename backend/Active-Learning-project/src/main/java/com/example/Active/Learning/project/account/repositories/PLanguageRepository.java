@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface  PLanguageRepository extends JpaRepository<PLanguage,Long> {
+public interface  PLanguageRepository extends JpaRepository<PLanguage, UUID> {
 
     Optional<PLanguage> findByName(String name);
 

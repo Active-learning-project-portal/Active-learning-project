@@ -1,6 +1,6 @@
 package com.example.Active.Learning.project.account.security.services;
 
-import com.example.Active.Learning.project.account.models.User;
+import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

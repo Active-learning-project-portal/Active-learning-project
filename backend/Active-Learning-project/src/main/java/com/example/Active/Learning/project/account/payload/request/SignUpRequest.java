@@ -9,13 +9,11 @@ import java.util.Set;
 @Getter
 @Setter
 public class SignUpRequest {
-    private String username;
-    private String password;
-    private String provider;
     private String firstname;
     private String lastname;
+    private String username;
     private String avatar;
-    private String authType;
+    private String password;
+    private String provider;
     private Date joined = new Date();
-    private Date lastSeen = new Date();
 }

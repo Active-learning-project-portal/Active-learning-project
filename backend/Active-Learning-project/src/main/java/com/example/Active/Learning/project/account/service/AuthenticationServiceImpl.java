@@ -2,9 +2,9 @@ package com.example.Active.Learning.project.account.service;
 
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
+import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.interfaces.IAuthentication;
-import com.example.Active.Learning.project.account.payload.request.AuthRequest;
 import com.example.Active.Learning.project.account.payload.response.AuthResponse;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import lombok.NonNull;
@@ -30,21 +30,23 @@ public class AuthenticationServiceImpl implements IAuthentication {
     @Value("${active_learning_project.app.tokenType}")
     private String tokenType;
 
+    @Autowired
+    UserServiceImpl userService;
 
     @Override
-    public ResponseEntity<?> authenticate(@NonNull AuthRequest authRequest) {
+    public ResponseEntity<?> authenticate(@NonNull SignUpRequest signUpRequest) {
 
-        Authentication authentication = getAuthentication(authRequest.getUsername(), authRequest.getPassword());
+        Authentication authentication = getAuthentication(signUpRequest.getUsername(), signUpRequest.getPassword());
 
         if (authentication == null) {
-            return switch (authRequest.getAuthType()) {
-                case GITHUB, GOOGLE, MANUAL -> ResponseEntity
+            return switch (signUpRequest.getProvider().toLowerCase()) {
+                case "github", "google" -> userService.createUser(signUpRequest);
+                default -> ResponseEntity
                         .badRequest()
                         .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
             };
 
         }
-
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

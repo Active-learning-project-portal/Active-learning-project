@@ -2,7 +2,7 @@ package com.example.Active.Learning.project.account.controller;
 
 
 import com.example.Active.Learning.project.account.constants.DefaultValues;
-import com.example.Active.Learning.project.account.models.User;
+import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import com.example.Active.Learning.project.account.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -38,7 +39,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable UUID id) {
         return userService.getUserById(id);
     }
 
@@ -49,7 +50,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<List<User>> updateUserById(@PathVariable Long id, @RequestBody SignUpRequest user) {
+    public ResponseEntity<List<User>> updateUserById(@PathVariable UUID id, @RequestBody SignUpRequest user) {
         return userService.updateUser(id,user);
     }
 }

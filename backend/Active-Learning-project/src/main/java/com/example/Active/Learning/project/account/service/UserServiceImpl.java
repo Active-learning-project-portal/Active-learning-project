@@ -8,7 +8,9 @@ import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegiste
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
 import com.example.Active.Learning.project.account.interfaces.IUserService;
-import com.example.Active.Learning.project.account.models.*;
+import com.example.Active.Learning.project.account.models.course.Course;
+import com.example.Active.Learning.project.account.models.role.Role;
+import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.repositories.CourseRepository;
@@ -56,15 +58,11 @@ public class UserServiceImpl implements IUserService {
                 signUpRequest.getUsername(),
                 signUpRequest.getFirstname(),
                 signUpRequest.getLastname(),
-                signUpRequest.getAuthType(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
                 signUpRequest.getAvatar(),
-                signUpRequest.getLastSeen(),
-                true);
-
+                new Date());
         user.setRoles(addRoles());
-        user.setCourse(addCourse());
 
         try {
             userRepository.save(user);
@@ -105,7 +103,7 @@ public class UserServiceImpl implements IUserService {
         return ResponseEntity.ok(users.stream().toList());
     }
 
-    public ResponseEntity<?> getUserById(@NonNull Long id) {
+    public ResponseEntity<?> getUserById(@NonNull UUID id) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
             return ResponseEntity
@@ -116,7 +114,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseEntity<List<User>> updateUser(@NonNull Long userId, @NonNull SignUpRequest signUpRequest) {
+    public ResponseEntity<List<User>> updateUser(@NonNull UUID userId, @NonNull SignUpRequest signUpRequest) {
         User userExist = userRepository.findById(userId).
                 orElseThrow(() ->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
@@ -124,7 +122,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseEntity<User> deleteUser(@NonNull Long userId) {
+    public ResponseEntity<User> deleteUser(@NonNull UUID userId) {
       return null;
     }
 
