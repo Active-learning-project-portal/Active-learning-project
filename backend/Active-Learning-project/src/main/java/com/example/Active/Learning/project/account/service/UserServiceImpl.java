@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl{
 
     @Autowired
     PasswordEncoder encoder;
@@ -39,21 +39,9 @@ public class UserServiceImpl implements IUserService {
     UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    ServiceImpl<User> userService;
 
-
-    @Autowired
-    CourseRepository courseRepository;
-
-    @Override
-    public ResponseEntity<?> createUser(@NonNull SignUpRequest signUpRequest) {
-
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserAlreadyRegisteredException(MessageResponse.EMAIL_ALREADY_EXISTS));
-        }
-
+    public ResponseEntity<User> createUser(@NonNull SignUpRequest signUpRequest) {
         User user = new User(
                 signUpRequest.getUsername(),
                 signUpRequest.getFirstname(),
@@ -62,68 +50,37 @@ public class UserServiceImpl implements IUserService {
                 signUpRequest.getProvider(),
                 signUpRequest.getAvatar(),
                 new Date());
-        user.setRoles(addRoles());
 
         try {
-            userRepository.save(user);
+            userService.create(user);
         } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
+           throw new RuntimeException(e.getMessage());
         }
-
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(user);
     }
 
-    public Set<Role> addRoles() {
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(DefaultValues.DEFAULT_ROLE.getName())
-                .orElseThrow(() -> new RoleNotFoundException(MessageResponse.ROLE_NOT_FOUND_ERROR));
-        roles.add(userRole);
-        return roles;
-    }
-
-    public Course addCourse() {
-        return courseRepository.findByName(DefaultValues.DEFAULT_COURSE.getName())
-                .orElseThrow(() -> new CourseNotFoundException(MessageResponse.COURSE_NOT_FOUND));
-    }
-
-    @Override
     public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
-        Page<User> users = null;
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-
-        if (searchValue != null) {
-            users = userRepository.findAllByLike(searchValue,pageable);
-        } else {
-            users = userRepository.findAll(pageable);
-        }
-        return ResponseEntity.ok(users.stream().toList());
+        return userService.findAll(pageNo,pageSize,sortBy,sortDir,searchValue);
     }
 
-    public ResponseEntity<?> getUserById(@NonNull UUID id) {
-        Optional<User> user = userRepository.findById(id);
-        if (!user.isPresent()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-        }
-        return ResponseEntity.ok().body(user.get());
+    public ResponseEntity<User> getUserById(@NonNull UUID id) {
+        return userService.findById(id);
     }
 
-    @Override
-    public ResponseEntity<List<User>> updateUser(@NonNull UUID userId, @NonNull SignUpRequest signUpRequest) {
-        User userExist = userRepository.findById(userId).
+    public ResponseEntity<User> updateUser(@NonNull UUID userId, @NonNull SignUpRequest signUpRequest) {
+        User user = userRepository.findById(userId).
                 orElseThrow(() ->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-        return ResponseEntity.ok(List.of(userExist));
+          user.setAvatar(signUpRequest.getAvatar());
+          user.setFirstname(signUpRequest.getFirstname());
+          user.setLastname(signUpRequest.getLastname());
+          user.setPassword(signUpRequest.getPassword());
+          user.setProvider(signUpRequest.getProvider());
+          user.setLastname(signUpRequest.getLastname());
+        return userService.update(user,userId);
     }
 
-    @Override
-    public ResponseEntity<User> deleteUser(@NonNull UUID userId) {
-      return null;
+    public ResponseEntity<Void> deleteUser(@NonNull UUID userId) {
+      return userService.delete(userId);
     }
-
 }

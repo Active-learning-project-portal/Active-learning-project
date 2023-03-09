@@ -5,6 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
-public interface IUserRoleService {
-    ResponseEntity<?> updateUserRole(@NonNull UUID roleId,@NonNull UUID userId);
+public interface IUserRoleService extends IService{
 }

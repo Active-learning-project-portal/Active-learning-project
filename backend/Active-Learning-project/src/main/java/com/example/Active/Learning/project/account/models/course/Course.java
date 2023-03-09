@@ -1,6 +1,7 @@
 package com.example.Active.Learning.project.account.models.course;
 
 
+import com.example.Active.Learning.project.account.models.PLanguage;
 import com.example.Active.Learning.project.account.models.units.Unit;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,17 +25,18 @@ public class Course {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private UUID id;
-    @NonNull
     private  String name;
 
-    @NonNull
     private  String avatar;
+
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
+    private Set<PLanguage> pLanguage;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "course_unit",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "unit_id"))
-    private Set<Unit> units = new HashSet<>();
+            joinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "unit_id",referencedColumnName = "id")})
+    private Set<Unit> units;
 
     public Course(String name) {
         this.name = name;

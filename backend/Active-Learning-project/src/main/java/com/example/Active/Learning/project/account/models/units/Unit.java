@@ -1,11 +1,13 @@
 package com.example.Active.Learning.project.account.models.units;
 
+import com.example.Active.Learning.project.account.models.course.Course;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -20,10 +22,13 @@ public class Unit {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private UUID id;
-    @Column(length = 20)
+
     private String name;
     private String contentUrl;
     private String description;
+
+    @ManyToMany(mappedBy = "units")
+    private Set<Course> course;
 
     public Unit(UUID id, String name, String contentUrl,String description) {
         this.id = id;

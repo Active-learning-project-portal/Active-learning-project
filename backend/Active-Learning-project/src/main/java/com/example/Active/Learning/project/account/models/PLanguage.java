@@ -28,10 +28,10 @@ public class PLanguage {
         private UUID id;
         private String name;
         private String avatar;
-        @OneToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "lang_courses",
-                joinColumns = @JoinColumn(name = "lang_id"),
-                inverseJoinColumns = @JoinColumn(name = "course_id"))
+        @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+        @JoinTable(name = "lang_course",
+                joinColumns = {@JoinColumn(name = "lang_id",referencedColumnName = "id")},
+                inverseJoinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "id")})
         private Set<Course> courses = new HashSet<>();
 
         public PLanguage(String name,Set<Course> courses,String avatar) {

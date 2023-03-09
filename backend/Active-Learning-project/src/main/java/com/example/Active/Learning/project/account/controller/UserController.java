@@ -50,7 +50,19 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<List<User>> updateUserById(@PathVariable UUID id, @RequestBody SignUpRequest user) {
+    public ResponseEntity<User> updateUserById(@PathVariable UUID id, @RequestBody SignUpRequest user) {
         return userService.updateUser(id,user);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
+    public ResponseEntity<Void> deleteUserById(@PathVariable UUID id) {
+        ResponseEntity<Void> user = null;
+        try{
+          user = userService.deleteUser(id);
+        }catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return user;
     }
 }
