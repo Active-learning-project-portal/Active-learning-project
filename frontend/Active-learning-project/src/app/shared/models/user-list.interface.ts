@@ -3,7 +3,7 @@ import { RoleList } from './roles.interface';
 export interface UsersList {
   id: number;
   username: string;
-  firstname: string;
+  name: string;
   lastname:string;
   provider:string;
   avatar: string;

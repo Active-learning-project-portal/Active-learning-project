@@ -39,12 +39,13 @@ public class UserServiceImpl{
     UserRepository userRepository;
 
     @Autowired
-    ServiceImpl<User> userService;
+    ServiceImpl<User> service;
+
 
     public ResponseEntity<User> createUser(@NonNull SignUpRequest signUpRequest) {
         User user = new User(
                 signUpRequest.getUsername(),
-                signUpRequest.getFirstname(),
+                signUpRequest.getName(),
                 signUpRequest.getLastname(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getProvider(),
@@ -52,19 +53,19 @@ public class UserServiceImpl{
                 new Date());
 
         try {
-            userService.create(user);
+            service.create(user);
         } catch (Exception e) {
            throw new RuntimeException(e.getMessage());
         }
         return ResponseEntity.ok(user);
     }
 
-    public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
-        return userService.findAll(pageNo,pageSize,sortBy,sortDir,searchValue);
-    }
+//    public ResponseEntity<List<User>> getAllUsers() {
+//        return (ResponseEntity<List<User>>) service.findAll();
+//    }
 
     public ResponseEntity<User> getUserById(@NonNull UUID id) {
-        return userService.findById(id);
+        return service.findById(id);
     }
 
     public ResponseEntity<User> updateUser(@NonNull UUID userId, @NonNull SignUpRequest signUpRequest) {
@@ -72,15 +73,15 @@ public class UserServiceImpl{
                 orElseThrow(() ->
                         new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
           user.setAvatar(signUpRequest.getAvatar());
-          user.setFirstname(signUpRequest.getFirstname());
+          user.setName(signUpRequest.getName());
           user.setLastname(signUpRequest.getLastname());
           user.setPassword(signUpRequest.getPassword());
           user.setProvider(signUpRequest.getProvider());
           user.setLastname(signUpRequest.getLastname());
-        return userService.update(user,userId);
+        return service.update(user,userId);
     }
 
     public ResponseEntity<Void> deleteUser(@NonNull UUID userId) {
-      return userService.delete(userId);
+      return service.delete(userId);
     }
 }

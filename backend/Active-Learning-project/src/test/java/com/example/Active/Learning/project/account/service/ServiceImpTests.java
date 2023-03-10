@@ -1,13 +1,10 @@
 package com.example.Active.Learning.project.account.service;
 
 import com.example.Active.Learning.project.account.repositories.IRepository;
-import lombok.Getter;
-import lombok.Setter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
@@ -17,22 +14,13 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
 public class ServiceImpTests {
 
-    //Creating a person class for test
-    @Getter
-    @Setter
-    public static class Person{
-        private UUID id;
-        private String name;
-        private String age;
-    }
-
     //Creating a null new instance of person
-    Person person;
+     Person person;
+     UUID uuid;
 
-    @Mock
+    @MockBean
     private final IRepository<Person> mockRepository;
 
     @Autowired
@@ -45,14 +33,15 @@ public class ServiceImpTests {
     }
 
     @BeforeEach
-    void setup(){
-        person = new Person();
+    public void setup(){
+        this.person = new Person();
+        this.uuid = UUID.randomUUID();
     }
 
     @Test
     public void findById_returns_entity_when_entity_is_found() {
+
         //Generate random uuid
-        UUID uuid = UUID.randomUUID();
         when(this.mockRepository.findById(uuid))
                 .thenReturn(Optional.of(this.person));
 
@@ -67,8 +56,6 @@ public class ServiceImpTests {
 
     @Test
     public void findById_returns_notFoundResponse_when_entity_is_notFound() {
-        //Generate rando uuid
-        UUID uuid = UUID.randomUUID();
         when(this.mockRepository.findById(uuid))
                 .thenReturn(Optional.empty());
 
@@ -83,8 +70,6 @@ public class ServiceImpTests {
 
     @Test
     public void update_returns_entity_when_entity_is_found() {
-        //Generate random uuid
-        UUID uuid = UUID.randomUUID();
         when(this.mockRepository.findById(uuid))
                 .thenReturn(Optional.of(this.person));
 
@@ -100,8 +85,7 @@ public class ServiceImpTests {
 
     @Test
     public void update_returns_notFoundResponse_when_entity_is_notFound() {
-        //Generate rando uuid
-        UUID uuid = UUID.randomUUID();
+
         when(this.mockRepository.findById(uuid))
                 .thenReturn(Optional.empty());
 

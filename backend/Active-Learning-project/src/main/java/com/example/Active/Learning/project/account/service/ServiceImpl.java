@@ -4,10 +4,6 @@ import com.example.Active.Learning.project.account.interfaces.IService;
 import com.example.Active.Learning.project.account.repositories.IRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -20,23 +16,15 @@ public class ServiceImpl<T> implements IService<T> {
     @Autowired
     private final IRepository<T> repository;
 
+
     public ServiceImpl(IRepository<T> repository) {
         this.repository = repository;
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
-        Page<T> pageEntity = null;
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-
-        if (searchValue != null) {
-            pageEntity = repository.findAllContaining(searchValue,pageable);
-        } else {
-            pageEntity = repository.findAll(pageable);
-        }
-        return ResponseEntity.ok(pageEntity.stream().toList());
+    public List<T> findAll() {
+       // return repository.findAll();
+        return null;
     }
 
     @Override
@@ -46,9 +34,9 @@ public class ServiceImpl<T> implements IService<T> {
     }
 
     @Override
-    public ResponseEntity<T> create(@NonNull T entity) {
+    public void create(@NonNull T entity) {
         T object = repository.save(entity);
-        return ResponseEntity.ok().body(object);
+        ResponseEntity.ok().body(object);
     }
 
     @Override

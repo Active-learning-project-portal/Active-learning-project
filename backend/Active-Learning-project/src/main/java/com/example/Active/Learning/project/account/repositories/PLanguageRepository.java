@@ -11,4 +11,6 @@ public interface  PLanguageRepository extends IRepository<PLanguage> {
 
     @Query("select u from Course u where u.name like %:#{[0]}% or u.name like %:searchValue%")
     Page<PLanguage> findAllByLike(String searchValue, Pageable pageable);
+
+    boolean existsByName(String name);
 }

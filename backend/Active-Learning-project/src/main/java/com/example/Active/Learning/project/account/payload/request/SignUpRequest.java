@@ -9,7 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class SignUpRequest {
-    private String firstname;
+    private String name;
     private String lastname;
     private String username;
     private String avatar;

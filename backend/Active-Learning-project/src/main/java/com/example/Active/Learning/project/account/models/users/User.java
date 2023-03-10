@@ -31,7 +31,7 @@ public class User {
     private String username;
     private String password;
     private String provider;
-    private String firstname;
+    private String name;
     private String lastname;
     private String avatar;
     private Date dateJoined;
@@ -49,7 +49,7 @@ public class User {
                 String provider,
                 String avatar,
                 Date dateJoined) {
-        this.firstname = firstname;
+        this.name = firstname;
         this.lastname = lastname;
         this.username = username;
         this.password = encode;

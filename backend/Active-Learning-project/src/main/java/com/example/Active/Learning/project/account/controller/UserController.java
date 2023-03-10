@@ -28,13 +28,9 @@ public class UserController {
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers(
-            @RequestParam(value = "pageNo", defaultValue = DefaultValues.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = DefaultValues.DEFAULT_PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = DefaultValues.DEFAULT_SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
-            @RequestParam(value = "searchValue",required = false) String searchValue
     ) {
-        return userService.getAllUsers(pageNo,pageSize,sortBy,sortDir,searchValue);
+//        return userService.getAllUsers();
+        return null;
     }
 
     @GetMapping("/{id}")
