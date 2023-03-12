@@ -94,6 +94,7 @@ export class SignInComponent implements OnInit {
     const authModel: AuthenticateRequest = {
       username: this.getFormControl('email').value,
       password: this.getFormControl('password').value,
+      provider:"MANUAL"
     };
 
     this.authenticateService.authenticate(authModel).subscribe(

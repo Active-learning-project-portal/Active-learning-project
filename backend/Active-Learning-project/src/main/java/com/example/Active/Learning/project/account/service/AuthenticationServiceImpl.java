@@ -3,8 +3,8 @@ package com.example.Active.Learning.project.account.service;
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
 import com.example.Active.Learning.project.account.models.users.User;
+import com.example.Active.Learning.project.account.payload.request.UserRequest;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
-import com.example.Active.Learning.project.account.interfaces.IAuthentication;
 import com.example.Active.Learning.project.account.payload.response.AuthResponse;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import lombok.NonNull;
@@ -34,27 +34,22 @@ public class AuthenticationServiceImpl{
     UserServiceImpl userService;
 
 
-    public User authenticate(@NonNull User user) {
+    public User authenticate(@NonNull UserRequest userRequest) {
 
-        Authentication authentication = getAuthentication(user.getUsername(), user.getPassword());
+        Authentication authentication = getAuthentication(userRequest.getUsername(), userRequest.getPassword());
 
         if (authentication == null) {
-//            return switch (signUpRequest.getProvider().toLowerCase()) {
-//                case "github", "google" -> userService.save(signUpRequest);
-//                default -> ResponseEntity
-//                        .badRequest()
-//                        .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-//            };
+            return switch (userRequest.getProvider().toLowerCase()) {
+                case "github", "google" -> userService.saveUser(userRequest);
+                default -> null;
+            };
 
         }
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        assert authentication != null;
         String jwt = jwtUtils.generateJwtToken(authentication);
+        User user = userService.mapUserRequestToUser(userRequest);
         user.setToken(jwt);
         user.setTokenType(tokenType);
-
         return user;
     }
 

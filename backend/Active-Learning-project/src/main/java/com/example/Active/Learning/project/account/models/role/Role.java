@@ -25,10 +25,6 @@ public class Role extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ERole name;
-
-    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
-    private Set<User> users;
-
     public Role(ERole name) {
         this.name = name;
     }

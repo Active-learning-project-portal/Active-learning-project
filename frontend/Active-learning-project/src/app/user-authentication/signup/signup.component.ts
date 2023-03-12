@@ -6,7 +6,6 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { AuthenticateService } from 'src/app/services/user-authentication/authenticate.service';
 import { UserManagementService } from 'src/app/services/user-management/user-management.service';
-import { RoleList } from 'src/app/shared/models/roles.interface';
 
 @Component({
   selector: 'alp-signup',
@@ -61,8 +60,6 @@ export class SignupComponent implements OnInit {
     this.loading = true;
     this.usermanagementService.save(authModel).subscribe(
       (data) => {
-        console.log("I am in : ");
-        console.log(data);
         this.toastrService.success('Registration successfully');
         this.router.navigate(['/signin']);
         this.loading = false;

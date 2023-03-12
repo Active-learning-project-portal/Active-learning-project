@@ -32,9 +32,19 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
         super(baseRepository);
     }
 
-
     public User saveUser(@NonNull UserRequest userRequest) {
-        User user = new User(
+        User user = mapUserRequestToUser(userRequest);
+        user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
+        try {
+             this.save(user);
+        } catch (Exception e) {
+           throw new RuntimeException(e.getMessage());
+        }
+        return user;
+    }
+
+    public User mapUserRequestToUser(UserRequest userRequest){
+        return new User(
                 userRequest.getUsername(),
                 userRequest.getFirstname(),
                 userRequest.getLastname(),
@@ -42,14 +52,6 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
                 userRequest.getProvider(),
                 userRequest.getAvatar(),
                 new Date());
-        user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
-
-        try {
-             this.save(user);
-        } catch (Exception e) {
-           throw new RuntimeException(e.getMessage());
-        }
-        return user;
     }
     public Set<Role> addRole(ERole eRole) {
         Set<Role> roles = new HashSet<>();
@@ -76,9 +78,6 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
      }
      return currentRoles;
     }
-
-
-
 
     public boolean userExistByUsername(@NonNull  String username){
         return userRepository.existsByUsername(username);
