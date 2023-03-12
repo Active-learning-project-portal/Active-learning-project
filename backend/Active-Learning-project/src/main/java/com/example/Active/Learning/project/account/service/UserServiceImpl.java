@@ -25,6 +25,9 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     public UserServiceImpl(BaseRepository<User, UUID> baseRepository) {
         super(baseRepository);
     }
@@ -38,7 +41,8 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
                 encoder.encode(userRequest.getPassword()),
                 userRequest.getProvider(),
                 userRequest.getAvatar(),
-                new Date(),changeRolesOnRoleSet(userRequest.getRoles(), DefaultValues.DEFAULT_ROLE.getName(),EAddOrRemove.ADD));
+                new Date());
+        user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
 
         try {
              this.save(user);
@@ -46,6 +50,12 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
            throw new RuntimeException(e.getMessage());
         }
         return user;
+    }
+    public Set<Role> addRole(ERole eRole) {
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(eRole);
+        roles.add(userRole);
+        return roles;
     }
 
     private User saveRolesToUser(@NonNull UUID id,@NonNull UserRequest userRequest,@NonNull Set<Role> rolesToAdd){

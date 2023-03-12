@@ -46,8 +46,8 @@ public class User extends BaseEntity {
                 String encode,
                 String provider,
                 String avatar,
-                Date dateJoined,
-                Set<Role> roles) {
+                Date dateJoined
+                ) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -55,6 +55,5 @@ public class User extends BaseEntity {
         this.provider = provider;
         this.avatar = avatar;
         this.dateJoined = dateJoined;
-        this.roles = roles;
     }
 }

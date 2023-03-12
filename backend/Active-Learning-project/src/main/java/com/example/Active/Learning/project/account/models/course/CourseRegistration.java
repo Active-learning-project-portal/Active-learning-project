@@ -16,11 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "courses_registration")
 public class CourseRegistration extends BaseEntity {
-
-    @NonNull
     private UUID courseId;
-    @NonNull
     private  UUID userId;
-    @NonNull
     private UUID langId;
 }
