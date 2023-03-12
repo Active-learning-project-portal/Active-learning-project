@@ -2,7 +2,7 @@ package com.example.Active.Learning.project.account.service;
 
 
 import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
+import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.interfaces.IAuthentication;
 import com.example.Active.Learning.project.account.payload.response.AuthResponse;
@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationServiceImpl implements IAuthentication {
+public class AuthenticationServiceImpl{
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -33,26 +33,29 @@ public class AuthenticationServiceImpl implements IAuthentication {
     @Autowired
     UserServiceImpl userService;
 
-    @Override
-    public ResponseEntity<?> authenticate(@NonNull SignUpRequest signUpRequest) {
 
-        Authentication authentication = getAuthentication(signUpRequest.getUsername(), signUpRequest.getPassword());
+    public User authenticate(@NonNull User user) {
+
+        Authentication authentication = getAuthentication(user.getUsername(), user.getPassword());
 
         if (authentication == null) {
-            return switch (signUpRequest.getProvider().toLowerCase()) {
-                case "github", "google" -> userService.createUser(signUpRequest);
-                default -> ResponseEntity
-                        .badRequest()
-                        .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-            };
+//            return switch (signUpRequest.getProvider().toLowerCase()) {
+//                case "github", "google" -> userService.save(signUpRequest);
+//                default -> ResponseEntity
+//                        .badRequest()
+//                        .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
+//            };
 
         }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        assert authentication != null;
         String jwt = jwtUtils.generateJwtToken(authentication);
+        user.setToken(jwt);
+        user.setTokenType(tokenType);
 
-        return ResponseEntity.ok(new AuthResponse(jwt,tokenType));
+        return user;
     }
 
     public Authentication getAuthentication(String username, String password) {

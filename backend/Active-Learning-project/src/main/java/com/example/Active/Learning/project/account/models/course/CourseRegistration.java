@@ -1,6 +1,7 @@
 package com.example.Active.Learning.project.account.models.course;
 
 
+import com.example.Active.Learning.project.account.models.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,12 +15,8 @@ import java.util.UUID;
 @Getter
 @Entity
 @Table(name = "courses_registration")
-public class CourseRegistration {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id")
-    private UUID id;
+public class CourseRegistration extends BaseEntity {
+
     @NonNull
     private UUID courseId;
     @NonNull

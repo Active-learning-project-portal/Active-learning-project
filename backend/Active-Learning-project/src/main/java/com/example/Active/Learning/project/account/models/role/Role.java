@@ -1,6 +1,7 @@
 package com.example.Active.Learning.project.account.models.role;
 
 
+import com.example.Active.Learning.project.account.models.BaseEntity;
 import com.example.Active.Learning.project.account.models.enums.ERole;
 import com.example.Active.Learning.project.account.models.users.User;
 import jakarta.persistence.*;
@@ -19,12 +20,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
-public class Role {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id")
-    private UUID id;
+
+public class Role extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ERole name;

@@ -1,5 +1,6 @@
 package com.example.Active.Learning.project.account.models.units;
 
+import com.example.Active.Learning.project.account.models.BaseEntity;
 import com.example.Active.Learning.project.account.models.course.Course;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,13 +17,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "unit")
 @NoArgsConstructor
-public class Unit {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id")
-    private UUID id;
-
+public class Unit extends BaseEntity {
     private String name;
     private String contentUrl;
     private String description;
@@ -31,7 +26,6 @@ public class Unit {
     private Set<Course> course;
 
     public Unit(UUID id, String name, String contentUrl,String description) {
-        this.id = id;
         this.name = name;
         this.contentUrl = contentUrl;
         this.description = description;

@@ -11,10 +11,8 @@ import java.util.*;
 
 
 @Repository
-public interface UserRepository extends IRepository<User> {
+public interface UserRepository extends BaseRepository<User,UUID>{
     Optional<User> findByUsername(String username);
     Boolean existsByUsername(String username);
-
-    Page<User> findAllContaining(String searchValue, Pageable pageable);
 
 }

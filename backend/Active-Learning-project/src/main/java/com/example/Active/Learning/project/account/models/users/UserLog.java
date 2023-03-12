@@ -20,10 +20,8 @@ public class UserLog {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private UUID id;
-
     @NonNull
     private Date lastSeen;
-
     @NonNull
     private ELoginType eLoginType;
 

@@ -5,5 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
-public interface IUserRoleService extends IService{
+public interface IUserRoleService{
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface CourseRepository extends IRepository<Course> {
+public interface CourseRepository extends org.springframework.data.jpa.repository.JpaRepository<Course, java.util.UUID> {
     @Query("select u from Course u where u.name like %:#{[0]}% or u.name like %:searchValue%")
     Page<Course> findAllByLike(String searchValue, Pageable pageable);
 }

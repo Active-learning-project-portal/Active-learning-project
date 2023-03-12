@@ -14,4 +14,5 @@ public class MessageResponse extends RuntimeException {
     public static final String NO_LANGUAGE_ADDED = "Course is empty";
 
     public static final String LANGUAGE_NOT_FOUND = "Language not found";
+
 }
