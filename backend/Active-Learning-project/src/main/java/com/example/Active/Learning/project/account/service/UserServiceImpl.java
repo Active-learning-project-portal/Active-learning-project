@@ -59,26 +59,7 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
         roles.add(userRole);
         return roles;
     }
-
-    private User saveRolesToUser(@NonNull UUID id,@NonNull UserRequest userRequest,@NonNull Set<Role> rolesToAdd){
-          userRequest.setRoles(rolesToAdd);
-        return this.updateUser(id,userRequest);
-    }
-
-    private Set<Role>  changeRolesOnRoleSet(Set<Role> currentRoles,@NonNull  ERole eRole ,@NonNull EAddOrRemove method){
-       if(currentRoles == null){
-           currentRoles = new HashSet<>();
-           currentRoles.add(new Role(ERole.ROLE_TRAINEE));
-           return currentRoles;
-       }
-        switch (method){
-         case ADD -> currentRoles.add(new Role(eRole));
-         case REMOVE -> currentRoles.remove(new Role(eRole));
-         default -> currentRoles.add(new Role(ERole.ROLE_TRAINEE));
-     }
-     return currentRoles;
-    }
-
+    
     public boolean userExistByUsername(@NonNull  String username){
         return userRepository.existsByUsername(username);
     }
