@@ -15,4 +15,6 @@ public class MessageResponse extends RuntimeException {
 
     public static final String LANGUAGE_NOT_FOUND = "Language not found";
 
+    public static final String ENTITY_NOT_FOUND = "Entity does not exist";
+
 }

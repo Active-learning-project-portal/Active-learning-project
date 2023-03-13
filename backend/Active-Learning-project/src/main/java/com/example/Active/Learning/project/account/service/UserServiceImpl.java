@@ -33,17 +33,17 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
     }
 
     public User saveUser(@NonNull UserRequest userRequest) {
-        User user = mapUserRequestToUser(userRequest);
+        User user = initiateUserRequestToUser(userRequest);
         user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
         try {
-             this.save(user);
+             super.save(user);
         } catch (Exception e) {
            throw new RuntimeException(e.getMessage());
         }
         return user;
     }
 
-    public User mapUserRequestToUser(UserRequest userRequest){
+    public User initiateUserRequestToUser(UserRequest userRequest){
         return new User(
                 userRequest.getUsername(),
                 userRequest.getFirstname(),

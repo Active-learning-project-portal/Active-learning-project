@@ -57,7 +57,7 @@ public  class BaseImpl<T extends BaseEntity,id extends UUID> implements IBase<T,
         if(optional.isPresent()){
             return (T) baseRepository.save(entity);
         }
-       return null;
+        throw new RuntimeException(MessageResponse.ENTITY_NOT_FOUND);
     }
 
     @Override
@@ -67,7 +67,7 @@ public  class BaseImpl<T extends BaseEntity,id extends UUID> implements IBase<T,
             baseRepository.delete(entity);
             return  entity;
         }
-        return null;
+        throw new RuntimeException(MessageResponse.ENTITY_NOT_FOUND);
     }
 
     @Override
@@ -77,6 +77,6 @@ public  class BaseImpl<T extends BaseEntity,id extends UUID> implements IBase<T,
            baseRepository.deleteById(entityId);
            return  optional;
         }
-        return Optional.empty();
+        throw new RuntimeException(MessageResponse.ENTITY_NOT_FOUND);
     }
 }
