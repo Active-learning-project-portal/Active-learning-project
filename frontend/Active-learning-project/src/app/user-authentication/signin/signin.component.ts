@@ -99,6 +99,7 @@ export class SignInComponent implements OnInit {
 
     this.authenticateService.authenticate(authModel).subscribe(
       (userAuth) => {
+        console.log(userAuth);
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);

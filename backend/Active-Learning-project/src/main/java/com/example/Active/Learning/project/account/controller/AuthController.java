@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -22,7 +24,7 @@ public class AuthController {
     private AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/authenticate")
-    public User authenticate(@RequestBody UserRequest userRequest) {
+    public User authenticate(@RequestBody UserRequest userRequest){
         return authenticationService.authenticate(userRequest);
     }
 }

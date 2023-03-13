@@ -1,16 +1,11 @@
 package com.example.Active.Learning.project.account.service;
 
-
-import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
-import com.example.Active.Learning.project.account.payload.response.MessageResponse;
-import com.example.Active.Learning.project.account.payload.response.AuthResponse;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,16 +29,15 @@ public class AuthenticationServiceImpl{
     UserServiceImpl userService;
 
 
-    public User authenticate(@NonNull UserRequest userRequest) {
+    public User authenticate(@NonNull UserRequest userRequest){
 
         Authentication authentication = getAuthentication(userRequest.getUsername(), userRequest.getPassword());
 
         if (authentication == null) {
             return switch (userRequest.getProvider().toLowerCase()) {
                 case "github", "google" -> userService.saveUser(userRequest);
-                default -> null;
+                default -> throw new RuntimeException("Error: Unauthorized");
             };
-
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
