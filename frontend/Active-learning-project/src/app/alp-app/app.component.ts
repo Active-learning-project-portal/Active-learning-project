@@ -1,4 +1,6 @@
-import { Component} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'alp-root',
@@ -7,5 +9,10 @@ import { Component} from '@angular/core';
 })
 export class AppComponent{
   title = 'Active-learning-project';
-  constructor() {}
+  
+  static isBrowser = new BehaviorSubject<boolean>(false);
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {
+    AppComponent.isBrowser.next(isPlatformBrowser(platformId));
+  }
 }

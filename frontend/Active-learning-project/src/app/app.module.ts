@@ -11,8 +11,6 @@ import { SigninAuthService } from './shared/helpers/signin-auth.service';
 import { ErrorsInterceptor } from './shared/helpers/errors.interceptor';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './services/app-config/app-config.service';
 import { FullNamePipe } from './shared/pipes/full-name.pipe';
-import { ArrayToStringPipe } from './shared/pipes/array-string.pipe';
-
 import { AccountComponent } from './user-authentication/account/account.component';
 import { GithubButtonComponent } from './user-authentication/github-button/github-button.component';
 import { GoogleButtonComponent } from './user-authentication/google-button/google-button.component';
@@ -22,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app.module.routing';
 import { AuthenticateService } from './services/user-authentication/authenticate.service';
 import { MaterialModule } from './shared/modules/material-modules';
+import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
 
 @NgModule({
 	declarations: [
@@ -50,6 +49,7 @@ import { MaterialModule } from './shared/modules/material-modules';
 	],
 	providers: [
 		AuthenticateService,
+		LocalStorageService,
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: SigninAuthService,
