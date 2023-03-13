@@ -7,15 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface  PLanguageRepository extends JpaRepository<PLanguage,Long> {
-
-    Optional<PLanguage> findByName(String name);
+public interface  PLanguageRepository extends JpaRepository<PLanguage, UUID> {
 
     @Query("select u from Course u where u.name like %:#{[0]}% or u.name like %:searchValue%")
     Page<PLanguage> findAllByLike(String searchValue, Pageable pageable);
 
-    Boolean existsByName(String name);
+    boolean existsByName(String name);
 }

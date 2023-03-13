@@ -1,6 +1,6 @@
 package com.example.Active.Learning.project.account.security.services;
 
-import com.example.Active.Learning.project.account.models.User;
+import com.example.Active.Learning.project.account.models.users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,13 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private final Long id;
+    private final UUID id;
 
     private final String username;
 
@@ -25,7 +26,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username,String password,
+    public UserDetailsImpl(UUID id, String username, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
@@ -36,7 +37,6 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
-
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
@@ -60,7 +60,7 @@ public class UserDetailsImpl implements UserDetails {
         return this.username;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 

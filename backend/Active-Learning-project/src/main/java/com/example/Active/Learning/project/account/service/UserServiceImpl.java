@@ -2,33 +2,22 @@ package com.example.Active.Learning.project.account.service;
 
 
 import com.example.Active.Learning.project.account.constants.DefaultValues;
-import com.example.Active.Learning.project.account.exceptions.CourseNotFoundException;
-import com.example.Active.Learning.project.account.exceptions.RoleNotFoundException;
-import com.example.Active.Learning.project.account.exceptions.UserAlreadyRegisteredException;
-
-import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.interfaces.IUserService;
-import com.example.Active.Learning.project.account.models.*;
-import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
-import com.example.Active.Learning.project.account.payload.response.MessageResponse;
-import com.example.Active.Learning.project.account.repositories.CourseRepository;
-import com.example.Active.Learning.project.account.repositories.RoleRepository;
-import com.example.Active.Learning.project.account.repositories.UserRepository;
+import com.example.Active.Learning.project.account.models.enums.EAddOrRemove;
+import com.example.Active.Learning.project.account.models.enums.ERole;
+import com.example.Active.Learning.project.account.models.role.Role;
+import com.example.Active.Learning.project.account.models.users.User;
+import com.example.Active.Learning.project.account.payload.request.UserRequest;
+import com.example.Active.Learning.project.account.repositories.*;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends BaseImpl<User,UUID>{
 
     @Autowired
     PasswordEncoder encoder;
@@ -39,93 +28,57 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     RoleRepository roleRepository;
 
-
-    @Autowired
-    CourseRepository courseRepository;
-
-    @Override
-    public ResponseEntity<?> createUser(@NonNull SignUpRequest signUpRequest) {
-
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserAlreadyRegisteredException(MessageResponse.EMAIL_ALREADY_EXISTS));
-        }
-
-        User user = new User(
-                signUpRequest.getUsername(),
-                signUpRequest.getFirstname(),
-                signUpRequest.getLastname(),
-                signUpRequest.getAuthType(),
-                encoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getProvider(),
-                signUpRequest.getAvatar(),
-                signUpRequest.getLastSeen(),
-                true);
-
-        user.setRoles(addRoles());
-        user.setCourse(addCourse());
-
-        try {
-            userRepository.save(user);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-
-        return ResponseEntity.ok("");
+    public UserServiceImpl(BaseRepository<User, UUID> baseRepository) {
+        super(baseRepository);
     }
 
-    public Set<Role> addRoles() {
+    public User saveUser(@NonNull UserRequest userRequest) {
+        User user = mapUserRequestToUser(userRequest);
+        user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
+        try {
+             this.save(user);
+        } catch (Exception e) {
+           throw new RuntimeException(e.getMessage());
+        }
+        return user;
+    }
+
+    public User mapUserRequestToUser(UserRequest userRequest){
+        return new User(
+                userRequest.getUsername(),
+                userRequest.getFirstname(),
+                userRequest.getLastname(),
+                encoder.encode(userRequest.getPassword()),
+                userRequest.getProvider(),
+                userRequest.getAvatar(),
+                new Date());
+    }
+    public Set<Role> addRole(ERole eRole) {
         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(DefaultValues.DEFAULT_ROLE.getName())
-                .orElseThrow(() -> new RoleNotFoundException(MessageResponse.ROLE_NOT_FOUND_ERROR));
+        Role userRole = roleRepository.findByName(eRole);
         roles.add(userRole);
         return roles;
     }
-
-    public Course addCourse() {
-        return courseRepository.findByName(DefaultValues.DEFAULT_COURSE.getName())
-                .orElseThrow(() -> new CourseNotFoundException(MessageResponse.COURSE_NOT_FOUND));
+    
+    public boolean userExistByUsername(@NonNull  String username){
+        return userRepository.existsByUsername(username);
     }
 
-    @Override
-    public ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
-        Page<User> users = null;
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-
-        if (searchValue != null) {
-            users = userRepository.findAllByLike(searchValue,pageable);
-        } else {
-            users = userRepository.findAll(pageable);
-        }
-        return ResponseEntity.ok(users.stream().toList());
-    }
-
-    public ResponseEntity<?> getUserById(@NonNull Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (!user.isPresent()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-        }
-        return ResponseEntity.ok().body(user.get());
-    }
-
-    @Override
-    public ResponseEntity<List<User>> updateUser(@NonNull Long userId, @NonNull SignUpRequest signUpRequest) {
-        User userExist = userRepository.findById(userId).
-                orElseThrow(() ->
-                        new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
-        return ResponseEntity.ok(List.of(userExist));
-    }
-
-    @Override
-    public ResponseEntity<User> deleteUser(@NonNull Long userId) {
-      return null;
+    public User updateUser(@NonNull UUID userId, @NonNull UserRequest userRequest) {
+        User user = userRepository.findById(userId).
+                orElseThrow();
+          user.setAvatar(userRequest.getAvatar());
+          user.setFirstname(userRequest.getFirstname());
+          user.setLastname(userRequest.getLastname());
+          user.setPassword(userRequest.getPassword());
+          user.setProvider(userRequest.getProvider());
+          user.setLastname(userRequest.getLastname());
+          user.setRoles(userRequest.getRoles());
+          try{
+             return this.updateById(user,user.getId());
+          }catch (Exception e){
+              throw  new RuntimeException(e.getMessage());
+          }
     }
 
 }

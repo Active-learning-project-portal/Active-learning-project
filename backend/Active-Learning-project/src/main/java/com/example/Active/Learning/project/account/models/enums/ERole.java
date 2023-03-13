@@ -1,4 +1,4 @@
-package com.example.Active.Learning.project.account.models;
+package com.example.Active.Learning.project.account.models.enums;
 
 public enum ERole {
     ROLE_SUPER_ADMIN,

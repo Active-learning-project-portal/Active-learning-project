@@ -124,13 +124,16 @@ export class GithubButtonComponent {
           this.btnType
         );
 
-
-        if (transformedData.authType === 'signin') {
-          const gitAuthModel: AuthenticateRequest = {
+          const authModel: UserRequest = {
+            firstname: transformedData.firstname,
+            lastname: transformedData.lastname,
+            authType: transformedData.authType,
+            provider: transformedData.provider,
             username: transformedData.username,
             password: environment.defaultPassword,
+            avatar: transformedData.avatar,
           };
-          this.authenticateService.authenticate(gitAuthModel).subscribe(
+          this.authenticateService.authenticate(authModel).subscribe(
             (userAuth) => {
               this.toastr.success(`Successful login`);
               const stringifyUser = JSON.stringify(userAuth);
@@ -141,27 +144,7 @@ export class GithubButtonComponent {
               this.toastr.error(error?.message);
             }
           );
-        } else if (transformedData.authType === 'signup') {
-          const authModel: UserRequest = {
-            firstname: transformedData.firstname,
-            lastname: transformedData.lastname,
-            authType: transformedData.authType,
-            provider: transformedData.provider,
-            username: transformedData.username,
-            password: environment.defaultPassword,
-            avatar: transformedData.avatar,
-          };
-
-          this.usermanagementService.save(authModel).subscribe(
-            (data) => {
-              this.toastr.success('Registration successfully');
-              window.location.href = '/signin';
-            },
-            (error) => {
-              this.toastr.error(error.message, error.title);
-            }
-          );
-        }
+     
       }
     });
   }

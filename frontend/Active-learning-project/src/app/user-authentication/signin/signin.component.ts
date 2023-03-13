@@ -94,10 +94,12 @@ export class SignInComponent implements OnInit {
     const authModel: AuthenticateRequest = {
       username: this.getFormControl('email').value,
       password: this.getFormControl('password').value,
+      provider:"MANUAL"
     };
 
     this.authenticateService.authenticate(authModel).subscribe(
       (userAuth) => {
+        console.log(userAuth);
         this.toastr.success(`Successful login`);
         const stringifyUser = JSON.stringify(userAuth);
         localStorage.setItem('user', stringifyUser);

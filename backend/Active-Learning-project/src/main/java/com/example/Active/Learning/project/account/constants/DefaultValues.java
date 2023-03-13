@@ -1,8 +1,8 @@
 package com.example.Active.Learning.project.account.constants;
 
-import com.example.Active.Learning.project.account.models.Course;
-import com.example.Active.Learning.project.account.models.ERole;
-import com.example.Active.Learning.project.account.models.Role;
+import com.example.Active.Learning.project.account.models.course.Course;
+import com.example.Active.Learning.project.account.models.enums.ERole;
+import com.example.Active.Learning.project.account.models.role.Role;
 
 public class DefaultValues {
     public static final String DEFAULT_PAGE_NUMBER = "0";

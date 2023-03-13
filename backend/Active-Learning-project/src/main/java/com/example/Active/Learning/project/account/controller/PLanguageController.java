@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -42,18 +43,17 @@ public class PLanguageController {
     }
 
     @GetMapping("/{languageId}")
-    public ResponseEntity<?> getLanguageById(@NonNull Long languageId) {
+    public ResponseEntity<?> getLanguageById(@NonNull UUID languageId) {
         return pLanguageService.getLanguageById(languageId);
     }
 
-
     @PutMapping()
-    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull Long languageId, @NonNull PLanguageRequest pLanguageRequest) {
+    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull UUID languageId, @NonNull PLanguageRequest pLanguageRequest) {
         return pLanguageService.updateLanguage(languageId,pLanguageRequest);
     }
 
     @DeleteMapping("/{languageId}")
-    public ResponseEntity<?> deleteLanguage(@NonNull Long languageId) {
+    public ResponseEntity<?> deleteLanguage(@NonNull UUID languageId) {
         return pLanguageService.deleteLanguage(languageId);
     }
 }

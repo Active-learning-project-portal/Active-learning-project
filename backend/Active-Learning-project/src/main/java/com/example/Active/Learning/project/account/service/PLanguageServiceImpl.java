@@ -2,7 +2,6 @@ package com.example.Active.Learning.project.account.service;
 
 import com.example.Active.Learning.project.account.exceptions.CourseNotFoundException;
 import com.example.Active.Learning.project.account.interfaces.IPLanguageService;
-import com.example.Active.Learning.project.account.models.Course;
 import com.example.Active.Learning.project.account.models.PLanguage;
 import com.example.Active.Learning.project.account.payload.request.PLanguageRequest;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PLanguageServiceImpl implements IPLanguageService {
@@ -33,8 +33,7 @@ public class PLanguageServiceImpl implements IPLanguageService {
     public ResponseEntity<?> createLanguage(@NonNull PLanguageRequest pLanguageRequest) {
 
         if (pLanguageRequest.getName() == null ||
-                pLanguageRequest.getCourse() == null ||
-                pLanguageRequest.getThumbNail() == null) {
+                pLanguageRequest.getAvatar() == null) {
             return ResponseEntity
                     .badRequest()
                     .body(List.of(new CourseNotFoundException(MessageResponse.NO_LANGUAGE_ADDED).getMessage()));
@@ -48,8 +47,8 @@ public class PLanguageServiceImpl implements IPLanguageService {
 
         PLanguage pLanguage = new PLanguage(
                 pLanguageRequest.getName(),
-                pLanguageRequest.getCourse(),
-                pLanguageRequest.getThumbNail());
+                pLanguageRequest.getCourses(),
+                pLanguageRequest.getAvatar());
 
         try {
             pLanguageRepository.save(pLanguage);
@@ -78,7 +77,7 @@ public class PLanguageServiceImpl implements IPLanguageService {
     }
 
     @Override
-    public ResponseEntity<?> getLanguageById(@NonNull Long languageId) {
+    public ResponseEntity<?> getLanguageById(@NonNull UUID languageId) {
         Optional<PLanguage> course = pLanguageRepository.findById(languageId);
         if (!course.isPresent()) {
             return ResponseEntity
@@ -89,12 +88,12 @@ public class PLanguageServiceImpl implements IPLanguageService {
     }
 
     @Override
-    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull Long languageId, @NonNull PLanguageRequest pLanguageRequest) {
+    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull UUID languageId, @NonNull PLanguageRequest pLanguageRequest) {
         return null;
     }
 
     @Override
-    public ResponseEntity<?> deleteLanguage(@NonNull Long languageId) {
+    public ResponseEntity<?> deleteLanguage(@NonNull UUID languageId) {
         Optional<PLanguage> language = pLanguageRepository.findById(languageId);
         if (!language.isPresent()) {
             return ResponseEntity

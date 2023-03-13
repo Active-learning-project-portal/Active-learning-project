@@ -1,16 +1,11 @@
 package com.example.Active.Learning.project.account.service;
 
-
-import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.payload.response.MessageResponse;
-import com.example.Active.Learning.project.account.interfaces.IAuthentication;
-import com.example.Active.Learning.project.account.payload.request.AuthRequest;
-import com.example.Active.Learning.project.account.payload.response.AuthResponse;
+import com.example.Active.Learning.project.account.models.users.User;
+import com.example.Active.Learning.project.account.payload.request.UserRequest;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationServiceImpl implements IAuthentication {
+public class AuthenticationServiceImpl{
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -30,27 +25,26 @@ public class AuthenticationServiceImpl implements IAuthentication {
     @Value("${active_learning_project.app.tokenType}")
     private String tokenType;
 
+    @Autowired
+    UserServiceImpl userService;
 
-    @Override
-    public ResponseEntity<?> authenticate(@NonNull AuthRequest authRequest) {
 
-        Authentication authentication = getAuthentication(authRequest.getUsername(), authRequest.getPassword());
+    public User authenticate(@NonNull UserRequest userRequest){
+
+        Authentication authentication = getAuthentication(userRequest.getUsername(), userRequest.getPassword());
 
         if (authentication == null) {
-            return switch (authRequest.getAuthType()) {
-                case GITHUB, GOOGLE, MANUAL -> ResponseEntity
-                        .badRequest()
-                        .body(new UserNotFoundException(MessageResponse.USER_NOT_FOUND));
+            return switch (userRequest.getProvider().toLowerCase()) {
+                case "github", "google" -> userService.saveUser(userRequest);
+                default -> throw new RuntimeException("Error: Unauthorized");
             };
-
         }
-
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtUtils.generateJwtToken(authentication);
-
-        return ResponseEntity.ok(new AuthResponse(jwt,tokenType));
+        User user = userService.mapUserRequestToUser(userRequest);
+        user.setToken(jwt);
+        user.setTokenType(tokenType);
+        return user;
     }
 
     public Authentication getAuthentication(String username, String password) {

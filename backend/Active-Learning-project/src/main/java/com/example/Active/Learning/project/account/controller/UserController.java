@@ -1,9 +1,10 @@
 package com.example.Active.Learning.project.account.controller;
 
 
-import com.example.Active.Learning.project.account.constants.DefaultValues;
-import com.example.Active.Learning.project.account.models.User;
-import com.example.Active.Learning.project.account.payload.request.SignUpRequest;
+import com.example.Active.Learning.project.account.models.users.User;
+import com.example.Active.Learning.project.account.payload.request.UserRequest;
+import com.example.Active.Learning.project.account.payload.response.Message;
+import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -27,29 +30,46 @@ public class UserController {
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers(
-            @RequestParam(value = "pageNo", defaultValue = DefaultValues.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = DefaultValues.DEFAULT_PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = DefaultValues.DEFAULT_SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
-            @RequestParam(value = "searchValue",required = false) String searchValue
     ) {
-        return userService.getAllUsers(pageNo,pageSize,sortBy,sortDir,searchValue);
+      return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINEE') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+        Optional<User> user = userService.findById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> create(@RequestBody SignUpRequest user) {
-        return userService.createUser(user);
+    public ResponseEntity<?> create(@RequestBody UserRequest userRequest) {
+        boolean  userExist = userService.userExistByUsername(userRequest.getUsername());
+        if(userExist){
+            return ResponseEntity.badRequest().body(MessageResponse.EMAIL_ALREADY_EXISTS);
+        }
+        return ResponseEntity.ok(userService.saveUser(userRequest));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
-    public ResponseEntity<List<User>> updateUserById(@PathVariable Long id, @RequestBody SignUpRequest user) {
-        return userService.updateUser(id,user);
+    public ResponseEntity<User> updateUserById(@PathVariable UUID id, @RequestBody UserRequest userRequest) {
+        User updateUser = null;
+        try{
+            updateUser = userService.updateUser(id, userRequest);
+        }catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        if(updateUser == null) return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.ok(updateUser);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN') or hasRole('TRAINER') or hasRole('SUPER_ADMIN')")
+    public void deleteUserById(@PathVariable UUID id) {
+        try{
+          userService.deleteById(id);
+        }catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

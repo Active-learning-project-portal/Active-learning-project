@@ -1,7 +1,8 @@
 package com.example.Active.Learning.project.account.controller;
 
 
-import com.example.Active.Learning.project.account.payload.request.AuthRequest;
+import com.example.Active.Learning.project.account.models.users.User;
+import com.example.Active.Learning.project.account.payload.request.UserRequest;
 import com.example.Active.Learning.project.account.service.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -21,7 +24,7 @@ public class AuthController {
     private AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) {
-        return authenticationService.authenticate(authRequest);
+    public User authenticate(@RequestBody UserRequest userRequest){
+        return authenticationService.authenticate(userRequest);
     }
 }
