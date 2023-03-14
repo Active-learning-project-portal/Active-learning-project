@@ -16,6 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "courses_registration")
 public class CourseRegistration extends BaseEntity {
+    //TODO
     private UUID courseId;
     private  UUID userId;
     private UUID langId;

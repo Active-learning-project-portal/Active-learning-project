@@ -32,13 +32,17 @@ public class AuthenticationServiceImpl{
     public User authenticate(@NonNull UserRequest userRequest){
 
         Authentication authentication = getAuthentication(userRequest.getUsername(), userRequest.getPassword());
-
+        System.out.println("Inside Service");
+        System.out.println(userRequest.toString());
+        System.out.println(authentication);
         if (authentication == null) {
             return switch (userRequest.getProvider().toLowerCase()) {
                 case "github", "google" -> userService.saveUser(userRequest);
                 default -> throw new RuntimeException("Error: Unauthorized");
             };
         }
+        System.out.println("After null");
+        System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         User user = userService.initiateUserRequestToUser(userRequest);

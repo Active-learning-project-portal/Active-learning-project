@@ -1,18 +1,13 @@
 package com.example.Active.Learning.project.account.service;
 
-import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
-import com.example.Active.Learning.project.account.exceptions.model.ErrorMessage;
 import com.example.Active.Learning.project.account.interfaces.IBase;
 import com.example.Active.Learning.project.account.models.BaseEntity;
-import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.repositories.BaseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

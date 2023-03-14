@@ -1,16 +1,13 @@
 package com.example.Active.Learning.project.account.models;
 
-
 import com.example.Active.Learning.project.account.models.course.Course;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -20,12 +17,7 @@ import java.util.UUID;
                 @UniqueConstraint(columnNames = "name"),
         })
 @NoArgsConstructor
-public class PLanguage {
-        @Id
-        @GeneratedValue(generator = "uuid2")
-        @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-        @Column(name = "id")
-        private UUID id;
+public class PLanguage extends BaseEntity{
         private String name;
         private String avatar;
         @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

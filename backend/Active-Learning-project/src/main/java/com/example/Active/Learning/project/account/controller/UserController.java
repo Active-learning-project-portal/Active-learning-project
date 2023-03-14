@@ -3,7 +3,6 @@ package com.example.Active.Learning.project.account.controller;
 
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
-import com.example.Active.Learning.project.account.payload.response.Message;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
 import com.example.Active.Learning.project.account.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

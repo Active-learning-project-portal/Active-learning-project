@@ -4,6 +4,7 @@ package com.example.Active.Learning.project.account.controller;
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
 import com.example.Active.Learning.project.account.service.AuthenticationServiceImpl;
+import org.codehaus.plexus.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +26,8 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public User authenticate(@RequestBody UserRequest userRequest){
+        System.out.println("Inside authentication");
+        System.out.println(userRequest);
         return authenticationService.authenticate(userRequest);
     }
 }

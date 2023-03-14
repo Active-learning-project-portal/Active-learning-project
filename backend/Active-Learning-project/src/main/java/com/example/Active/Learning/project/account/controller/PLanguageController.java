@@ -19,41 +19,41 @@ import java.util.UUID;
 public class PLanguageController {
 
 
-    private final PLanguageServiceImpl pLanguageService;
-
-    @Autowired
-    public PLanguageController(PLanguageServiceImpl pLanguageService) {
-        this.pLanguageService = pLanguageService;
-    }
-
-
-    @PostMapping()
-    public ResponseEntity<?> createLanguage(@RequestBody PLanguageRequest pLanguageRequest) {
-        return pLanguageService.createLanguage(pLanguageRequest);
-    }
-
-    @GetMapping()
-    public ResponseEntity<List<PLanguage>> getAllLanguages(
-            @RequestParam(value = "pageNo", defaultValue = DefaultValues.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = DefaultValues.DEFAULT_PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = DefaultValues.DEFAULT_SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
-            @RequestParam(value = "searchValue", required = false) String searchValue) {
-        return pLanguageService.getAllLanguages(pageNo,pageSize,sortBy,sortDir,searchValue);
-    }
-
-    @GetMapping("/{languageId}")
-    public ResponseEntity<?> getLanguageById(@NonNull UUID languageId) {
-        return pLanguageService.getLanguageById(languageId);
-    }
-
-    @PutMapping()
-    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull UUID languageId, @NonNull PLanguageRequest pLanguageRequest) {
-        return pLanguageService.updateLanguage(languageId,pLanguageRequest);
-    }
-
-    @DeleteMapping("/{languageId}")
-    public ResponseEntity<?> deleteLanguage(@NonNull UUID languageId) {
-        return pLanguageService.deleteLanguage(languageId);
-    }
+//    private final PLanguageServiceImpl pLanguageService;
+//
+//    @Autowired
+//    public PLanguageController(PLanguageServiceImpl pLanguageService) {
+//        this.pLanguageService = pLanguageService;
+//    }
+//
+//
+//    @PostMapping()
+//    public ResponseEntity<?> createLanguage(@RequestBody PLanguageRequest pLanguageRequest) {
+//        return pLanguageService.createLanguage(pLanguageRequest);
+//    }
+//
+//    @GetMapping()
+//    public ResponseEntity<List<PLanguage>> getAllLanguages(
+//            @RequestParam(value = "pageNo", defaultValue = DefaultValues.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+//            @RequestParam(value = "pageSize", defaultValue = DefaultValues.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+//            @RequestParam(value = "sortBy", defaultValue = DefaultValues.DEFAULT_SORT_BY, required = false) String sortBy,
+//            @RequestParam(value = "sortDir", defaultValue = DefaultValues.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
+//            @RequestParam(value = "searchValue", required = false) String searchValue) {
+//        return pLanguageService.getAllLanguages(pageNo,pageSize,sortBy,sortDir,searchValue);
+//    }
+//
+//    @GetMapping("/{languageId}")
+//    public ResponseEntity<?> getLanguageById(@NonNull UUID languageId) {
+//        return pLanguageService.getLanguageById(languageId);
+//    }
+//
+//    @PutMapping()
+//    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull UUID languageId, @NonNull PLanguageRequest pLanguageRequest) {
+//        return pLanguageService.updateLanguage(languageId,pLanguageRequest);
+//    }
+//
+//    @DeleteMapping("/{languageId}")
+//    public ResponseEntity<?> deleteLanguage(@NonNull UUID languageId) {
+//        return pLanguageService.deleteLanguage(languageId);
+//    }
 }
