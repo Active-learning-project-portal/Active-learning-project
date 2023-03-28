@@ -1,16 +1,13 @@
 package com.example.Active.Learning.project.account.service;
 
-
-import com.example.Active.Learning.project.account.exceptions.UserNotFoundException;
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
-import com.example.Active.Learning.project.account.payload.response.AuthResponse;
+import com.example.Active.Learning.project.account.payload.response.UserResponse;
 import com.example.Active.Learning.project.account.security.jwt.JwtUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,23 +31,23 @@ public class AuthenticationServiceImpl{
     UserServiceImpl userService;
 
 
-    public User authenticate(@NonNull UserRequest userRequest) {
+    public UserResponse authenticate(@NonNull UserRequest userRequest) {
 
         Authentication authentication = getAuthentication(userRequest.getUsername(), userRequest.getPassword());
 
         if (authentication == null) {
-            return switch (userRequest.getProvider().toLowerCase()) {
-                case "github", "google" -> userService.saveUser(userRequest);
-                default -> null;
-            };
-
+                return switch (userRequest.getProvider()) {
+                    case "GITHUB", "GOOGLE" -> userService.saveUser(userRequest);
+                    case  "MANUAL" -> throw new RuntimeException(MessageResponse.USER_NOT_FOUND);
+                    default -> throw new RuntimeException(String.format("Unauthorized user {}", userRequest.getUsername()));
+                };
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-        User user = userService.mapUserRequestToUser(userRequest);
+        User user = userService.findByUsername(userRequest.getUsername());
         user.setToken(jwt);
         user.setTokenType(tokenType);
-        return user;
+        return  userService.mapUserToUserResponse(user);
     }
 
     public Authentication getAuthentication(String username, String password) {

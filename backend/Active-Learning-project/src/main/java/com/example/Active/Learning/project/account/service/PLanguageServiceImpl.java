@@ -5,8 +5,10 @@ import com.example.Active.Learning.project.account.interfaces.IPLanguageService;
 import com.example.Active.Learning.project.account.models.PLanguage;
 import com.example.Active.Learning.project.account.payload.request.PLanguageRequest;
 import com.example.Active.Learning.project.account.payload.response.MessageResponse;
+import com.example.Active.Learning.project.account.repositories.BaseRepository;
 import com.example.Active.Learning.project.account.repositories.PLanguageRepository;
 import lombok.NonNull;
+import org.hibernate.validator.cfg.defs.UUIDDef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,94 +22,53 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PLanguageServiceImpl implements IPLanguageService {
-
-    private final PLanguageRepository pLanguageRepository;
+public class PLanguageServiceImpl extends BaseImpl {
 
     @Autowired
-    public PLanguageServiceImpl(PLanguageRepository pLanguageRepository) {
-        this.pLanguageRepository = pLanguageRepository;
+    private PLanguageRepository pLanguageRepository;
+
+    @Autowired
+    public PLanguageServiceImpl(BaseRepository<PLanguage, UUID> baseRepository) {
+        super(baseRepository);
     }
 
-    @Override
-    public ResponseEntity<?> createLanguage(@NonNull PLanguageRequest pLanguageRequest) {
+    public Optional<PLanguage> createLanguage(@NonNull PLanguageRequest pLanguageRequest) {
 
-        if (pLanguageRequest.getName() == null ||
-                pLanguageRequest.getAvatar() == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(List.of(new CourseNotFoundException(MessageResponse.NO_LANGUAGE_ADDED).getMessage()));
+        Optional<PLanguage> pLanguage = this.findById(pLanguageRequest.getLanguageId());
+        if(pLanguage.isEmpty()){
+            PLanguage pLanguage1 = new PLanguage(
+                    pLanguageRequest.getName(),
+                    pLanguageRequest.getCourses(),
+                    pLanguageRequest.getAvatar());
+            try {
+                this.save(pLanguage1);
+            } catch (Exception e) {
+                throw  new RuntimeException(e.getMessage());
+            }
+
         }
-
-        if (pLanguageRepository.existsByName(pLanguageRequest.getName())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(List.of(new CourseNotFoundException(MessageResponse.LANGUAGE_ALREADY_EXISTS).getMessage()));
-        }
-
-        PLanguage pLanguage = new PLanguage(
-                pLanguageRequest.getName(),
-                pLanguageRequest.getCourses(),
-                pLanguageRequest.getAvatar());
-
-        try {
-            pLanguageRepository.save(pLanguage);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(List.of(pLanguage));
+        throw  new RuntimeException(MessageResponse.LANGUAGE_ALREADY_EXISTS);
     }
 
-    @Override
-    public ResponseEntity<List<PLanguage>> getAllLanguages(int pageNo, int pageSize, String sortBy, String sortDir, String searchValue) {
-        Page<PLanguage> languages = null;
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-
-        if (searchValue != null) {
-            languages = pLanguageRepository.findAllByLike(searchValue, pageable);
-        } else {
-            languages = pLanguageRepository.findAll(pageable);
-        }
-        return ResponseEntity.ok(languages.stream().toList());
-    }
-
-    @Override
-    public ResponseEntity<?> getLanguageById(@NonNull UUID languageId) {
+    public Optional<PLanguage> getLanguageById(@NonNull UUID languageId) {
         Optional<PLanguage> course = pLanguageRepository.findById(languageId);
-        if (!course.isPresent()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new CourseNotFoundException(MessageResponse.USER_NOT_FOUND));
+        if (course.isEmpty()) {
+            throw new RuntimeException(new CourseNotFoundException(MessageResponse.LANGUAGE_NOT_FOUND));
         }
-        return ResponseEntity.ok().body(course.get());
+        return course;
     }
 
-    @Override
-    public ResponseEntity<List<PLanguage>> updateLanguage(@NonNull UUID languageId, @NonNull PLanguageRequest pLanguageRequest) {
-        return null;
-    }
 
-    @Override
-    public ResponseEntity<?> deleteLanguage(@NonNull UUID languageId) {
+    public Optional<PLanguage> deleteLanguageById(@NonNull UUID languageId) {
         Optional<PLanguage> language = pLanguageRepository.findById(languageId);
-        if (!language.isPresent()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(List.of(new CourseNotFoundException(MessageResponse.LANGUAGE_NOT_FOUND)));
+        if (language.isEmpty()) {
+            throw new RuntimeException(new CourseNotFoundException(MessageResponse.LANGUAGE_NOT_FOUND));
         }
-
         try {
-            pLanguageRepository.deleteById(languageId);
+            this.deleteById(languageId);
         } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return ResponseEntity.ok(List.of(language));
+        return language;
     }
 }

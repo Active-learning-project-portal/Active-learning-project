@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { UserRequest } from 'src/app/models/payloads/requests/user.auth.request.model';
 import { UserResponse } from 'src/app/models/payloads/response/user.auth.response.model';
 import { Pagination } from 'src/app/shared/models/pagination.interface';
@@ -25,22 +25,6 @@ export class UserManagementService {
   public get userValue(): UserResponse {
     return this.userSubject.value;
   }
-
-  //   login(email: string, password: string) {
-  //     return this.http
-  //       .post<UserAuthModel>(`${this.config.apiRoute}/authenticate`, {
-  //         email,
-  //         password,
-  //       })
-  //       .pipe(
-  //         map((user) => {
-  //           // store user details and jwt token in local storage to keep user logged in between page refreshes
-  //           localStorage.setItem('user', JSON.stringify(user));
-  //           this.userSubject.next(user);
-  //           return user;
-  //         })
-  //       );
-  //   }
 
   logout() {
     localStorage.removeItem('user');
@@ -108,38 +92,28 @@ export class UserManagementService {
     return this.addSearchValue(pagination).join('&');
   }
 
-  // getById(userId: string): Observable<UserAuthModel> {
-  //   return this.http.get<UserAuthModel>(this.config.apiRoute + '/' + userId);
-  // }
+  update(id: string, params: UserRequest) {
+    return this.http.put(`${environment.apiUrl}/users/${id}`, params).pipe(
+      map((x) => {
+        if (id == this.userValue.id) {
+          const user = { ...this.userValue, ...params };
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+        }
+        return x;
+      })
+    );
+  }
 
-  // update(id: string, params: UserAuthModel) {
-  //   // Admin should have a privilege to delete admin
-  //   // Only super_admin can do this and Admin
-  //   return this.http.put(`${this.config.apiRoute}/users/${id}`, params).pipe(
-  //     map((x) => {
-  //       // update stored user if the logged in user updated their own record
-  //       if (id == this.userValue.id) {
-  //         // update local storage
-  //         const user = { ...this.userValue, ...params };
-  //         localStorage.setItem('user', JSON.stringify(user));
-  //         // publish updated user to subscribers
-  //         this.userSubject.next(user);
-  //       }
-  //       return x;
-  //     })
-  //   );
-  // }
-
-  // delete(id: string) {
-  //   console.log(id);
-  //   return this.http.delete(`${this.config.apiRoute}/users/${id}`).pipe(
-  //     map((x) => {
-  //       // auto logout if the logged in user deleted their own record
-  //       if (id == this.userValue.id) {
-  //         this.logout();
-  //       }
-  //       return x;
-  //     })
-  //   );
-  // }
+  delete(id: string) {
+    console.log(id);
+    return this.http.delete(`${environment.apiUrl}/users/${id}`).pipe(
+      map((user) => {
+        if (id == this.userValue.id) {
+          this.logout();
+        }
+        return user;
+      })
+    );
+  }
 }

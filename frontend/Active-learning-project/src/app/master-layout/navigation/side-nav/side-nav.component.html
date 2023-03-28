@@ -5,7 +5,7 @@
     </div>
     <div>Dashboard</div>
   </a>
-  <a routerLink="/alp/courses" routerLinkActive="active" (click)="closeMenu()">
+  <a *ngIf="hasCoursePermission()" routerLink="/alp/courses" routerLinkActive="active" (click)="closeMenu()">
     <div>
       <fa-icon class="icon" [icon]="courses"></fa-icon>
     </div>
@@ -17,7 +17,7 @@
     </div>
     <div>Assignments</div>
   </a>
-  <a routerLink="/alp/users" routerLinkActive="active" (click)="closeMenu()">
+  <a *ngIf="hasUsersPermission()" routerLink="/alp/users" routerLinkActive="active" (click)="closeMenu()">
     <div>
       <fa-icon class="icon" [icon]="users"></fa-icon>
     </div>

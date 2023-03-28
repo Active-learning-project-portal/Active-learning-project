@@ -7,6 +7,9 @@ import com.example.Active.Learning.project.account.models.enums.ERole;
 import com.example.Active.Learning.project.account.models.role.Role;
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
+import com.example.Active.Learning.project.account.payload.response.AuthResponse;
+import com.example.Active.Learning.project.account.payload.response.MessageResponse;
+import com.example.Active.Learning.project.account.payload.response.UserResponse;
 import com.example.Active.Learning.project.account.repositories.*;
 
 import lombok.NonNull;
@@ -32,7 +35,7 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
         super(baseRepository);
     }
 
-    public User saveUser(@NonNull UserRequest userRequest) {
+    public UserResponse saveUser(@NonNull UserRequest userRequest) {
         User user = mapUserRequestToUser(userRequest);
         user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
         try {
@@ -40,8 +43,23 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
         } catch (Exception e) {
            throw new RuntimeException(e.getMessage());
         }
-        return user;
+        return mapUserToUserResponse(user);
     }
+
+
+    public User findByUsername(String username){
+     Optional<User> user = this.userRepository.findByUsername(username);
+     if(user.isPresent()){
+         return user.get();
+     }
+     throw new RuntimeException(MessageResponse.USER_NOT_FOUND);
+    }
+
+    public UserResponse mapUserToUserResponse(User user){
+        AuthResponse authResponse = new AuthResponse(user.getToken(),user.getTokenType());
+        return new UserResponse(user.getFirstname(),user.getLastname(),user.getUsername(),user.getAvatar(),user.getProvider(),user.getRoles(),user.getDateJoined(),authResponse);
+    }
+
 
     public User mapUserRequestToUser(UserRequest userRequest){
         return new User(
@@ -58,25 +76,6 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
         Role userRole = roleRepository.findByName(eRole);
         roles.add(userRole);
         return roles;
-    }
-
-    private User saveRolesToUser(@NonNull UUID id,@NonNull UserRequest userRequest,@NonNull Set<Role> rolesToAdd){
-          userRequest.setRoles(rolesToAdd);
-        return this.updateUser(id,userRequest);
-    }
-
-    private Set<Role>  changeRolesOnRoleSet(Set<Role> currentRoles,@NonNull  ERole eRole ,@NonNull EAddOrRemove method){
-       if(currentRoles == null){
-           currentRoles = new HashSet<>();
-           currentRoles.add(new Role(ERole.ROLE_TRAINEE));
-           return currentRoles;
-       }
-        switch (method){
-         case ADD -> currentRoles.add(new Role(eRole));
-         case REMOVE -> currentRoles.remove(new Role(eRole));
-         default -> currentRoles.add(new Role(ERole.ROLE_TRAINEE));
-     }
-     return currentRoles;
     }
 
     public boolean userExistByUsername(@NonNull  String username){

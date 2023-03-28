@@ -20,7 +20,7 @@ import java.util.UUID;
                 @UniqueConstraint(columnNames = "name"),
         })
 @NoArgsConstructor
-public class PLanguage {
+public class PLanguage extends BaseEntity {
         @Id
         @GeneratedValue(generator = "uuid2")
         @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")

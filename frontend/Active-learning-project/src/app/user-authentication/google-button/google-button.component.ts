@@ -49,7 +49,7 @@ export class GoogleButtonComponent {
               this.toastr.success(`Successful login`);
               const stringifyUser = JSON.stringify(userAuth);
               localStorage.setItem('user', stringifyUser);
-              window.location.href = '/alp';
+              window.location.href = '/alp/dashboard';
             },
             (error) => {
               this.toastr.error(error?.message);

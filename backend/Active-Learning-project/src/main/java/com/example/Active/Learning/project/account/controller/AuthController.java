@@ -3,6 +3,7 @@ package com.example.Active.Learning.project.account.controller;
 
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
+import com.example.Active.Learning.project.account.payload.response.UserResponse;
 import com.example.Active.Learning.project.account.service.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AuthController {
     private AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/authenticate")
-    public User authenticate(@RequestBody UserRequest userRequest) {
+    public UserResponse authenticate(@RequestBody UserRequest userRequest) {
         return authenticationService.authenticate(userRequest);
     }
 }

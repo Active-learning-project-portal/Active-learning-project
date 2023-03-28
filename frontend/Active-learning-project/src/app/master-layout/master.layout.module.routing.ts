@@ -13,7 +13,6 @@ const routes: Routes = [
   {
     path: '',
     component: MasterLayoutComponent,
-    canActivate: [UserManagementGuard],
     children: [
       {
         path: 'dashboard',
@@ -31,6 +30,8 @@ const routes: Routes = [
       {
         path: 'users',
         component: UserManagementComponent,
+        canActivate:[UserManagementGuard]
+      
       },
       {
         path: 'settings',
