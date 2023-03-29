@@ -42,6 +42,7 @@ export class GoogleButtonComponent {
             username: user['email'],
             password: environment.defaultPassword,
             avatar: user['photoUrl'],
+            roles:[{name:"ROLE_TRAINEE"}]
           };
 
           this.authenticateService.authenticate(authModel).subscribe(

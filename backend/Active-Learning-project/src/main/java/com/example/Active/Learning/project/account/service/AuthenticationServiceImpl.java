@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl{
                     new UsernamePasswordAuthenticationToken(username,
                             password));
         } catch (AuthenticationException error) {
-            return null;
+            throw new RuntimeException(error.getMessage());
         }
         return authentication;
     }

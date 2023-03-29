@@ -8,4 +8,5 @@ export interface UserRequest {
   password?: string,
   provider: "GOOGLE" | "GITHUB" | "MANUAL",
   authType: "signin" | "signup" | null,
+  roles:Array<RoleList>
 }

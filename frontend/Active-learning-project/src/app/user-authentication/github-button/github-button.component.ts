@@ -132,6 +132,7 @@ export class GithubButtonComponent {
             username: transformedData.username,
             password: environment.defaultPassword,
             avatar: transformedData.avatar,
+            roles:[{name:"ROLE_TRAINEE"}]
           };
           this.authenticateService.authenticate(authModel).subscribe(
             (userAuth) => {

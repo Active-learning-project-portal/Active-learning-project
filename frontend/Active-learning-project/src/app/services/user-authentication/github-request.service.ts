@@ -95,6 +95,7 @@ export class GithubRequestService {
 			password: environment.defaultPassword,
 			provider: 'GITHUB',
 			authType: authType,
+			roles:[{name:"ROLE_TRAINEE"}]
 		};
 	}
 }

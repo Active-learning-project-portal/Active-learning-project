@@ -22,6 +22,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
     let errorObject = {};
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.log(error)
         if (error.status === 0) {
           if (!error.ok) {
             errorObject = {

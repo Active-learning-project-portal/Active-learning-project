@@ -2,6 +2,7 @@ package com.example.Active.Learning.project.account.models.role;
 
 
 import com.example.Active.Learning.project.account.models.BaseEntity;
+import com.example.Active.Learning.project.account.models.PLanguage;
 import com.example.Active.Learning.project.account.models.enums.ERole;
 import com.example.Active.Learning.project.account.models.users.User;
 import jakarta.persistence.*;
@@ -25,6 +26,9 @@ public class Role extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ERole name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
     public Role(ERole name) {
         this.name = name;
     }

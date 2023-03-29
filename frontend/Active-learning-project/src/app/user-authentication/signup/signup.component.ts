@@ -55,6 +55,7 @@ export class SignupComponent implements OnInit {
       provider: 'MANUAL',
       username: this.controls['email'].value,
       password: this.controls['password'].value,
+      roles:[{name:"ROLE_TRAINEE"}]
     };
 
     this.loading = true;

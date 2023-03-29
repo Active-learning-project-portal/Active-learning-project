@@ -37,7 +37,6 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
 
     public UserResponse saveUser(@NonNull UserRequest userRequest) {
         User user = mapUserRequestToUser(userRequest);
-        user.setRoles(addRole(DefaultValues.DEFAULT_ROLE.getName()));
         try {
              this.save(user);
         } catch (Exception e) {
@@ -69,15 +68,9 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
                 encoder.encode(userRequest.getPassword()),
                 userRequest.getProvider(),
                 userRequest.getAvatar(),
+                userRequest.getRoles(),
                 new Date());
     }
-    public Set<Role> addRole(ERole eRole) {
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(eRole);
-        roles.add(userRole);
-        return roles;
-    }
-
     public boolean userExistByUsername(@NonNull  String username){
         return userRepository.existsByUsername(username);
     }

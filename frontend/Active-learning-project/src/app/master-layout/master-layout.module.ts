@@ -22,6 +22,7 @@ import { LanguageSubjectComponent } from './modals/views/language-subject/langua
 import { MatButtonModule } from '@angular/material/button';
 import { CommunityComponent } from './layouts/community/community.component';
 import { PlaygroundComponent } from './layouts/playground/playground.component';
+import { BoardComponent } from './layouts/board/board/board.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PlaygroundComponent } from './layouts/playground/playground.component';
     LanguageCourseComponent,
     LanguageSubjectComponent,
     CommunityComponent,
-    PlaygroundComponent
+    PlaygroundComponent,
+    BoardComponent
   ],
   exports: [
     MasterLayoutComponent,

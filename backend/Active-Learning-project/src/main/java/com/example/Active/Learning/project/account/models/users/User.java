@@ -34,7 +34,7 @@ public class User extends BaseEntity {
     @Transient
     private String tokenType;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
@@ -46,6 +46,7 @@ public class User extends BaseEntity {
                 String encode,
                 String provider,
                 String avatar,
+                Set<Role> roles,
                 Date dateJoined
                 ) {
         this.firstname = firstname;
@@ -54,6 +55,7 @@ public class User extends BaseEntity {
         this.password = encode;
         this.provider = provider;
         this.avatar = avatar;
+        this.roles = roles;
         this.dateJoined = dateJoined;
     }
 }
