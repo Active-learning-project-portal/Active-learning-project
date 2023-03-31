@@ -29,6 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@ngneat/until-destroy": "^9.2.2",
     "@nrwl/angular": "15.6.3",
+    "@syncfusion/ej2-angular-kanban": "^21.1.35",
     "axios": "^1.3.2",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
