@@ -5,6 +5,7 @@ import com.example.Active.Learning.project.account.models.BaseEntity;
 import com.example.Active.Learning.project.account.models.PLanguage;
 import com.example.Active.Learning.project.account.models.enums.ERole;
 import com.example.Active.Learning.project.account.models.users.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Role extends BaseEntity {
     @Column(length = 20)
     private ERole name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
     public Role(ERole name) {
