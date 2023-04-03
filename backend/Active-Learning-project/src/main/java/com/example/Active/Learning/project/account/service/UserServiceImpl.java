@@ -1,10 +1,5 @@
 package com.example.Active.Learning.project.account.service;
 
-
-import com.example.Active.Learning.project.account.constants.DefaultValues;
-import com.example.Active.Learning.project.account.models.enums.EAddOrRemove;
-import com.example.Active.Learning.project.account.models.enums.ERole;
-import com.example.Active.Learning.project.account.models.role.Role;
 import com.example.Active.Learning.project.account.models.users.User;
 import com.example.Active.Learning.project.account.payload.request.UserRequest;
 import com.example.Active.Learning.project.account.payload.response.AuthResponse;
@@ -13,6 +8,7 @@ import com.example.Active.Learning.project.account.payload.response.UserResponse
 import com.example.Active.Learning.project.account.repositories.*;
 
 import lombok.NonNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,15 +24,14 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
+    ModelMapper modelMapper = new ModelMapper();
 
     public UserServiceImpl(BaseRepository<User, UUID> baseRepository) {
         super(baseRepository);
     }
 
     public UserResponse saveUser(@NonNull UserRequest userRequest) {
-        User user = mapUserRequestToUser(userRequest);
+        User user = this.modelMapper.map(userRequest,User.class);
         try {
              this.save(user);
         } catch (Exception e) {
@@ -56,21 +51,11 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
 
     public UserResponse mapUserToUserResponse(User user){
         AuthResponse authResponse = new AuthResponse(user.getToken(),user.getTokenType());
-        return new UserResponse(user.getFirstname(),user.getLastname(),user.getUsername(),user.getAvatar(),user.getProvider(),user.getRoles(),user.getDateJoined(),authResponse);
+        UserResponse userResponse =  this.modelMapper.map(user,UserResponse.class);
+        userResponse.setAuthResponse(authResponse);
+        return userResponse;
     }
 
-
-    public User mapUserRequestToUser(UserRequest userRequest){
-        return new User(
-                userRequest.getUsername(),
-                userRequest.getFirstname(),
-                userRequest.getLastname(),
-                encoder.encode(userRequest.getPassword()),
-                userRequest.getProvider(),
-                userRequest.getAvatar(),
-                userRequest.getRoles(),
-                new Date());
-    }
     public boolean userExistByUsername(@NonNull  String username){
         return userRepository.existsByUsername(username);
     }
@@ -84,7 +69,6 @@ public class UserServiceImpl extends BaseImpl<User,UUID>{
           user.setPassword(userRequest.getPassword());
           user.setProvider(userRequest.getProvider());
           user.setLastname(userRequest.getLastname());
-          user.setRoles(userRequest.getRoles());
           try{
              return this.updateById(user,user.getId());
           }catch (Exception e){

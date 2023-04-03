@@ -1,35 +1,38 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { Component } from '@angular/core';
+import { IBoardHeader } from '../../assignments/models/boadHeader.interface';
 
 @Component({
   selector: 'alp-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.css'],
 })
 export class BoardComponent {
-  
-  @ViewChild('kanbanObj') kanbanObj: KanbanComponent;  
+  columns: Array<IBoardHeader> = [
+    {
+      id: 1,
+      name: 'Backlog',
+    },
+    {
+      id: 2,
+      name: 'In Progress',
+    },
+    {
+      id: 3,
+      name: 'Requested Review',
+    },
+    {
+      id: 4,
+      name: 'Review',
+    },
+    {
+      id: 5,
+      name: 'Done',
+    },
+  ];
 
-  public cardSettings: CardSettingsModel = {  
-    headerField: 'Id'  
-  };  
-  
-  headerdata: any  
-  BoradData1: Object;  
-  
-  constructor(private http: HttpClient) {  
-  
-  }  
-  ngOnInit() {  
-    this.http.get('https://localhost:44314/Api/EmployeeInfo/Getemployeeinfo').subscribe(result => {  
-      this.BoradData1 = result;  
-      console.log(this.BoradData1);  
-    })  
-    this.headerdata = [  
-      { text: 'Jaipur', key: 'Jaipur' },  
-      { text: 'Delhi', key: 'Delhi' },  
-      { text: 'Bangalore', key: 'Bangalore' },  
-      { text: 'Pune', key: 'Pune' },   
-    ]  
-  }  
 }
