@@ -1,0 +1,47 @@
+<div class="card-column-headers row">
+  <div class="backlog col">
+    <h6>
+      <span>{{ "Backlog" | uppercase }}</span>
+      <alp-circular-number
+        [activeClass]="'backlog'"
+        [cardCount]="backlogCount"
+      ></alp-circular-number>
+    </h6>
+  </div>
+  <div class="started col">
+    <h6>
+      <span>{{ "In Progress" | uppercase }}</span>
+      <alp-circular-number
+        [activeClass]="'started'"
+        [cardCount]="startedCount"
+      ></alp-circular-number>
+    </h6>
+  </div>
+  <div class="paused col">
+    <h6>
+      <span>{{ "Paused" | uppercase }}</span>
+      <alp-circular-number
+        [activeClass]="'paused'"
+        [cardCount]="pausedCount"
+      ></alp-circular-number>
+    </h6>
+  </div>
+  <div class="completed col">
+    <h6>
+      <span>{{ "Completed" | uppercase }}</span>
+      <alp-circular-number
+        [activeClass]="'completed'"
+        [cardCount]="completedCount"
+      ></alp-circular-number>
+    </h6>
+  </div>
+  <div class="archived col">
+    <h6>
+      <span>{{ "Archived" | uppercase }}</span>
+      <alp-circular-number
+        [activeClass]="'archived'"
+        [cardCount]="archivedCount"
+      ></alp-circular-number>
+    </h6>
+  </div>
+</div>

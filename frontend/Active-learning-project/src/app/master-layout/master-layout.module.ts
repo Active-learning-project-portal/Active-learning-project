@@ -9,7 +9,6 @@ import { UserProfileComponent } from './navigation/top-nav/user-profile/user-pro
 import { ModalComponent } from './layouts/user-management/modal/modal.component';
 import { UserManagementComponent } from './layouts/user-management/user-management.component';
 import { MasterLayoutComponent } from './layouts/master/master-layout.component';
-import { ArrayToStringPipe } from '../shared/pipes/array-string.pipe';
 import { CoursesModule } from './layouts/courses/courses.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AssignmentsComponent } from './layouts/assignments/assignments.component';
@@ -22,7 +21,8 @@ import { LanguageSubjectComponent } from './modals/views/language-subject/langua
 import { MatButtonModule } from '@angular/material/button';
 import { CommunityComponent } from './layouts/community/community.component';
 import { PlaygroundComponent } from './layouts/playground/playground.component';
-import { BoardComponent } from './layouts/board/board/board.component';
+import { BoardModule } from './layouts/board/board.module';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +34,6 @@ import { BoardComponent } from './layouts/board/board/board.component';
     TopNavComponent,
     SideNavComponent,
     UserProfileComponent,
-    ArrayToStringPipe,
     DashboardComponent,
     AssignmentsComponent,
     SettingsComponent,
@@ -43,8 +42,7 @@ import { BoardComponent } from './layouts/board/board/board.component';
     LanguageCourseComponent,
     LanguageSubjectComponent,
     CommunityComponent,
-    PlaygroundComponent,
-    BoardComponent
+    PlaygroundComponent
   ],
   exports: [
     MasterLayoutComponent,
@@ -55,7 +53,6 @@ import { BoardComponent } from './layouts/board/board/board.component';
     TopNavComponent,
     SideNavComponent,
     UserProfileComponent,
-    ArrayToStringPipe,
     DashboardComponent,
     AssignmentsComponent,
     SettingsComponent,
@@ -70,7 +67,8 @@ import { BoardComponent } from './layouts/board/board/board.component';
     CoursesModule,
     FontAwesomeModule,
     MaterialModule,
-    MatButtonModule
+    MatButtonModule,
+    BoardModule
   ],
 })
 export class MasterLayoutModule { }

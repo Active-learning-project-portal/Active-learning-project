@@ -1,0 +1,59 @@
+<mat-card
+  (click)="onViewCard(card)"
+  (pointerdown)="grab($event)"
+  (pointerup)="release($event)"
+  cdkDrag
+>
+  <mat-card-header>
+    <mat-card-title>
+      {{ card.title }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="d-block" [ngClass]="card.cardStatus">
+      <div
+        class="card-content-item card-description"
+        *ngIf="card.description.length > 0"
+      >
+        <div class="card-item-icon">
+          <i class="fa-solid fa-pen"></i>
+        </div>
+        <div class="card-item-description">
+          {{ card.description }}
+        </div>
+      </div>
+      <div
+        class="card-content-item card-duration"
+        *ngIf="card.cardStatus !== 'started'"
+      >
+        <div class="card-item-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div class="card-duration">
+          {{ card.duration}}
+        </div>
+      </div>
+      <div
+        class="card-content-item card-duration"
+        *ngIf="card.cardStatus !== 'archived' && card.cardStatus !== 'completed' && card.cardStatus !== 'backlog'"
+      >
+        <div class="card-item-icon">
+          <div [ngSwitch]="card.cardStatus">
+            <span *ngSwitchCase="'started'">
+              <i class="fa-solid fa-stopwatch"></i>
+            </span>
+            <span *ngSwitchCase="'paused'">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </span>
+            <span *ngSwitchDefault>
+              <i class="fa-solid fa-clock"></i>
+            </span>
+          </div>
+        </div>
+        <div class="card-duration">
+          {{ card.timeRemaining}}
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

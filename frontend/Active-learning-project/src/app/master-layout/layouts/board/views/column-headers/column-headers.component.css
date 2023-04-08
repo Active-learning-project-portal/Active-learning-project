@@ -1,0 +1,10 @@
+.card-column-headers {
+  margin: 0;
+  padding: .5rem;
+}
+
+.card-column-headers h6 {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}

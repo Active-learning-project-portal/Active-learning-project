@@ -1,0 +1,68 @@
+<div class="goal-management-controls">
+  <button mat-raised-button (click)="addNewCard()">
+    <i class="fa-solid fa-plus"></i>
+    <span>ADD NEW GOAL</span>
+  </button>
+</div>
+
+<div class="goal-management-kanban">
+  <alp-column-headers
+    [backlogCount]="getCardTypeObjectList().backlog.length"
+    [startedCount]="getCardTypeObjectList().started.length"
+    [pausedCount]="getCardTypeObjectList().paused.length"
+    [completedCount]="getCardTypeObjectList().completed.length"
+    [archivedCount]="getCardTypeObjectList().archived.length"
+  ></alp-column-headers>
+
+  <div class="goal-kanban-content row m-0" cdkDropListGroup>
+    <div class="backlog-content col">
+      <alp-card-column-list
+        [listID]="cardStates.backlog"
+        [cardsList]="getCardTypeObjectList().backlog"
+        [onDropRef]="onDropCard"
+        [connectedIDList]="[cardStates.started, cardStates.archived]"
+      >
+      </alp-card-column-list>
+    </div>
+    <div class="started-content col">
+      <alp-card-column-list
+        [listID]="cardStates.started"
+        [cardsList]="getCardTypeObjectList().started"
+        [onDropRef]="onDropCard"
+        [connectedIDList]="[
+          cardStates.paused,
+          cardStates.completed,
+          cardStates.archived
+        ]"
+      >
+      </alp-card-column-list>
+    </div>
+    <div class="paused-content col">
+      <alp-card-column-list
+        [listID]="cardStates.paused"
+        [cardsList]="getCardTypeObjectList().paused"
+        [onDropRef]="onDropCard"
+        [connectedIDList]="[cardStates.started, cardStates.archived]"
+      >
+      </alp-card-column-list>
+    </div>
+    <div class="completed-content col">
+      <alp-card-column-list
+        [listID]="cardStates.completed"
+        [cardsList]="getCardTypeObjectList().completed"
+        [onDropRef]="onDropCard"
+        [connectedIDList]="[]"
+      >
+      </alp-card-column-list>
+    </div>
+    <div class="archived-content col">
+      <alp-card-column-list
+        [listID]="cardStates.archived"
+        [cardsList]="getCardTypeObjectList().archived"
+        [onDropRef]="onDropCard"
+        [connectedIDList]="[cardStates.backlog, cardStates.started]"
+      >
+      </alp-card-column-list>
+    </div>
+  </div>
+</div>
