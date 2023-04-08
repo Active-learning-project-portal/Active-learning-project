@@ -1,10 +1,9 @@
 package com.example.Active.Learning.project.account.payload.request;
 
-import com.example.Active.Learning.project.account.models.role.Role;
+import com.example.Active.Learning.project.account.models.enums.ERole;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -16,6 +15,5 @@ public class UserRequest {
     private String avatar;
     private String password;
     private String provider;
-    private Set<Role> roles;
-    private Date joined = new Date();
+    private Set<ERole> roles;
 }

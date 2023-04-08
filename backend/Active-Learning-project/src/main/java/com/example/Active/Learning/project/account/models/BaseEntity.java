@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -20,5 +20,8 @@ public class BaseEntity {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private UUID id;
+
+    private Date createdOn;
+    private  Date modifiedOn;
 
 }

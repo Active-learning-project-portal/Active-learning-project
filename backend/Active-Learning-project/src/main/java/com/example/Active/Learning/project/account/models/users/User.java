@@ -1,15 +1,13 @@
 package com.example.Active.Learning.project.account.models.users;
 
 import com.example.Active.Learning.project.account.models.BaseEntity;
-import com.example.Active.Learning.project.account.models.role.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.Active.Learning.project.account.models.enums.ERole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
 import java.util.Set;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -22,13 +20,30 @@ import java.util.UUID;
 @AllArgsConstructor
 
 public class User extends BaseEntity {
+
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+            flags = Pattern.Flag.CASE_INSENSITIVE)
     private String username;
     private String password;
     private String provider;
     private String firstname;
     private String lastname;
     private String avatar;
-    private Date dateJoined;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", provider='" + provider + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", token='" + token + '\'' +
+                ", tokenType='" + tokenType + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 
     @Transient
     private String token;
@@ -36,28 +51,6 @@ public class User extends BaseEntity {
     @Transient
     private String tokenType;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
-    private Set<Role> roles;
+    private Set<ERole> roles;
 
-    public User(String username,
-                String firstname,
-                String lastname,
-                String encode,
-                String provider,
-                String avatar,
-                Set<Role> roles,
-                Date dateJoined
-                ) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = encode;
-        this.provider = provider;
-        this.avatar = avatar;
-        this.roles = roles;
-        this.dateJoined = dateJoined;
-    }
 }
