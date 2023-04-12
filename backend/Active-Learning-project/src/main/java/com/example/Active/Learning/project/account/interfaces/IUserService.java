@@ -1,18 +1,21 @@
 package com.example.Active.Learning.project.account.interfaces;
 
-import com.example.Active.Learning.project.account.models.users.User;
+import com.example.Active.Learning.project.account.dto.request.user.UserRequest;
+import com.example.Active.Learning.project.account.dto.response.auth.AuthResponse;
+import com.example.Active.Learning.project.account.dto.response.user.UserResponse;
 import lombok.NonNull;
-import org.springframework.http.ResponseEntity;
+
 
 import java.util.List;
 import java.util.UUID;
 
 public interface IUserService {
-//    ResponseEntity<?> createUser(@NonNull SignUpRequest signUpRequest);
-//
-//    ResponseEntity<List<User>> getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir,String column);
-//    ResponseEntity<?> getUserById(@NonNull UUID userId);
-//    ResponseEntity<List<User>> updateUser(@NonNull UUID userId, @NonNull SignUpRequest signUpRequest);
-//    ResponseEntity<User> deleteUser(@NonNull UUID userId);
+    AuthResponse saveUser(@NonNull UserRequest userRequest);
+    List<UserResponse> findAllUsers();
+    UserResponse findByUsername(@NonNull String username);
+    UserResponse findUserById(@NonNull UUID userId);
+    UserResponse updateUser(@NonNull UUID userId, @NonNull UserRequest userRequest);
+    void deleteById(@NonNull UUID userId);
+    void delete(@NonNull UserRequest userRequest);
 }
 
